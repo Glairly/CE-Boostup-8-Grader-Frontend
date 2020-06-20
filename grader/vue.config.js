@@ -23,7 +23,7 @@ module.exports = {
                 },
             },
             "/api/*": {
-                target: "http://localhost:5000/api",
+                target: "https://deno.everythink.dev/api",
                 changeOrigin: true,
                 secure: false,
                 pathRewrite: {
