@@ -55,7 +55,7 @@ export default {
             "sourceCode": "\r\n#include <iostream>\r\n int main(){int arr[10] = {0};    int a, b, i;scanf(\"%d%d\", &a, &b);printf(\"%d\", a + b);return 0;}",
             "output": "3$.$4"
         }
-        this.axios.post('/compiler', data).then(res => {
+        this.axios.post(this.$store.state.compiler + '/compiler', data).then(res => {
             console.log(res)
         }).catch(err => {
             console.log(err)

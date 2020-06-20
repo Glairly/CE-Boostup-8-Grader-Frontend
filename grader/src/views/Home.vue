@@ -6,7 +6,7 @@
 
         <v-toolbar class="elevation-0" color="transparent">
             <v-avatar :tile="true">
-                <img :src="require('@/assets/logo.png')" alt="logo">
+                <img :src="require('@/assets/beeLogo.png')" alt="logo">
             </v-avatar>
             <v-toolbar-title class="ml-2">CE-BU 8 | Grader </v-toolbar-title>
         </v-toolbar>

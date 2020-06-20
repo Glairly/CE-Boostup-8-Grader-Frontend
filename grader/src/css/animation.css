@@ -114,7 +114,7 @@
 
 @keyframes sineMovement {
     to {
-        transform: translatey(200px)
+        transform: translatey(var(--sine))
     }
 }
 

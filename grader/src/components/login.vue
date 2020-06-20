@@ -276,6 +276,7 @@ export default {
     left:  0px;
     top: 0px;
     --radius : 300px;
+   
     animation: circleAround 5s infinite cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 .c-center{
@@ -296,12 +297,13 @@ export default {
 
 .l-center{
     position: fixed;
-      z-index:10;
+    z-index:10;
     left: -10%;
     top: 50%;
     animation: linearAround 5s  alternate infinite ease-in-out;
 }
 .sineMovement{
+     --sine : 500px;
     animation: sineMovement 1.5s alternate infinite ease-in-out;
  }
 

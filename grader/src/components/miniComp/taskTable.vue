@@ -165,7 +165,6 @@
             <!-- table data list -->
             <template v-else v-slot:default="props">
                 <v-data-table hide-default-footer :items-per-page.sync="itemsPerPage" :page="page" :search="search" @click:row="to($event)" :headers="table.header" :items="props.items">
-
                     <template v-slot:item.rank="{ item }">
                         <v-rating :half-icon="ratingIcon.half" :full-icon="item.rank/2 >= 5 ? ratingIcon.full : ratingIcon.default" :value="item.rank/2" style="flex: none;" :color="ratingCol(item.rank)" dense half-increments readonly size="20"></v-rating>
                     </template>
@@ -177,7 +176,6 @@
                             </v-chip>
                         </template>
                     </template>
-
                 </v-data-table>
             </template>
 

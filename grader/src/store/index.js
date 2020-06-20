@@ -33,10 +33,8 @@ export default new Vuex.Store({
                 state.api = " " // point to localhost
                 state.compiler = " "
             } else {
-                // state.api = "https://deno.everythink.dev"
-                // state.compiler = "https://bug.everythink.dev"
-                state.api = " " // point to localhost
-                state.compiler = " "
+                state.api = "https://deno.everythink.dev"
+                state.compiler = "https://bug.everythink.dev"
             }
         }
     },
