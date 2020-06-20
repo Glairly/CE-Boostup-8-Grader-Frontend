@@ -4,7 +4,7 @@
         <v-data-iterator :items="filtered" :custom-filter="customFilter" :items-per-page.sync="itemsPerPage" :page="page" :search="search" :sort-by="sortBy.toLowerCase()" :sort-desc="sortDesc" hide-default-footer>
             <!-- search bar etc. -->
             <template v-slot:header>
-                <v-toolbar class="mb-2 task-rounded-top" :color="color" rounded flat>
+                <v-toolbar  class="mb-2 rounded-b-xl rounded-t-m" :color="color" rounded flat>
                     <!-- title -->
                     <!-- <v-toolbar-title  class="headline font-weight-black mr-5">{{title}}</v-toolbar-title> -->
                     <!-- change table -->
@@ -181,7 +181,7 @@
 
             <!-- Pagination -->
             <template v-slot:footer>
-                <v-toolbar class="mb-2  task-rounded-bot" :color="color" rounded dark flat>
+                <v-toolbar class="rounded-t-xl" :color="color" rounded dark flat>
                     <v-row class="ma-2" align="center" justify="center" background-color="primary">
                         <span class="font-weight-black">Items per page</span>
                         <v-menu offset-y>

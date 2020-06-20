@@ -48,6 +48,52 @@
     animation: spin 2s infinite cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
+.c-top-left {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    --radius: 300px;
+    animation: circleAround 5s normal infinite cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+.c-center {
+    position: fixed;
+    z-index: 5;
+    left: 50%;
+    top: 50%;
+    --radius: 800px;
+    animation: circleAround 6s normal infinite;
+}
+
+.c-bottom-right {
+    position: fixed;
+    left: 100%;
+    top: 100%;
+    --radius: 300px;
+    animation: circleAround-r 5s cubic-bezier(0.250, 0.460, 0.450, 0.940) infinite;
+}
+
+.l-center {
+    position: fixed;
+    z-index: 5;
+    left: -10%;
+    top: 50%;
+    animation: linearAround 5s normal infinite cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+.lr-top {
+    position: fixed;
+    z-index: 5;
+    left: -10%;
+    top: -20%;
+    animation: linearAround-r 5s normal infinite ease-in-out;
+}
+
+.sineMovement {
+    --sine: 500px;
+    animation: sineMovement 1.5s alternate infinite ease-in-out;
+}
+
 @keyframes spin {
     0% {
         -webkit-transform: rotateY(0deg);
@@ -71,38 +117,38 @@
 }
 
 @-webkit-keyframes circleAround {
-    from {
+    0% {
         transform: rotate(0deg) translateX(var(--radius));
     }
-    to {
+    100% {
         transform: rotate(360deg) translateX(var(--radius));
     }
 }
 
 @keyframes circleAround {
-    from {
+    0% {
         transform: rotate(0deg) translateX(var(--radius));
     }
-    to {
+    100% {
         transform: rotate(360deg) translateX(var(--radius));
     }
 }
 
 @-webkit-keyframes circleAround-r {
-    from {
-        transform: rotate(0deg) translateX(var(--radius)) rotate(0deg);
+    0% {
+        transform: rotate(0deg) translateX(var(--radius));
     }
-    to {
-        transform: rotate(-360deg) translateX(var(--radius)) rotate(360deg);
+    100% {
+        transform: rotate(-360deg) translateX(var(--radius));
     }
 }
 
 @keyframes circleAround-r {
-    from {
-        transform: rotate(0deg) translateX(var(--radius)) rotate(0deg);
+    0% {
+        transform: rotate(0deg) translateX(var(--radius)) scaleX(-1);
     }
-    to {
-        transform: rotate(-360deg) translateX(var(--radius)) rotate(360deg);
+    100% {
+        transform: rotate(-360deg) translateX(var(--radius)) scaleX(-1);
     }
 }
 
@@ -112,9 +158,18 @@
     }
 }
 
+@keyframes linearAround-r {
+    from {
+        transform: translateX(1000%) scaleX(-1);
+    }
+    to {
+        transform: translateX(0%) scaleX(-1);
+    }
+}
+
 @keyframes sineMovement {
     to {
-        transform: translatey(var(--sine))
+        transform: translatey(var(--sine)) rotate(60deg);
     }
 }
 

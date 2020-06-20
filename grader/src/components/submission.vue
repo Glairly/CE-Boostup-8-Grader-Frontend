@@ -1,5 +1,5 @@
 <template>
-<div class="ma-12" style="background:transparent;">
+<div class="mx-12  d-flex align-center" style="background:transparent;height:100%">
     <taskTable type="submission" animation="slide-in-elliptic-top-fwd" :tasks="tasks" title="All Submission" color="#5C6BC0"></taskTable>
 </div>
 </template>

@@ -23,7 +23,7 @@ module.exports = {
                 },
             },
             "/api/*": {
-                target: "https://deno.everythink.dev/api",
+                target: "http://localhost:5000/api",
                 changeOrigin: true,
                 secure: false,
                 pathRewrite: {
@@ -31,7 +31,7 @@ module.exports = {
                 },
             },
             "/compiler": {
-                target: "https://bug.everythink.dev/compiler",
+                target: "http://localhost:4096/compiler",
                 changeOrigin: true,
                 secure: false,
                 pathRewrite: {

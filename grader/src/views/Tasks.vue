@@ -1,5 +1,5 @@
 <template>
-<div class="ma-12" style="background:transparent;">
+<div class="mx-12 d-flex align-center" style="background:transparent;height:100%">
     <taskTable type="question" animation="swing-in-top-bck" :tasks="tasks" title="All Questions" color="#8c8f11"></taskTable>
 </div>
 </template>

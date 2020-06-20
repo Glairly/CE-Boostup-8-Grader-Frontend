@@ -6,7 +6,7 @@
 
         <v-toolbar class="elevation-0" color="transparent">
             <v-avatar :tile="true">
-                <img :src="require('@/assets/beeLogo.png')" alt="logo">
+                <img :src="require('@/assets/beeLogo1.png')" alt="logo">
             </v-avatar>
             <v-toolbar-title class="ml-2">CE-BU 8 | Grader </v-toolbar-title>
         </v-toolbar>
@@ -30,7 +30,7 @@
         <v-spacer></v-spacer>
         <v-tooltip bottom>
             <template v-slot:activator="{ on }">
-                <v-btn v-on="on">
+                <v-btn color="#b15d2c" v-on="on">
                     <themeSwitch></themeSwitch>
                 </v-btn>
             </template>
@@ -39,7 +39,7 @@
         <v-divider class="mx-3"></v-divider>
         <v-menu color="white" offset-y transition="slide-x-transition">
             <template v-slot:activator="{ on }">
-                <v-chip  v-on="on" style="border-radius:50px !important;width:250px;" class="pa-5 elevation-3" pill outlined color="black" @click="{}">
+                <v-chip v-on="on" style="border-radius:50px !important;width:auto;" class="pl-5 pr-10 py-5 elevation-3" pill dark @click="{}">
                     <v-badge bordered bottom color="green accent-4" dot offset-x="15" offset-y="10">
                         <v-avatar v-on="on" left>
                             <v-img :src="user.detail.avatar"></v-img>
@@ -48,7 +48,7 @@
                     {{user.detail.name}}
                 </v-chip>
             </template>
-            <v-card  width="300">
+            <v-card width="300">
                 <v-list dark>
                     <v-list-item>
                         <v-list-item-avatar>
@@ -89,7 +89,14 @@
 
     <router-view>
     </router-view>
-
+    <span v-if="$route.name != 'Coding'">
+        <div class="l-center" style="width:200px;height:200px;border-radius:50%;background:transparent;">
+            <v-img class="sineMovement" :src="require('@/assets/Bee-r.png')"></v-img>
+        </div>
+        <div class="lr-top" style="width:200px;height:200px;border-radius:50%;background:transparent;">
+            <v-img class="sineMovement" :src="require('@/assets/Bee-r.png')"></v-img>
+        </div>
+    </span>
 </v-sheet>
 </template>
 

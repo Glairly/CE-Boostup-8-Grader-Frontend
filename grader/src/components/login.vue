@@ -55,7 +55,7 @@
                 <!-- </v-fab-transition> -->
                 <!-- Login progress bar -->
                 <v-dialog v-model="wait" persistent width="500">
-                    <v-card color="primary" dark>
+                    <v-card color="warning" dark>
                         <v-card-text class="pa-5 ma-0">
                             <v-row class="ma-0 pa-0" align="center" justify="center" style="height:100%">
                                 <v-col>
@@ -90,9 +90,11 @@
                 <v-img class="sineMovement" :src="require('@/assets/Bee_d.png')"></v-img>
             </div>
         </template>
-        <div class="l-center" style="width:200px;height:200px;border-radius:50%;background:transparent;">
-            <v-img class="sineMovement" :src="require('@/assets/Bee-r.png')"></v-img>
-        </div>
+        <template v-for="c in linearBee">
+            <div :key="c" :class="c"  style="width:200px;height:200px;border-radius:50%;background:transparent;">
+                <v-img class="sineMovement" :src="require('@/assets/Bee-r.png')"></v-img>
+            </div>
+        </template>
     </v-main>
 </v-app>
 </template>
@@ -139,7 +141,8 @@ export default {
             scaleover: "",
             // register
             waitRegis: false,
-            circleAround: ["c-top-left", "c-center", 'c-bottom-right']
+            circleAround: ["c-top-left", "c-center", 'c-bottom-right'],
+            linearBee: ["l-center", "lr-top"]
         }
     },
     computed: {
@@ -271,40 +274,5 @@ export default {
     }
 }
 
-.c-top-left {
-    position: fixed;
-    left:  0px;
-    top: 0px;
-    --radius : 300px;
-   
-    animation: circleAround 5s infinite cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-}
-.c-center{
-        position: fixed;
-        z-index:10;
-    left: 50%;
-    top: 50%;
-    --radius : 800px;
-    animation: circleAround 4s linear infinite;
-}
-.c-bottom-right{
-        position: fixed;
-    left: 100%;
-    top: 100%;
-    --radius : 300px;
-    animation: circleAround-r 5s cubic-bezier(0.250, 0.460, 0.450, 0.940)   infinite;
-}
-
-.l-center{
-    position: fixed;
-    z-index:10;
-    left: -10%;
-    top: 50%;
-    animation: linearAround 5s  alternate infinite ease-in-out;
-}
-.sineMovement{
-     --sine : 500px;
-    animation: sineMovement 1.5s alternate infinite ease-in-out;
- }
 
 </style>
