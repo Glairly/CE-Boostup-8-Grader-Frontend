@@ -30,8 +30,8 @@
                                 <!-- login form -->
                                 <v-col class="ma-0 px-3" cols="6" style="max-width:100%">
                                     <v-form class="pa-5" ref="form" v-model="valid">
-                                        <v-text-field outlined rounded label="Username" :rules="nameRules" counter name="login" prepend-inner-icon="person" type="text" v-model="userFill" required></v-text-field>
-                                        <v-text-field :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" outlined rounded id="password" :rules="nameRules" counter label="Password" name="password" prepend-inner-icon="lock" :type=" !show1 ? 'text' : 'password'" v-model="passFill" @click:append="show1 = !show1" required></v-text-field>
+                                        <v-text-field color="warning" outlined rounded label="Username" :rules="nameRules" counter name="login" prepend-inner-icon="person" type="text" v-model="userFill" required></v-text-field>
+                                        <v-text-field color="warning" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" outlined rounded id="password" :rules="nameRules" counter label="Password" name="password" prepend-inner-icon="lock" :type=" !show1 ? 'text' : 'password'" v-model="passFill" @click:append="show1 = !show1" required></v-text-field>
 
                                         <v-btn rounded class="ma-2 pa-6 glow-warning" :class="scaleIn" v-show="loginValid && this.loginErrorMessage == 'No data or User is not existed.'" @click.end="register()" color="warning" style="text-decoration-line:none;color:white">Register With This User ?</v-btn>
                                         <v-btn rounded class="ma-2 pa-6 glow-warning " :loading="wait" @click.end="login()" :disabled="!valid" color="warning" style="text-decoration-line:none;color:white">Login</v-btn>
@@ -86,13 +86,13 @@
             <!-- <vue-particles style="height:100%;position:absolute;width:100%" color="#dedede" :particleOpacity="0.7" :particlesNumber="80" shapeType="polygon" :particleSize="4" linesColor="#dedede" :linesWidth="1" :lineLinked="true" :lineOpacity="0.4" :linesDistance="150" :moveSpeed="3" :hoverEffect="true" hoverMode="grab" :clickEffect="true" clickMode="push"> </vue-particles> -->
         </v-container>
         <template v-for="c in circleAround">
-            <div :key="c" :class="c" style="width:200px;height:200px;border-radius:50%;">
-                <v-img class="sineMovement" :src="require('@/assets/Bee_d.png')"></v-img>
+            <div :key="c" :class="c" style="width:150px;height:200px;border-radius:50%;">
+                <v-img class="sineMovement glow-warning rounded-circle" :src="require('@/assets/Bee_d.png')"></v-img>
             </div>
         </template>
         <template v-for="c in linearBee">
-            <div :key="c" :class="c"  style="width:200px;height:200px;border-radius:50%;background:transparent;">
-                <v-img class="sineMovement" :src="require('@/assets/Bee-r.png')"></v-img>
+            <div :key="c" :class="c" style="width:200px;height:200px;border-radius:50%;background:transparent;">
+                <v-img class="sineMovement glow-warning rounded-circle" :src="require('@/assets/Bee-r.png')"></v-img>
             </div>
         </template>
     </v-main>
@@ -273,6 +273,5 @@ export default {
         background: linear-gradient(90deg, var(--theme-5) 0%, var(--theme-2) 100%);
     }
 }
-
 
 </style>

@@ -37,6 +37,30 @@ export default { // eslint-disable-next-line no-unused-vars
         },
         getToken: state => {
             return state.data.token
+        },
+        getQuestions: (state) => {
+            var sub = JSON.parse(JSON.stringify(state.data.submission))
+            var que = JSON.parse(JSON.stringify(state.data.questions))
+            sub.forEach(el => {
+                el.userPassed = true
+                if (el.result)
+                    for (let i = 0; i < el.result.length; i++) {
+                        if (el.result.charAt(i) != 'P') {
+                            el.userPassed = false
+                            break
+                        }
+                    }
+                else {
+                    el.userPassed = false
+                }
+                que.forEach(e => {
+                    if (e.id == el.questionId) {
+                        e.userPassed = el.userPassed
+                    }
+                })
+            })
+            console.log(que)
+            return que
         }
     },
 
@@ -77,6 +101,9 @@ export default { // eslint-disable-next-line no-unused-vars
             var tok = state.data.token
             axios.get(rootState.api + "/api/v1/questions").then(res => {
                 var allQuestion = res.data.data
+                for (var i = 0; i < allQuestion.length; i++) {
+                    allQuestion[i].i_d = i + 1;
+                }
                 commit('setQuestions', allQuestion)
             }).catch(err => {
                 console.log(err)

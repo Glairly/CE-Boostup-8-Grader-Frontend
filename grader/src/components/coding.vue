@@ -3,7 +3,7 @@
     <v-navigation-drawer ref="drawer" no-gutters clipped app :mini-variant.sync="rightNav.show" width="50%" dark class="elevation-5" :style="Zindex" permanent>
         <v-row class="ma-0 pa-0" style="height:100%">
             <v-col v-show="!rightNav.show" class="ma-0 pa-0">
-                <v-tabs style="height:100%" grow color="#42b983" v-model="rightNav.tab_select" slider-color="#42b983" class="elevation-5">
+                <v-tabs style="height:100%" grow color="#FFEEB0" v-model="rightNav.tab_select" slider-color="#B15D2C" class="elevation-5">
                     <v-tab>
                         <v-icon>mdi-file-pdf</v-icon>
                     </v-tab>
@@ -56,7 +56,7 @@
                                 </v-row>
                                 <v-row align="center">
                                     <v-col cols="4">
-                                        <v-btn block outlined class="mt-1 glow-lightblue" color="info"><strong>Score Per Case</strong></v-btn>
+                                        <v-btn block outlined class="mt-1 glow-warning" color="info"><strong>Score Per Case</strong></v-btn>
                                     </v-col>
                                     <v-col cols="4">
                                         {{task.scorePerCase}}
@@ -64,13 +64,13 @@
                                 </v-row>
                                 <v-row align="center">
                                     <v-col cols="4">
-                                        <v-btn block outlined class="mt-1 glow-lightblue" color="info"><strong>Last Submit</strong></v-btn>
+                                        <v-btn block outlined class="mt-1 glow-warning" color="info"><strong>Last Submit</strong></v-btn>
                                     </v-col>
                                     <v-col cols="3">
                                         {{question.details.list}}
                                     </v-col>
                                     <v-col cols="2">
-                                        <v-btn outlined rounded class="glow-success" :color="question.status == 'Passed' ? 'success': 'error'">{{question.status}}</v-btn>
+                                        <v-btn outlined rounded class="glow-warning" :color="question.status == 'Passed' ? 'success': 'error'">{{question.status}}</v-btn>
 
                                     </v-col>
                                     <v-col cols="2">
@@ -168,7 +168,6 @@ export default {
         }).catch(err => {
             this.rightNav.seeCode = true
             console.log(err)
-            console.log(" asdasd : ", this.rightNav.seeCode)
         })
     },
     methods: {

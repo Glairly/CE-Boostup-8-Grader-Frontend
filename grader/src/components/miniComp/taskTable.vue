@@ -1,6 +1,6 @@
 <template>
 <VueGlow :color="color" mode="hex" style="width:100%" elevation="15" intense>
-    <v-card style="">
+    <v-card class="">
         <v-data-iterator :items="filtered" :custom-filter="customFilter" :items-per-page.sync="itemsPerPage" :page="page" :search="search" :sort-by="sortBy.toLowerCase()" :sort-desc="sortDesc" hide-default-footer>
             <!-- search bar etc. -->
             <template v-slot:header>
@@ -93,7 +93,7 @@
                 <v-row class="pa-5">
                     <v-col v-for="(item,index) in props.items" :key="index" cols="12" sm="6" md="4" lg="3">
                         <v-hover v-slot:default="{ hover }" close-delay="50">
-                            <v-card :class="animation" v-ripple style="border-radius:20px;" :elevation="hover ? 16 : 2" @click.end="toCoding(item)">
+                            <v-card :color="item.userPassed ? 'green lighten-5': 'white'" :class="animation" v-ripple style="border-radius:20px;" :elevation="hover ? 16 : 2" @click.end="toCoding(item)">
                                 <v-row align="center" justify="center" class="ma-0 pa-0 subheading font-weight-bold">
                                     <v-col cols="3">
                                         {{ item.i_d }}
@@ -164,14 +164,15 @@
 
             <!-- table data list -->
             <template v-else v-slot:default="props">
-                <v-data-table hide-default-footer :items-per-page.sync="itemsPerPage" :page="page" :search="search" @click:row="to($event)" :headers="table.header" :items="props.items">
+                <v-data-table hide-default-footer :items-per-page.sync="itemsPerPage" :page="page" :search="search" @dblclick:row="toCoding($event)" :headers="table.header" :items="props.items">
                     <template v-slot:item.rank="{ item }">
                         <v-rating :half-icon="ratingIcon.half" :full-icon="item.rank/2 >= 5 ? ratingIcon.full : ratingIcon.default" :value="item.rank/2" style="flex: none;" :color="ratingCol(item.rank)" dense half-increments readonly size="20"></v-rating>
                     </template>
 
                     <template v-slot:item.types="{ item }">
+                        <v-icon @click="item.showTag = !item.showTag">mdi-tag-plus-outline</v-icon>
                         <template v-for=" i in tagFilter(item.types)">
-                            <v-chip color="info" class="ma-1" :key="i">
+                            <v-chip  v-if="item.showTag" color="info" class="ma-1" :key="i">
                                 {{ i }}
                             </v-chip>
                         </template>
