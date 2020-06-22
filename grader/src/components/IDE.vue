@@ -126,13 +126,13 @@
 
             <span v-if="compile.withSample">
                 <v-skeleton-loader :loading="compile.skeleton" height="100%" type="table">
-                    <v-tabs show-arrows grow v-model="compile.tabSelect" slider-color="primary">
+                    <v-tabs  show-arrows grow v-model="compile.tabSelect" slider-color="white">
                         <template v-if="compile.withSample">
-                            <v-tab v-for="(i,index) in compile.compile_Status.length" :key="index">
+                            <v-tab :ripple="false" v-for="(i,index) in compile.compile_Status" :key="index">
                                 <v-btn text :ripple="false">
                                     <span v-if="!standAloneCase(i)">
-                                        Case : {{index + 1}}
-                                        <v-icon v-if="compile.compile_Status[index] == 'P'" color="success" right>mdi-check-bold</v-icon>
+                                        Case : {{index + 1}}  
+                                        <v-icon v-if="i == 'P'" color="success" right>mdi-check-bold</v-icon>
                                         <v-icon v-else color="error" right>mdi-close</v-icon>
                                     </span>
                                     <span v-else>
@@ -324,6 +324,7 @@ export default {
             }
             data = JSON.stringify(data)
 
+            console.log(data)
             this.axios.post(this.$store.state.compiler + '/compiler', data, {
                 headers: {
                     'Content-Type': 'application/json'
@@ -370,7 +371,8 @@ export default {
             this.ide.fonts -= this.ide.fonts > 10 ? 1 : 0;
         },
         standAloneCase(item) {
-            var standAlone = ["C", "B", "L", "F"]
+            var standAlone = ["C", "B","b", "L", "F"]
+          
             return standAlone.includes(item)
         }
     },

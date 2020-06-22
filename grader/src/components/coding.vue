@@ -167,8 +167,8 @@ export default {
             by: "Glairy",
             status: "Passed",
             details: {
-                timeLimit: "1sec",
-                memoryLimit: "64mb",
+                timeLimit: "1 second",
+                memoryLimit: "64 Megabyte",
                 list: "PPPPP"
             }
         },

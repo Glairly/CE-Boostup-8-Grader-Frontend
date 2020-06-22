@@ -152,6 +152,9 @@ export default {
             }, {
                 name: "Fix the Bugs",
                 link: "/Home/learn2"
+            },{
+                name: "Information",
+                link: "/Home/learn2"
             }]
 
         }
