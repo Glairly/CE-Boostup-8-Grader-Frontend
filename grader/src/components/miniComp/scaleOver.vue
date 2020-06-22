@@ -18,7 +18,7 @@ export default {
     position: fixed;
     top: -250px;
     right: -250px;
-    z-index: 10;
+    z-index: 15;
     width: 250px;
     height: 250px;
 }

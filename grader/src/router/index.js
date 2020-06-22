@@ -32,21 +32,21 @@ const routes = [{
                             import ('../views/Tasks.vue'),
                     },
                     {
-                        path: 'coding',
-                        name: 'Coding',
-                        component: () =>
-                            import ('../views/Coding.vue'),
-                        props: {
-                            task: Object
-                        }
-                    },
-                    {
                         path: 'submission',
                         name: 'Submission',
                         component: () =>
                             import ('../views/Submission.vue')
                     }
                 ],
+            },
+            {
+                path: 'coding',
+                name: 'Coding',
+                component: () =>
+                    import ('../views/Coding.vue'),
+                props: {
+                    task: Object
+                }
             },
             {
                 path: 'profile',

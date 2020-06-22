@@ -53,7 +53,7 @@
     left: 0px;
     top: 0px;
     --radius: 300px;
-    animation: circleAround 5s normal infinite cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation: circleAround 10s normal infinite cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
 .c-center {
@@ -62,7 +62,7 @@
     left: 50%;
     top: 50%;
     --radius: 800px;
-    animation: circleAround 6s normal infinite;
+    animation: circleAround 10s normal infinite;
 }
 
 .c-bottom-right {
@@ -70,23 +70,23 @@
     left: 100%;
     top: 100%;
     --radius: 300px;
-    animation: circleAround-r 5s cubic-bezier(0.250, 0.460, 0.450, 0.940) infinite;
+    animation: circleAround-r 10s cubic-bezier(0.250, 0.460, 0.450, 0.940) infinite;
 }
 
 .l-center {
     position: fixed;
-    z-index: 5;
+    z-index: 10;
     left: -10%;
     top: 50%;
-    animation: linearAround 5s normal infinite cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation: linearAround 20s normal infinite cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
 .lr-top {
     position: fixed;
-    z-index: 5;
+    z-index: 100;
     left: -10%;
     top: -20%;
-    animation: linearAround-r 5s normal infinite ease-in-out;
+    animation: linearAround-r 10s normal infinite ease-in-out;
 }
 
 .sineMovement {
@@ -136,34 +136,49 @@
 
 @-webkit-keyframes circleAround-r {
     0% {
-        transform: rotate(0deg) translateX(var(--radius));
+        transform: rotate(0deg) scaleY(-1) translateX(var(--radius));
     }
     100% {
-        transform: rotate(-360deg) translateX(var(--radius));
+        transform: rotate(-360deg) scaleY(-1) translateX(var(--radius));
     }
 }
 
 @keyframes circleAround-r {
     0% {
-        transform: rotate(0deg) translateX(var(--radius)) scaleX(-1);
+        transform: rotate(0deg) scaleY(-1) translateX(var(--radius));
     }
     100% {
-        transform: rotate(-360deg) translateX(var(--radius)) scaleX(-1);
+        transform: rotate(-360deg) scaleY(-1) translateX(var(--radius));
     }
 }
 
 @keyframes linearAround {
-    to {
-        transform: translateX(1000%);
+    49% {
+        transform: translateX(990%) scaleX(1);
+    }
+    50% {
+        transform: translateX(1000%) scaleX(-1);
+    }
+    99% {
+        transform: translateX(10%) scaleX(-1);
+    }
+    100% {
+        transform: translateX(0%) scaleX(1);
     }
 }
 
 @keyframes linearAround-r {
-    from {
+    0% {
         transform: translateX(1000%) scaleX(-1);
     }
-    to {
-        transform: translateX(0%) scaleX(-1);
+    49% {
+        transform: translateX(10%) scaleX(-1);
+    }
+    50% {
+        transform: translateX(0%) scaleX(1);
+    }
+    100% {
+        transform: translateX(1000%) scaleX(1);
     }
 }
 

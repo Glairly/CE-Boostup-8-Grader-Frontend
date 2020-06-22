@@ -4,11 +4,25 @@
     <v-main style="height:100%">
         <router-view />
     </v-main>
-    <!-- <v-footer app color="#42b983" class="white--text">
-        <span>CE-BoostUp Camp | 8</span>
-        <v-spacer></v-spacer>
-        <span>&copy; 2020</span>
-    </v-footer> -->
+    <v-footer dark padless>
+        <v-card flat tile class="indigo lighten-1 white--text text-center">
+            <v-card-text>
+                <v-btn v-for="icon in icons" :key="icon" class="mx-4 white--text" icon>
+                    <v-icon size="24px">{{ icon }}</v-icon>
+                </v-btn>
+            </v-card-text>
+
+            <v-card-text class="white--text pt-0">
+                Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim a sit amet dui. Duis commodo vitae velit et faucibus. Morbi vehicula lacinia malesuada. Nulla placerat augue vel ipsum ultrices, cursus iaculis dui sollicitudin. Vestibulum eu ipsum vel diam elementum tempor vel ut orci. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+            </v-card-text>
+
+            <v-divider></v-divider>
+
+            <v-card-text class="white--text">
+                {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
+            </v-card-text>
+        </v-card>
+    </v-footer>
 </v-app>
 </template>
 
@@ -20,6 +34,7 @@
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
+    // cursor:  url(http://ani.cursors-4u.net/cursors/cur-13/cur1157.ani), url(http://ani.cursors-4u.net/cursors/cur-13/cur1157.png), auto !important;
     // background: rgb(250, 250, 250);
 }
 
@@ -45,21 +60,26 @@
 export default {
     data() {
         return {
-
+            icons: [
+                'mdi-facebook',
+                'mdi-twitter',
+                'mdi-linkedin',
+                'mdi-instagram',
+            ],
         };
     },
     created() {
         this.$store.commit('setApiPath', process.env.NODE_ENV == 'development')
-        let data = {
-            "input": "1 2$.$2 3",
-            "sourceCode": "\r\n#include <iostream>\r\n int main(){int arr[10] = {0};    int a, b, i;scanf(\"%d%d\", &a, &b);printf(\"%d\", a + b);return 0;}",
-            "output": "3$.$4"
-        }
-        this.axios.post(this.$store.state.compiler + '/compiler', data).then(res => {
-            console.log(res)
-        }).catch(err => {
-            console.log(err)
-        })
+        // let data = {
+        //     "input": "1 2$.$2 3",
+        //     "sourceCode": "\r\n#include <iostream>\r\n int main(){int arr[10] = {0};    int a, b, i;scanf(\"%d%d\", &a, &b);printf(\"%d\", a + b);return 0;}",
+        //     "output": "3$.$4"
+        // }
+        // this.axios.post(this.$store.state.compiler + '/compiler', data).then(res => {
+        //     console.log(res)
+        // }).catch(err => {
+        //     console.log(err)
+        // })
     },
 };
 </script>

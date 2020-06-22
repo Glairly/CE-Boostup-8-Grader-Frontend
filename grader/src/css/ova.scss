@@ -23,12 +23,12 @@
      @each $n,
      $s in $size {
          .bordered-left-#{$n}-#{$c} {
-             border-left: $s solid $col;
+             border-left: $s solid $col !important;
          }
      }
  }
  
- $color: ("white": rgb(255, 255, 255), "lightblue": rgb(33, 150, 243), "success":rgb(78, 175, 80), "indigo":rgb(75, 0, 13), "warning":#fb8c00);
+ $color: ("white": rgb(255, 255, 255), "lightblue": rgb(33, 150, 243), "success":rgb(78, 175, 80), "indigo":rgb(75, 0, 13), "warning":#fb8c00, "error":#ff5252, "black":#000000);
  @each $c,
  $col in $color {
      .glow-#{$c} {

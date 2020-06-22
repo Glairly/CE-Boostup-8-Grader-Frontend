@@ -31,7 +31,7 @@ module.exports = {
                 },
             },
             "/compiler": {
-                target: "http://localhost:4096/compiler",
+                target: "http://localhost:4906/compiler",
                 changeOrigin: true,
                 secure: false,
                 pathRewrite: {

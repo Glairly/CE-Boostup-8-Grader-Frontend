@@ -1,6 +1,10 @@
 <template>
 <div class="mx-12 pt-10 d-flex" style="background:transparent;height:100%">
-    <taskTable type="question" animation="swing-in-top-bck" :tasks="tasks" title="All Questions" color="#8c8f11"></taskTable>
+
+    <v-overlay :value="!tasks || !tasks.length">
+      <v-progress-circular indeterminate color="white" size="64"></v-progress-circular>
+    </v-overlay>
+    <taskTable type="question" animation="swing-in-top-bck" :tasks="tasks" title="All Questions" color="#fb8c00"></taskTable>
 </div>
 </template>
 
@@ -23,10 +27,12 @@ export default {
         //         this.tasks[i].i_d = i + 1;
         //     }
         // })
-        this.tasks = this.$store.getters['user/getQuestions'];
         setInterval(() => {
             this.tasks = this.$store.getters['user/getQuestions'];
-        }, 5000)
-    }
+        }, 1000)
+    },
+    mounted() {
+       this.tasks = this.$store.getters['user/getQuestions'];
+    },
 }
 </script>

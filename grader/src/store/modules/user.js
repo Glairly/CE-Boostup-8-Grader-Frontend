@@ -39,28 +39,40 @@ export default { // eslint-disable-next-line no-unused-vars
             return state.data.token
         },
         getQuestions: (state) => {
-            var sub = JSON.parse(JSON.stringify(state.data.submission))
-            var que = JSON.parse(JSON.stringify(state.data.questions))
-            sub.forEach(el => {
-                el.userPassed = true
-                if (el.result)
-                    for (let i = 0; i < el.result.length; i++) {
-                        if (el.result.charAt(i) != 'P') {
-                            el.userPassed = false
-                            break
-                        }
+            //   var sub = JSON.parse(JSON.stringify(state.data.submission))
+            // var que = JSON.parse(JSON.stringify(state.data.questions))
+            // sub.forEach(el => {
+            //     el.userPassed = true
+            //     if (el.result)
+            //         for (let i = 0; i < el.result.length; i++) {
+            //             if (el.result.charAt(i) != 'P') {
+            //                 el.userPassed = false
+            //                 break
+            //             }
+            //         }
+            //     else {
+            //         el.userPassed = false
+            //     }
+            //     que.forEach(e => {
+            //         if (e.id == el.questionId) {
+            //             e.userPassed = el.userPassed
+            //         }
+            //     })
+            // })
+            // return que
+            return state.data.questions
+        },
+        getLastSubmission: (state) => (id) => {
+            var data = state.data
+            if (data.submission) {
+                for (let i = data.submission.length - 1; i > -1; --i) {
+                    if (data.submission[i].questionId == id) {
+                        return data.submission[i]
                     }
-                else {
-                    el.userPassed = false
                 }
-                que.forEach(e => {
-                    if (e.id == el.questionId) {
-                        e.userPassed = el.userPassed
-                    }
-                })
-            })
-            console.log(que)
-            return que
+                return []
+            } else return []
+
         }
     },
 

@@ -30,11 +30,12 @@
                                 <!-- login form -->
                                 <v-col class="ma-0 px-3" cols="6" style="max-width:100%">
                                     <v-form class="pa-5" ref="form" v-model="valid">
-                                        <v-text-field color="warning" outlined rounded label="Username" :rules="nameRules" counter name="login" prepend-inner-icon="person" type="text" v-model="userFill" required></v-text-field>
-                                        <v-text-field color="warning" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" outlined rounded id="password" :rules="nameRules" counter label="Password" name="password" prepend-inner-icon="lock" :type=" !show1 ? 'text' : 'password'" v-model="passFill" @click:append="show1 = !show1" required></v-text-field>
+                                        <v-text-field color="warning" outlined rounded label="Username" :rules="nameRules" counter name="login" prepend-inner-icon="person" type="text" v-model="userFill" required v-on:keyup.enter="login()"></v-text-field>
+                                        <v-text-field color="warning" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" outlined rounded id="password" :rules="nameRules" counter label="Password" name="password" prepend-inner-icon="lock" :type=" !show1 ? 'text' : 'password'" v-model="passFill" @click:append="show1 = !show1" required v-on:keyup.enter="login()"></v-text-field>
 
                                         <v-btn rounded class="ma-2 pa-6 glow-warning" :class="scaleIn" v-show="loginValid && this.loginErrorMessage == 'No data or User is not existed.'" @click.end="register()" color="warning" style="text-decoration-line:none;color:white">Register With This User ?</v-btn>
                                         <v-btn rounded class="ma-2 pa-6 glow-warning " :loading="wait" @click.end="login()" :disabled="!valid" color="warning" style="text-decoration-line:none;color:white">Login</v-btn>
+
                                     </v-form>
                                 </v-col>
                             </v-row>
@@ -87,7 +88,7 @@
         </v-container>
         <template v-for="c in circleAround">
             <div :key="c" :class="c" style="width:150px;height:200px;border-radius:50%;">
-                <v-img class="sineMovement glow-warning rounded-circle" :src="require('@/assets/Bee_d.png')"></v-img>
+                <v-img class=" glow-warning rounded-circle" :src="require('@/assets/Bee_d.png')"></v-img>
             </div>
         </template>
         <template v-for="c in linearBee">
@@ -167,12 +168,8 @@ export default {
                 })
                 .then(response => {
                     console.log(response)
-                    var tok = response.data.data.token
-                    this.axios.get('https://aws.random.cat/meow').then(res => {
-                        this.loginSuccess(response.data.data, res, tok)
-                    }).catch(err => {
-                        console.log(err)
-                    })
+                    this.waitRegis = false
+                    this.login()
                 }).catch(err => {
                     console.log(err)
                     this.loginValid = true
@@ -182,6 +179,7 @@ export default {
         },
         login() {
             this.wait = true
+            this.waitRegis = false
             this.loginValid = false;
 
             // Call login API 
@@ -246,6 +244,7 @@ export default {
     },
     mounted() {
         this.cardShow = true;
+
     },
     created() {
 

@@ -89,14 +89,14 @@
 
     <router-view>
     </router-view>
-    <span v-if="$route.name != 'Coding'">
+    <!-- <span v-if="$route.name != 'Coding'">
         <div class="l-center" style="width:200px;height:200px;border-radius:50%;background:transparent;">
             <v-img class="sineMovement" :src="require('@/assets/Bee-r.png')"></v-img>
         </div>
         <div class="lr-top" style="width:200px;height:200px;border-radius:50%;background:transparent;">
             <v-img class="sineMovement" :src="require('@/assets/Bee-r.png')"></v-img>
         </div>
-    </span>
+    </span> -->
 </v-sheet>
 </template>
 
@@ -150,7 +150,7 @@ export default {
                 name: "Learn",
                 link: "/Home/learn"
             }, {
-                name: "Information",
+                name: "Fix the Bugs",
                 link: "/Home/learn2"
             }]
 

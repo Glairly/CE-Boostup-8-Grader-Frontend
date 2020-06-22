@@ -4,7 +4,7 @@
         <v-data-iterator :items="filtered" :custom-filter="customFilter" :items-per-page.sync="itemsPerPage" :page="page" :search="search" :sort-by="sortBy.toLowerCase()" :sort-desc="sortDesc" hide-default-footer>
             <!-- search bar etc. -->
             <template v-slot:header>
-                <v-toolbar  class="mb-2 rounded-b-xl rounded-t-m" :color="color" rounded flat>
+                <v-toolbar class="mb-2 rounded-b-xl rounded-t-m" :color="color" rounded flat>
                     <!-- title -->
                     <!-- <v-toolbar-title  class="headline font-weight-black mr-5">{{title}}</v-toolbar-title> -->
                     <!-- change table -->
@@ -93,68 +93,74 @@
                 <v-row class="pa-5">
                     <v-col v-for="(item,index) in props.items" :key="index" cols="12" sm="6" md="4" lg="3">
                         <v-hover v-slot:default="{ hover }" close-delay="50">
-                            <v-card :color="item.userPassed ? 'green lighten-5': 'white'" :class="animation" v-ripple style="border-radius:20px;" :elevation="hover ? 16 : 2" @click.end="toCoding(item)">
-                                <v-row align="center" justify="center" class="ma-0 pa-0 subheading font-weight-bold">
-                                    <v-col cols="3">
-                                        {{ item.i_d }}
-                                    </v-col>
-                                    <v-divider vertical></v-divider>
-                                    <v-col> {{ item.title }} </v-col>
-                                </v-row>
 
-                                <v-divider :color="item.status_col"></v-divider>
-                                <v-row class="ma-0 pa-0" align="center" justify="center">
-                                    <v-col cols="3">
-                                        Rank
-                                    </v-col>
-                                    <v-divider vertical> </v-divider>
-                                    <v-col>
-                                        <v-rating :full-icon="item.rank/2 >= 5 ? ratingIcon.full : ratingIcon.default" :half-icon="ratingIcon.half" :value="item.rank/2" style="flex: none;" :color="ratingCol(item.rank)" dense half-increments readonly size="20"></v-rating>
-                                    </v-col>
-                                </v-row>
+                            <v-card :color="item.userPassed ? 'green lighten-5': 'light'" light :class="animation" v-ripple style="border-radius:20px;" :elevation="hover ? 16 : 2" @click.end="toCoding(item)">
+                                    <v-fade-transition>
+                                        <v-overlay v-if="hover" absolute color="grey lighten-5">
+                                            <v-btn>Go to Coding</v-btn>
+                                        </v-overlay>
+                                    </v-fade-transition>
+                                    <v-row align="center" justify="center" class="ma-0 pa-0 subheading font-weight-bold">
+                                        <v-col cols="3">
+                                            {{ item.i_d }}
+                                        </v-col>
+                                        <v-divider vertical></v-divider>
+                                        <v-col> {{ item.title }} </v-col>
+                                    </v-row>
 
-                                <v-row v-if="item.finished || item.finished == 0" class="ma-0 pa-0" align="center" justify="center">
-                                    <v-col cols="3">
-                                        Passed
-                                    </v-col>
-                                    <v-divider vertical> </v-divider>
-                                    <v-col>
-                                        {{ item.finished  }}
-                                    </v-col>
-                                </v-row>
-                                <!-- <v-list dense>
+                                    <v-divider :color="item.status_col"></v-divider>
+                                    <v-row class="ma-0 pa-0" align="center" justify="center">
+                                        <v-col cols="3">
+                                            Rank
+                                        </v-col>
+                                        <v-divider vertical> </v-divider>
+                                        <v-col>
+                                            <v-rating :full-icon="item.rank/2 >= 5 ? ratingIcon.full : ratingIcon.default" :half-icon="ratingIcon.half" :value="item.rank/2" style="flex: none;" :color="ratingCol(item.rank)" dense half-increments readonly size="20"></v-rating>
+                                        </v-col>
+                                    </v-row>
+
+                                    <v-row v-if="item.finished || item.finished == 0" class="ma-0 pa-0" align="center" justify="center">
+                                        <v-col cols="3">
+                                            Passed
+                                        </v-col>
+                                        <v-divider vertical> </v-divider>
+                                        <v-col>
+                                            {{ item.finished  }}
+                                        </v-col>
+                                    </v-row>
+                                    <!-- <v-list dense>
                                     <v-list-item>
                                         <v-list-item-content>Author</v-list-item-content>
                                         <v-list-item-content class="align-end">{{ item.by }}</v-list-item-content>
                                     </v-list-item>
                                 </v-list> -->
-                                <v-divider :color="item.status_col"></v-divider>
+                                    <v-divider :color="item.status_col"></v-divider>
 
-                                <v-row class="ma-0 pa-0" align="center" justify="center" v-if="item.result">
-                                    <v-col cols="3">Result</v-col>
-                                    <!-- <v-list-item-content class="align-end" :style="{color:item.status_col}">{{ item.list }}</v-list-item-content> -->
-                                    <v-divider vertical> </v-divider>
+                                    <v-row class="ma-0 pa-0" align="center" justify="center" v-if="item.result">
+                                        <v-col cols="3">Result</v-col>
+                                        <!-- <v-list-item-content class="align-end" :style="{color:item.status_col}">{{ item.list }}</v-list-item-content> -->
+                                        <v-divider vertical> </v-divider>
 
-                                    <v-col>{{ item.result }}</v-col>
+                                        <v-col>{{ item.result }}</v-col>
 
-                                </v-row>
+                                    </v-row>
 
-                                <v-row class="ma-0 pa-0" v-if="item.types" align="center" justify="center">
-                                    <v-col cols="3">
-                                        Tags
-                                    </v-col>
-                                    <v-divider vertical> </v-divider>
-                                    <v-col class="ma-0 pa-1">
-                                        <v-row class="mx-5 pa-0" justify="start">
-                                            <template v-for=" i in tagFilter(item.types)">
-                                                <v-chip color="info" class="ma-1" :key="i">
-                                                    {{ i }}
-                                                </v-chip>
-                                            </template>
-                                        </v-row>
-                                    </v-col>
-                                </v-row>
-                                <!-- {{item.types}} -->
+                                    <v-row class="ma-0 pa-0" v-if="item.types" align="center" justify="center">
+                                        <v-col cols="3">
+                                            Tags
+                                        </v-col>
+                                        <v-divider vertical> </v-divider>
+                                        <v-col class="ma-0 pa-1">
+                                            <v-row class="mx-5 pa-0" justify="start">
+                                                <template v-for=" i in tagFilter(item.types)">
+                                                    <v-chip outlined class="pa-1 mx-1" :key="i">
+                                                        {{ i }}
+                                                    </v-chip>
+                                                </template>
+                                            </v-row>
+                                        </v-col>
+                                    </v-row>
+                                    <!-- {{item.types}} -->
 
                             </v-card>
                         </v-hover>
@@ -172,7 +178,7 @@
                     <template v-slot:item.types="{ item }">
                         <v-icon @click="item.showTag = !item.showTag">mdi-tag-plus-outline</v-icon>
                         <template v-for=" i in tagFilter(item.types)">
-                            <v-chip  v-if="item.showTag" color="info" class="ma-1" :key="i">
+                            <v-chip v-if="item.showTag" color="info" class="ma-1" :key="i">
                                 {{ i }}
                             </v-chip>
                         </template>

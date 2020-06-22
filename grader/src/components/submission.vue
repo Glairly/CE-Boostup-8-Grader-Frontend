@@ -1,6 +1,9 @@
 <template>
 <div class="mx-12 pt-10 d-flex" style="background:transparent;height:100%">
-    <taskTable type="submission" animation="slide-in-elliptic-top-fwd" :tasks="tasks" title="All Submission" color="#5C6BC0"></taskTable>
+    <v-overlay :value="!tasks || !tasks.length">
+        <v-progress-circular indeterminate color="white" size="64"></v-progress-circular>
+    </v-overlay>
+    <taskTable type="submission" animation="slide-in-elliptic-top-fwd" :tasks="tasks" title="All Submission" color="#B15D2C"></taskTable>
 </div>
 </template>
 
@@ -24,11 +27,13 @@ export default {
         }
     },
     created() {
-        this.tasks = this.$store.getters['user/getSubmission'];
         setInterval(() => {
             this.tasks = this.$store.getters['user/getSubmission'];
-        }, 5000)
-    }
+        }, 1000)
+    },
+    mounted() {
+        this.tasks = this.$store.getters['user/getSubmission'];
+    },
 }
 </script>
 
