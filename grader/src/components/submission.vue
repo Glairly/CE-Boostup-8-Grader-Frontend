@@ -9,6 +9,7 @@
 
 <script>
 import taskTable from './miniComp/taskTable'
+import {mapGetters} from 'vuex'
 
 export default {
     components: {
@@ -16,7 +17,7 @@ export default {
     },
     data() {
         return {
-            tasks: [],
+             
             sortBy: 'rank',
             page: 1,
             sortDesc: false,
@@ -26,13 +27,15 @@ export default {
             rank_range: [0, 10]
         }
     },
+    computed: {
+        ...mapGetters({
+            tasks : 'user/getSubmission'
+        })
+    },
     created() {
-        setInterval(() => {
-            this.tasks = this.$store.getters['user/getSubmission'];
-        }, 1000)
     },
     mounted() {
-        this.tasks = this.$store.getters['user/getSubmission'];
+
     },
 }
 </script>

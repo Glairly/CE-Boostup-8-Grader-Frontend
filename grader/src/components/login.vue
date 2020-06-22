@@ -30,8 +30,8 @@
                                 <!-- login form -->
                                 <v-col class="ma-0 px-3" cols="6" style="max-width:100%">
                                     <v-form class="pa-5" ref="form" v-model="valid">
-                                        <v-text-field color="warning" outlined rounded label="Username" :rules="nameRules" counter name="login" prepend-inner-icon="person" type="text" v-model="userFill" required v-on:keyup.enter="login()"></v-text-field>
-                                        <v-text-field color="warning" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" outlined rounded id="password" :rules="nameRules" counter label="Password" name="password" prepend-inner-icon="lock" :type=" !show1 ? 'text' : 'password'" v-model="passFill" @click:append="show1 = !show1" required v-on:keyup.enter="login()"></v-text-field>
+                                        <v-text-field color="warning" outlined rounded label="Username" :rules="nameRules" counter name="login" prepend-inner-icon="person" type="text" v-model="userFill" required  ></v-text-field>
+                                        <v-text-field color="warning" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" outlined rounded id="password" :rules="nameRules" counter label="Password" name="password" prepend-inner-icon="lock" :type=" !show1 ? 'text' : 'password'" v-model="passFill" @click:append="show1 = !show1" required  ></v-text-field>
 
                                         <v-btn rounded class="ma-2 pa-6 glow-warning" :class="scaleIn" v-show="loginValid && this.loginErrorMessage == 'No data or User is not existed.'" @click.end="register()" color="warning" style="text-decoration-line:none;color:white">Register With This User ?</v-btn>
                                         <v-btn rounded class="ma-2 pa-6 glow-warning " :loading="wait" @click.end="login()" :disabled="!valid" color="warning" style="text-decoration-line:none;color:white">Login</v-btn>

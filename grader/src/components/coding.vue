@@ -25,7 +25,7 @@
                                     <strong> {{task.i_d}} | {{task.title}}</strong>
                                     <v-col cols="1"></v-col>
                                     <v-col>
-                                        <v-row justify="space-around">
+                                        <v-row justify="start">
                                             <div>
                                                 <v-tooltip bottom>
                                                     <template v-slot:activator="{on}">
@@ -84,12 +84,8 @@
                                             </v-col>
 
                                             <v-col align="center">
-                                                <v-btn :disabled="rightNav.seeCode" outlined class="mt-1 glow-indigo" color="indigo" @click="rightNav.codePopup = !rightNav.codePopup"><strong>See Code</strong></v-btn>
+                                                <v-btn :disabled="rightNav.seeCode" outlined class="mt-1 glow-indigo" color="indigo" @click="codePopup(rightNav.other.data.code)"><strong>See Code</strong></v-btn>
                                                 <!-- show last submit code -->
-                                                <v-dialog v-model="rightNav.codePopup" persistent>
-                                                    <v-btn color="error" tile @click="rightNav.codePopup = !rightNav.codePopup"><strong>Close</strong></v-btn>
-                                                    <IDE :code="rightNav.lastCode" :footer="false" title="Lastest Code" class="pa-5"></IDE>
-                                                </v-dialog>
                                             </v-col>
                                         </v-row>
                                     </template>
@@ -104,15 +100,15 @@
                                             </v-col>
 
                                             <v-col cols="6" align="center">
-                                                
+
                                                 {{userLastest(task.id).result ? userLastest(task.id).result : 'No Submission Result'}}
                                             </v-col>
                                             <v-col align="end">
-                                                <v-btn :disabled="rightNav.seeCode" outlined class="mt-1 glow-indigo" color="indigo" @click="rightNav.codePopup = !rightNav.codePopup"><strong>See Code</strong></v-btn>
+                                                <v-btn :disabled="!rightNav.user.data.code" outlined class="mt-1 glow-indigo" color="indigo" @click="codePopup(rightNav.user.data.code)"><strong>See Code</strong></v-btn>
                                                 <!-- show last submit code -->
                                                 <v-dialog v-model="rightNav.codePopup" persistent>
                                                     <v-btn color="error" tile @click="rightNav.codePopup = !rightNav.codePopup"><strong>Close</strong></v-btn>
-                                                    <IDE :code="rightNav.user.data.code" :footer="false" title="Lastest Code" class="pa-5"></IDE>
+                                                    <IDE :code="rightNav.code" :footer="false" title="Lastest Code" class="pa-5"></IDE>
                                                 </v-dialog>
                                             </v-col>
 
@@ -167,8 +163,8 @@ export default {
             by: "Glairy",
             status: "Passed",
             details: {
-                timeLimit: "1 second",
-                memoryLimit: "64 Megabyte",
+                timeLimit: "1 sec",
+                memoryLimit: "64 Mb",
                 list: "PPPPP"
             }
         },
@@ -178,6 +174,7 @@ export default {
             tab_select: 0,
             codePopup: false,
             codePopupUser: false,
+            code:"",
             other: {
                 seeCode: false,
                 data: {}
@@ -203,37 +200,48 @@ export default {
         // get last passed submit
     },
     mounted() {
-        this.task = this.$cookies.get('task')
-        var body = {
-            token: this.$store.getters['user/getToken'],
-            questionId: this.task.id
-        }
-        let config = {
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-            }
-        }
-        this.axios.post(this.$store.state.api + "/api/v1/get_finish_code", body, config).then(res => {
-            var arr = res.data.data
-            if (arr.length) {
-                this.rightNav.other.seeCode = false
-                this.rightNav.other.data = arr[arr.length - 1]
-            }
-        }).catch(err => {
-            this.rightNav.seeCode = true
-            console.log(err)
-        })
-        this.axios.post(this.$store.state.api + "/api/v1/submission_code", body, config).then(res => {
-            var arr = res.data.data
-            if (arr.length) {
-                this.rightNav.user.data = arr[0]
-            }
-        }).catch(err => {
-            this.rightNav.seeCode = true
-            console.log(err)
-        })
+        this.update()
+
     },
     methods: {
+        codePopup(code){
+            this.rightNav.code = code;
+            if(this.rightNav.code )
+            this.rightNav.codePopup = true
+        },
+        update() {
+            this.task = this.$cookies.get('task')
+            var body = {
+                token: this.$store.getters['user/getToken'],
+                questionId: this.task.id
+            }
+            let config = {
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                }
+            }
+            // other
+            this.axios.post(this.$store.state.api + "/api/v1/get_finish_code", body, config).then(res => {
+                var arr = res.data.data
+                if (arr.length) {
+                    this.rightNav.other.seeCode = false
+                    this.rightNav.other.data = arr[arr.length - 1]
+                }
+            }).catch(err => {
+                this.rightNav.seeCode = true
+                console.log(err)
+            })
+            // user
+            this.axios.post(this.$store.state.api + "/api/v1/submission_code", body, config).then(res => {
+                var arr = res.data.data
+                if (arr.length) {
+                    this.rightNav.user.data = arr[0]
+                }
+            }).catch(err => {
+                this.rightNav.seeCode = true
+                console.log(err)
+            })
+        },
         setBorderWidth() {
             let i = this.$refs.drawer.$el.querySelector(
                 ".expandable"
@@ -320,7 +328,6 @@ export default {
 .v-navigation-drawer__content {
     overflow-y: hidden !important;
 }
-
 
 .v-window-item {
     height: 100% !important;
