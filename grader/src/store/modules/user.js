@@ -73,6 +73,11 @@ export default { // eslint-disable-next-line no-unused-vars
                 return []
             } else return []
 
+        },
+        getSessionCode: (state) => (id) => {
+            if (state[id])
+                return state[id].code
+            else return ""
         }
     },
 
@@ -104,6 +109,13 @@ export default { // eslint-disable-next-line no-unused-vars
                 submission: [],
                 questions: []
             }
+        },
+        addSessionCode(state, data) {
+            var body = {}
+            body[data.id] = true
+            body['code'] = data.code
+            console.log(body)
+                //      state.data.codeSession.push(data)
         }
 
     },

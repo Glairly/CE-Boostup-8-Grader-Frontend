@@ -39,7 +39,7 @@
         <v-divider class="mx-3"></v-divider>
         <v-menu color="white" offset-y transition="slide-x-transition">
             <template v-slot:activator="{ on }">
-                <v-chip v-on="on" style="border-radius:50px !important;width:auto;" class="pl-5 pr-10 py-5 elevation-3" pill dark @click="{}">
+                <v-chip v-on="on" class="pl-5 pr-12 py-5 elevation-3" pill dark @click="{}">
                     <v-badge bordered bottom color="green accent-4" dot offset-x="15" offset-y="10">
                         <v-avatar v-on="on" left>
                             <v-img :src="user.detail.avatar"></v-img>
@@ -60,7 +60,7 @@
                         </v-list-item-content>
                         <v-list-item-action>
                             <v-btn icon @click="menu = false">
-                                <v-icon>mdi-close-circle</v-icon>
+                                <v-icon>mdi-close</v-icon>
                             </v-btn>
                         </v-list-item-action>
                     </v-list-item>
@@ -152,9 +152,9 @@ export default {
             }, {
                 name: "Fix the Bugs",
                 link: "/Home/learn2"
-            },{
+            }, {
                 name: "Information",
-                link: "/Home/learn2"
+                link: "/Home/information"
             }]
 
         }
@@ -174,7 +174,7 @@ export default {
     // font-family: 'kuay pleum';
     font-weight: bold;
     //  color: #690000;
-    color: brown;
+    color: #805A46;
 }
 
 #nav {

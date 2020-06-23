@@ -84,15 +84,24 @@
                     <v-icon left>mdi-console</v-icon> Open Console
                 </v-btn>
                 <!-- Submit code -->
-                <v-btn color="success" @click.end="Submit()" raised>
+                <v-btn :loading="submitWait" color="success" @click.end="Submit()" raised>
                     <v-icon left>mdi-cloud-upload</v-icon> Submit
                 </v-btn>
                 <!-- submit warning -->
                 <v-snackbar v-model="snackbar">
-                    {{ text }}
-                    <v-btn color="pink" text @click="snackbar = false">
-                        Close
-                    </v-btn>
+                    <v-row style="width:100%" class="ma-0 pa-0">
+                        <v-col v-if="submitWait" class="ma-0 pa-0">
+                            <v-progress-circular :value="20" indeterminate></v-progress-circular>
+                        </v-col>
+                        <span style="width:100%" v-else>
+                            {{ text }}
+                        </span>
+                    </v-row>
+                    <template v-slot:action="{ attrs }">
+                        <v-btn v-if="!submitWait" color="pink" text v-bind="attrs" @click="snackbar = false">
+                            Close
+                        </v-btn>
+                    </template>
                 </v-snackbar>
 
             </v-row>
@@ -126,12 +135,12 @@
 
             <span v-if="compile.withSample">
                 <v-skeleton-loader :loading="compile.skeleton" height="100%" type="table">
-                    <v-tabs  show-arrows grow v-model="compile.tabSelect" slider-color="white">
+                    <v-tabs show-arrows grow v-model="compile.tabSelect" slider-color="white">
                         <template v-if="compile.withSample">
                             <v-tab :ripple="false" v-for="(i,index) in compile.compile_Status" :key="index">
                                 <v-btn text :ripple="false">
                                     <span v-if="!standAloneCase(i)">
-                                        Case : {{index + 1}}  
+                                        Case : {{index + 1}}
                                         <v-icon v-if="i == 'P'" color="success" right>mdi-check-bold</v-icon>
                                         <v-icon v-else color="error" right>mdi-close</v-icon>
                                     </span>
@@ -204,6 +213,7 @@ export default {
             },
             //  snackbar //
             snackbar: false,
+            submitWait: false,
             text: 'Submit Success',
             ///////////////
             // read file //
@@ -243,6 +253,13 @@ export default {
         },
     },
     methods: {
+        saveSession() {
+            var data = {
+                id: this.task.id,
+                code: this.ide.code
+            }
+            this.$store.commit('user/addSessionCode', data);
+        },
         codeUpload(e) {
             // define what is needed
             const errorCase = ["Invalid file type.", "Could not read file.", "Could not reach file !?", "Unknown Error"]
@@ -324,7 +341,6 @@ export default {
             }
             data = JSON.stringify(data)
 
-            console.log(data)
             this.axios.post(this.$store.state.compiler + '/compiler', data, {
                 headers: {
                     'Content-Type': 'application/json'
@@ -348,6 +364,8 @@ export default {
 
         },
         Submit() {
+            this.snackbar = true
+            this.submitWait = true
             let data = {
                 token: this.$store.getters['user/getToken'],
                 code: this.ide.code,
@@ -358,9 +376,12 @@ export default {
                     'Content-Type': 'application/json'
                 }
             }).then(res => {
-                this.snackbar = true
+                this.text = "Submiting was Done Successfully"
+                this.submitWait = false
                 console.log(res)
             }).catch(err => {
+                this.submitWait = false
+                this.text = "Submiting Come in Failure"
                 console.log(err)
             })
         },
@@ -371,8 +392,8 @@ export default {
             this.ide.fonts -= this.ide.fonts > 10 ? 1 : 0;
         },
         standAloneCase(item) {
-            var standAlone = ["C", "B","b", "L", "F"]
-          
+            var standAlone = ["C", "B", "b", "L", "F"]
+
             return standAlone.includes(item)
         }
     },
@@ -383,8 +404,13 @@ export default {
         if (!this.title) {
             this.ide.title = "Write Your Code Below.."
         }
+        window.onbeforeunload = () => {
+            this.saveSession()
+            console.log(this.$store.getters['user/getSessionCode'](''))
+        }
+        console.log(this.$store.getters['user/getSessionCode'](''))
     },
-    created() {},
+
 }
 </script>
 

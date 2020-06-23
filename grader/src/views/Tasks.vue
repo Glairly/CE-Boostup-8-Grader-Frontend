@@ -4,7 +4,7 @@
     <v-overlay :value="!tasks || !tasks.length">
         <v-progress-circular indeterminate color="white" size="64"></v-progress-circular>
     </v-overlay>
-    <taskTable type="question" animation="swing-in-top-bck" :tasks="tasks" title="All Questions" color="#fb8c00"></taskTable>
+    <taskTable type="question" animation="swing-in-top-bck" :tasks="tasks" title="All Questions" color="#fb8c00" ccolor="#ffeeb0"></taskTable>
 </div>
 </template>
 

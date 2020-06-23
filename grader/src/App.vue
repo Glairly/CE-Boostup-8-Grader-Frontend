@@ -27,9 +27,19 @@
 </template>
 
 <style lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap');
+
+* {}
+
+.v-application,.v-application .text-h3,.v-application .headline {
+    font-family: 'Ubuntu', sans-serif !important;
+
+}
+
 #app {
     // font-family: Roboto;
-    font-family: 'Roboto', sans-serif;
+    // font-family: 'Roboto', sans-serif;\
+    font-family: 'Ubuntu', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
@@ -38,10 +48,7 @@
     // background: rgb(250, 250, 250);
 }
 
-@font-face {
-    font-family: 'kuay pleum';
-    src: url('./fonts/font1.ttf') format('ttf');
-}
+
 </style>
 
 <style>

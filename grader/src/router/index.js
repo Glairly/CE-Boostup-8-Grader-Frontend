@@ -71,6 +71,12 @@ const routes = [{
                     window.focus();
                     // location.href = 'https://stackoverflow.com'
                 }
+            },
+            {
+                path: '/Home/information',
+                name: 'Information',
+                component: () =>
+                    import ('@/views/Information.vue')
             }
         ]
     },

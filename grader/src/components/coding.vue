@@ -63,7 +63,7 @@
                                         <v-btn block :ripple="false" class="mt-1 glow-warning" color="warning"><strong>Question's Rank</strong></v-btn>
                                     </v-col>
                                     <v-col>
-                                        <v-rating :value="task.rank/2" color="amber" dense half-increments readonly size="20"></v-rating>
+                                        <v-rating background-color="grey lighten-1" :value="task.rank/2" color="amber" dense half-increments readonly size="20"></v-rating>
                                     </v-col>
                                 </v-row>
                                 <v-row align="center">
@@ -174,7 +174,7 @@ export default {
             tab_select: 0,
             codePopup: false,
             codePopupUser: false,
-            code:"",
+            code: "",
             other: {
                 seeCode: false,
                 data: {}
@@ -197,17 +197,16 @@ export default {
         })
     },
     created() {
-        // get last passed submit
     },
     mounted() {
         this.update()
-
     },
     methods: {
-        codePopup(code){
+      
+        codePopup(code) {
             this.rightNav.code = code;
-            if(this.rightNav.code )
-            this.rightNav.codePopup = true
+            if (this.rightNav.code)
+                this.rightNav.codePopup = true
         },
         update() {
             this.task = this.$cookies.get('task')
