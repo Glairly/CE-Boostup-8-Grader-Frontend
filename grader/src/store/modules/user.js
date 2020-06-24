@@ -9,7 +9,6 @@ export default { // eslint-disable-next-line no-unused-vars
             detail: { email: "", avatar: "", name: "" },
             submission: [],
             questions: [],
-            codeSession: []
         }
     },
 
@@ -74,11 +73,6 @@ export default { // eslint-disable-next-line no-unused-vars
             } else return []
 
         },
-        getSessionCode: (state) => (id) => {
-            if (state[id])
-                return state[id].code
-            else return ""
-        }
     },
 
     // eslint-disable-next-line no-unused-vars
@@ -107,17 +101,10 @@ export default { // eslint-disable-next-line no-unused-vars
                 username: "",
                 detail: { email: "", avatar: "", name: "" },
                 submission: [],
-                questions: []
+                questions: [],
+                codeSession: []
             }
         },
-        addSessionCode(state, data) {
-            var body = {}
-            body[data.id] = true
-            body['code'] = data.code
-            console.log(body)
-                //      state.data.codeSession.push(data)
-        }
-
     },
     // eslint-disable-next-line no-unused-vars
     actions: {

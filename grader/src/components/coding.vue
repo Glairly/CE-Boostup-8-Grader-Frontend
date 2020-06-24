@@ -29,23 +29,25 @@
                                             <div>
                                                 <v-tooltip bottom>
                                                     <template v-slot:activator="{on}">
-                                                        <v-chip pill class="mx-2 pa-5 font-weight-black glow-black" color="black" v-on="on" outlined>{{question.details.timeLimit}}</v-chip>
+                                                        <v-chip pill class="ma-2 pa-5 font-weight-black glow-black" color="black" v-on="on" outlined>{{question.details.timeLimit}}</v-chip>
                                                     </template>
                                                     <span>Time Limit</span>
                                                 </v-tooltip>
                                                 <v-tooltip bottom>
                                                     <template v-slot:activator="{on}">
-                                                        <v-chip pill class="mx-2 pa-5 font-weight-black glow-black" color="black" v-on="on" outlined>{{question.details.memoryLimit}}</v-chip>
+                                                        <v-chip pill class="ma-2 pa-5 font-weight-black glow-black" color="black" v-on="on" outlined>{{question.details.memoryLimit}}</v-chip>
                                                     </template>
                                                     <span>Memory Limit</span>
                                                 </v-tooltip>
                                             </div>
-                                            <v-tooltip bottom>
-                                                <template v-slot:activator="{on}">
-                                                    <v-chip v-on="on" pill outlined :class="rightNav.user.data.finished ? 'glow-success':'glow-error'" class="glow-success pa-5 font-weight-black" :color="rightNav.user.data.finished  ? 'success': 'error'">{{rightNav.user.data.finished ? 'Passed' : 'Not Finished Yet'}}</v-chip>
-                                                </template>
-                                                <span>Question Status</span>
-                                            </v-tooltip>
+                                            <div>
+                                                <v-tooltip bottom>
+                                                    <template v-slot:activator="{on}">
+                                                        <v-chip  v-on="on" pill outlined :class="rightNav.user.data.finished ? 'glow-success':'glow-error'" class="ma-2 glow-success pa-5 font-weight-black" :color="rightNav.user.data.finished  ? 'success': 'error'">{{rightNav.user.data.finished ? 'Passed' : 'Not Finished Yet'}}</v-chip>
+                                                    </template>
+                                                    <span>Question Status</span>
+                                                </v-tooltip>
+                                            </div>
 
                                         </v-row>
                                     </v-col>
@@ -95,20 +97,20 @@
                                 <v-tooltip bottom>
                                     <template v-slot:activator="{on}">
                                         <v-row v-on="on" align="center">
-                                            <v-col cols="4">
+                                            <v-col   cols="4">
                                                 <v-btn block :ripple="false" class="mt-1 glow-warning" color="warning"><strong>Your Last Submit</strong></v-btn>
                                             </v-col>
 
-                                            <v-col cols="6" align="center">
+                                            <v-col cols="5" align="center">
 
                                                 {{userLastest(task.id).result ? userLastest(task.id).result : 'No Submission Result'}}
                                             </v-col>
-                                            <v-col align="end">
+                                            <v-col cosl="1" align="end">
                                                 <v-btn :disabled="!rightNav.user.data.code" outlined class="mt-1 glow-indigo" color="indigo" @click="codePopup(rightNav.user.data.code)"><strong>See Code</strong></v-btn>
                                                 <!-- show last submit code -->
                                                 <v-dialog v-model="rightNav.codePopup" persistent>
                                                     <v-btn color="error" tile @click="rightNav.codePopup = !rightNav.codePopup"><strong>Close</strong></v-btn>
-                                                    <IDE :code="rightNav.code" :footer="false" title="Lastest Code" class="pa-5"></IDE>
+                                                    <IDE :code="rightNav.code" :footer="false" title="Lastest Code"></IDE>
                                                 </v-dialog>
                                             </v-col>
 
@@ -196,13 +198,12 @@ export default {
             userLastest: 'user/getLastSubmission'
         })
     },
-    created() {
-    },
+    created() {},
     mounted() {
         this.update()
     },
     methods: {
-      
+
         codePopup(code) {
             this.rightNav.code = code;
             if (this.rightNav.code)

@@ -168,6 +168,10 @@
 
         </v-card>
     </v-sheet>
+    <v-overlay :value="ide.wait">
+        <v-progress-circular indeterminate color="white" size="64"></v-progress-circular>
+        <span class="mx-5">Retrieving Code</span>
+    </v-overlay>
 </v-card>
 </template>
 
@@ -186,7 +190,6 @@ import mixin from '../components/mixins'
 export default {
     mixins: [mixin],
     props: {
-        qId: String,
         footer: Boolean,
         code: String,
         title: String,
@@ -208,8 +211,10 @@ export default {
                 title: "",
                 fonts: 16,
                 language: "C/C++",
+                wait: true,
                 editorThemes: ["base16-dark", "base16-light"],
-                code: "#include<stdio.h> \r\n\nint main() { \r\n printf(\"Hello!! CE-BoostUp 8\"); \r\n return 0; \r\n}",
+                dCode: "#include<stdio.h> \r\n\nint main() { \r\n printf(\"Hello!! CE-BoostUp 8\"); \r\n return 0; \r\n}",
+                code: " "
             },
             //  snackbar //
             snackbar: false,
@@ -251,6 +256,9 @@ export default {
                 'font-size': this.ide.fonts + 'px',
             }
         },
+        qId() {
+            return this.task.id
+        }
     },
     methods: {
         saveSession() {
@@ -258,7 +266,8 @@ export default {
                 id: this.task.id,
                 code: this.ide.code
             }
-            this.$store.commit('user/addSessionCode', data);
+            sessionStorage.setItem(data.id, data.code)
+            // this.$store.commit('user/clearSession');
         },
         codeUpload(e) {
             // define what is needed
@@ -404,11 +413,19 @@ export default {
         if (!this.title) {
             this.ide.title = "Write Your Code Below.."
         }
+        setTimeout(() => {
+            this.ide.wait = false
+            var ss = sessionStorage.getItem(this.qId)
+            if (ss)
+                this.ide.code = ss
+            else this.ide.code = this.ide.dCode
+        }, 1000)
+    },
+    created() {
         window.onbeforeunload = () => {
             this.saveSession()
-            console.log(this.$store.getters['user/getSessionCode'](''))
+            return true;
         }
-        console.log(this.$store.getters['user/getSessionCode'](''))
     },
 
 }

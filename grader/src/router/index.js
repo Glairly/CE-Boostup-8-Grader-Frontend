@@ -129,7 +129,7 @@ router.beforeEach((to, from, next) => {
     } else {
         if (to.name == 'Auth') // 
             if (cookie.username) {
-            next(from.path);
+            next(false);
             return 0;
         }
     }

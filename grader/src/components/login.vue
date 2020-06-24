@@ -87,12 +87,12 @@
             <!-- <vue-particles style="height:100%;position:absolute;width:100%" color="#dedede" :particleOpacity="0.7" :particlesNumber="80" shapeType="polygon" :particleSize="4" linesColor="#dedede" :linesWidth="1" :lineLinked="true" :lineOpacity="0.4" :linesDistance="150" :moveSpeed="3" :hoverEffect="true" hoverMode="grab" :clickEffect="true" clickMode="push"> </vue-particles> -->
         </v-container>
         <template v-for="c in circleAround">
-            <div :key="c" :class="c" style="width:150px;height:200px;border-radius:50%;">
-                <v-img class=" glow-warning rounded-circle" :src="require('@/assets/Bee_d.png')"></v-img>
+            <div :key="c" :class="c" style="width:60px;height:60px;border-radius:50%;">
+                <v-img class="sineMovement glow-warning rounded-circle" :src="require('@/assets/Bee_d.png')"></v-img>
             </div>
         </template>
         <template v-for="c in linearBee">
-            <div :key="c" :class="c" style="width:200px;height:200px;border-radius:50%;background:transparent;">
+            <div :key="c" :class="c" style="width:60px;height:60px;border-radius:50%;background:transparent;">
                 <v-img class="sineMovement glow-warning rounded-circle" :src="require('@/assets/Bee-r.png')"></v-img>
             </div>
         </template>

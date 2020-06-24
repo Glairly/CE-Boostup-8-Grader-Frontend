@@ -76,21 +76,21 @@
 .l-center {
     position: fixed;
     z-index: 10;
-    left: -10%;
-    top: 50%;
+    left: 0;
+    top: 70%;
     animation: linearAround 20s normal infinite cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
 .lr-top {
     position: fixed;
     z-index: 100;
-    left: -10%;
-    top: -20%;
+    left: 0;
+    top: 20%;
     animation: linearAround-r 10s normal infinite ease-in-out;
 }
 
 .sineMovement {
-    --sine: 500px;
+    --sine: 150px;
     animation: sineMovement 1.5s alternate infinite ease-in-out;
 }
 
@@ -154,37 +154,37 @@
 
 @keyframes linearAround {
     49% {
-        transform: translateX(990%) scaleX(1);
+        transform: translateX(119vw) scaleX(1);
     }
     50% {
-        transform: translateX(1000%) scaleX(-1);
+        transform: translateX(120vw) scaleX(-1);
     }
     99% {
-        transform: translateX(10%) scaleX(-1);
+        transform: translateX(-4vw) scaleX(-1);
     }
     100% {
-        transform: translateX(0%) scaleX(1);
+        transform: translateX(-5vw) scaleX(1);
     }
 }
 
 @keyframes linearAround-r {
     0% {
-        transform: translateX(1000%) scaleX(-1);
+        transform: translateX(120vw) scaleX(-1);
     }
     49% {
-        transform: translateX(10%) scaleX(-1);
+        transform: translateX(-4vw) scaleX(-1);
     }
     50% {
-        transform: translateX(0%) scaleX(1);
+        transform: translateX(-5vw) scaleX(1);
     }
     100% {
-        transform: translateX(1000%) scaleX(1);
+        transform: translateX(120vw) scaleX(1);
     }
 }
 
 @keyframes sineMovement {
     to {
-        transform: translatey(var(--sine)) rotate(60deg);
+        transform: translatey(var(--sine)) rotate(20deg);
     }
 }
 

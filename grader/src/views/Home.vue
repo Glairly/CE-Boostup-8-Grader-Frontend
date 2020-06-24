@@ -97,6 +97,9 @@
             <v-img class="sineMovement" :src="require('@/assets/Bee-r.png')"></v-img>
         </div>
     </span> -->
+
+
+    
 </v-sheet>
 </template>
 

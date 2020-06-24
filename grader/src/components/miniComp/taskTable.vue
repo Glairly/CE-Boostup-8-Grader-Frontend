@@ -97,7 +97,7 @@
                             <v-card class="rounded-xl" :color="item.userPassed ? 'light-green lighten-5': 'light'" light :class="animation" v-ripple :elevation="hover ? 16 : 2">
                                 <v-fade-transition>
                                     <v-overlay v-if="hover" absolute color="grey lighten-5">
-                                        <v-btn @click.end="toCoding(item)">Go to Coding</v-btn>
+                                        <v-btn @click.end="toCoding(item,index)">Go to Coding</v-btn>
                                     </v-overlay>
                                 </v-fade-transition>
 
@@ -112,7 +112,7 @@
                                         {{ item.i_d }}
                                     </v-col>
 
-                                    <v-col > {{ item.title }} </v-col>
+                                    <v-col> {{ item.title }} </v-col>
                                 </v-row>
 
                                 <v-divider :color="item.status_col"></v-divider>
@@ -178,7 +178,7 @@
             <!-- table data list -->
             <template v-else v-slot:default="props">
                 <v-card class="ma-3 pa-5 elevation-3 rounded-xl">
-                    <v-data-table single-expand :show-expand="isTagged" item-key="i_d" hide-default-footer :items-per-page.sync="itemsPerPage" :page="page" :search="search" @dblclick:row="toCoding($event)" :headers="table.header" :items="props.items">
+                    <v-data-table single-expand :show-expand="isTagged" item-key="i_d" hide-default-footer :items-per-page.sync="itemsPerPage" :page="page" :search="search" @dblclick:row="toCoding" :headers="table.header" :items="props.items">
 
                         <template v-slot:item.rank="{ item }">
                             <v-rating background-color="grey lighten-1" :half-icon="ratingIcon.half" :full-icon="item.rank/2 >= 5 ? ratingIcon.full : ratingIcon.default" :value="item.rank/2" style="flex: none;" :color="ratingCol(item.rank)" dense half-increments readonly size="20"></v-rating>
@@ -379,11 +379,19 @@ export default {
         updateItemsPerPage(number) {
             this.itemsPerPage = number
         },
-        toCoding(item) {
+        toCoding(item, index) {
+            var data
+            if (typeof (index) == "number") {
+                // click return (item , index)
+                data = item
+            } else {
+                // dblclick return  (event , row )
+                data = index.item
+            }
             this.$router.push({
                 name: 'Coding'
             })
-            this.$cookies.set('task', item, '1d')
+            this.$cookies.set('task', data, '1d')
         },
         customFilter(items, search) {
             var allowRow = ["title"]
@@ -431,7 +439,7 @@ tbody>tr {
     margin: 100px !important;
 }
 
-.v-data-table-header{
+.v-data-table-header {
     /* background: var(--theme-8); */
 }
 
