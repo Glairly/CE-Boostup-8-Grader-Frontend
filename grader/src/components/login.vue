@@ -30,8 +30,8 @@
                                 <!-- login form -->
                                 <v-col class="ma-0 px-3" cols="6" style="max-width:100%">
                                     <v-form class="pa-5" ref="form" v-model="valid">
-                                        <v-text-field color="warning" outlined rounded label="Username" :rules="nameRules" counter name="login" prepend-inner-icon="person" type="text" v-model="userFill" required  ></v-text-field>
-                                        <v-text-field color="warning" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" outlined rounded id="password" :rules="nameRules" counter label="Password" name="password" prepend-inner-icon="lock" :type=" !show1 ? 'text' : 'password'" v-model="passFill" @click:append="show1 = !show1" required  ></v-text-field>
+                                        <v-text-field color="warning" outlined rounded label="Username" :rules="nameRules" counter name="login" prepend-inner-icon="person" type="text" v-model="userFill" required></v-text-field>
+                                        <v-text-field color="warning" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" outlined rounded id="password" :rules="nameRules" counter label="Password" name="password" prepend-inner-icon="lock" :type=" !show1 ? 'text' : 'password'" v-model="passFill" @click:append="show1 = !show1" required></v-text-field>
 
                                         <v-btn rounded class="ma-2 pa-6 glow-warning" :class="scaleIn" v-show="loginValid && this.loginErrorMessage == 'No data or User is not existed.'" @click.end="register()" color="warning" style="text-decoration-line:none;color:white">Register With This User ?</v-btn>
                                         <v-btn rounded class="ma-2 pa-6 glow-warning " :loading="wait" @click.end="login()" :disabled="!valid" color="warning" style="text-decoration-line:none;color:white">Login</v-btn>
@@ -191,9 +191,17 @@ export default {
                     var tok = response.data.user.token
                     // login success
                     console.log(response)
-                    this.axios.get('https://aws.random.cat/meow').then(res => {
+                    //https://cdn2.thecatapi.com/images/eh3.jpg
+                    //'https://aws.random.cat/meow
+                    this.axios.get('https://api.thecatapi.com/v1/images/search').then(res => {
                         this.loginSuccess(response.data.user, res, tok)
                     }).catch(err => {
+                        var res = {
+                            data: [{
+                                url: " "
+                            }]
+                        }
+                        this.loginSuccess(response.data.user, res, tok)
                         console.log(err)
                     })
                 })
@@ -212,12 +220,13 @@ export default {
             // })
         },
         loginSuccess(res1, prof, token) {
+            console.log(prof)
             var data = {
                 token: token,
                 username: this.userFill,
                 detail: {
                     email: res1.nickname + "@kmitl.ac.th",
-                    avatar: prof.data.file,
+                    avatar: prof.data[0].url,
                     name: res1.nickname
                 },
                 question_Done: {},

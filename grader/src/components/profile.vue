@@ -214,8 +214,8 @@ export default {
             })
         },
         changeMeow() {
-            this.axios.get('https://aws.random.cat/meow').then(res => {
-                this.$store.commit('user/changeImage', res.data.file)
+            this.axios.get('https://api.thecatapi.com/v1/images/search').then(res => {
+                this.$store.commit('user/changeImage', res.data[0].url)
             }).catch(() => {
                 this.edit.editError = true
                 this.edit.editError_Msg = "U Failed To Change Meow Meow"
