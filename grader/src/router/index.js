@@ -121,8 +121,14 @@ router.beforeEach((to, from, next) => {
 
 
     var cookie = store.state.user.data
+
     if (to.name != 'Auth') {
-        if (!cookie.username) {
+        if (Date.now() - cookie.expire >= 5000) { //80000000
+            store.commit('user/clear')
+            alert('User Expired!! Please Re-Login')
+            next('/auth');
+            return 0;
+        } else if (!cookie.username) {
             next('/auth');
             return 0;
         }
