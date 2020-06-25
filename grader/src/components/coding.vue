@@ -19,13 +19,13 @@
 
                         <!-- Details -->
                         <v-tab-item>
-                            <v-card tile class="pa-3 bordered-left-15-indigo">
+                            <v-card tile class="py-3 bordered-left-15-indigo">
                                 <!-- question title -->
                                 <v-card-title class="display-1 mb-1" primary-title>
                                     <strong> {{task.i_d}} | {{task.title}}</strong>
                                     <v-col cols="1"></v-col>
-                                    <v-col>
-                                        <v-row justify="start">
+                                    <v-col class="pa-0 ma-0">
+                                        <v-row class="pa-0 ma-0" justify="start">
                                             <div>
                                                 <v-tooltip bottom>
                                                     <template v-slot:activator="{on}">
@@ -43,7 +43,7 @@
                                             <div>
                                                 <v-tooltip bottom>
                                                     <template v-slot:activator="{on}">
-                                                        <v-chip  v-on="on" pill outlined :class="rightNav.user.data.finished ? 'glow-success':'glow-error'" class="ma-2 glow-success pa-5 font-weight-black" :color="rightNav.user.data.finished  ? 'success': 'error'">{{rightNav.user.data.finished ? 'Passed' : 'Not Finished Yet'}}</v-chip>
+                                                        <v-chip v-on="on" pill outlined :class="rightNav.user.data.finished ? 'glow-success':'glow-error'" class="ma-2 glow-success pa-5 font-weight-black" :color="rightNav.user.data.finished  ? 'success': 'error'">{{rightNav.user.data.finished ? 'Passed' : 'Not Finished Yet'}}</v-chip>
                                                     </template>
                                                     <span>Question Status</span>
                                                 </v-tooltip>
@@ -97,21 +97,16 @@
                                 <v-tooltip bottom>
                                     <template v-slot:activator="{on}">
                                         <v-row v-on="on" align="center">
-                                            <v-col   cols="4">
+                                            <v-col cols="4">
                                                 <v-btn block :ripple="false" class="mt-1 glow-warning" color="warning"><strong>Your Last Submit</strong></v-btn>
                                             </v-col>
 
                                             <v-col cols="5" align="center">
-
-                                                {{userLastest(task.id).result ? userLastest(task.id).result : 'No Submission Result'}}
+                                                {{userLastest(task.id) ? userLastest(task.id) : 'No Submission Result'}}
                                             </v-col>
                                             <v-col cosl="1" align="end">
                                                 <v-btn :disabled="!rightNav.user.data.code" outlined class="mt-1 glow-indigo" color="indigo" @click="codePopup(rightNav.user.data.code)"><strong>See Code</strong></v-btn>
                                                 <!-- show last submit code -->
-                                                <v-dialog v-model="rightNav.codePopup" persistent>
-                                                    <v-btn color="error" tile @click="rightNav.codePopup = !rightNav.codePopup"><strong>Close</strong></v-btn>
-                                                    <IDE :code="rightNav.code" :footer="false" title="Lastest Code"></IDE>
-                                                </v-dialog>
                                             </v-col>
 
                                         </v-row>
@@ -137,6 +132,10 @@
         </v-row>
     </v-navigation-drawer>
     <!-- IDE -->
+    <v-dialog class="ma-0 pa-0" v-model="rightNav.codePopup" persistent>
+        <v-btn color="error" tile @click="rightNav.codePopup = !rightNav.codePopup"><strong>Close</strong></v-btn>
+        <IDE :code="rightNav.code" :footer="false" title="Lastest Code"></IDE>
+    </v-dialog>
     <IDE :task="task" :qId="task.qId" footer class="pa-5"></IDE>
     <!-- {{ userLastest(task.id) }} {{ rightNav.other.data }} -->
 </v-sheet>
@@ -234,6 +233,7 @@ export default {
             // user
             this.axios.post(this.$store.state.api + "/api/v1/submission_code", body, config).then(res => {
                 var arr = res.data.data
+                console.log(arr)
                 if (arr.length) {
                     this.rightNav.user.data = arr[0]
                 }
@@ -241,6 +241,7 @@ export default {
                 this.rightNav.seeCode = true
                 console.log(err)
             })
+
         },
         setBorderWidth() {
             let i = this.$refs.drawer.$el.querySelector(

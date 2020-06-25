@@ -9,14 +9,14 @@ import user from './modules/user';
 Vue.use(Vuex);
 Vue.use(VueCookies);
 
-const debug = process.env.NODE_ENV !== 'production';
+// const debug = process.env.NODE_ENV !== 'production';
 
-const vuexCookie = new VuexPersistence({
-    restoreState: (key) => VueCookies.get(key),
-    saveState: (key, state) =>
-        VueCookies.set(key, state, '1d'), // timeout set to 1 day
+// const vuexCookie = new VuexPersistence({
+//     restoreState: (key) => VueCookies.get(key),
+//     saveState: (key, state) =>
+//         VueCookies.set(key, state, '1d'), // timeout set to 1 day
 
-})
+// })
 
 
 export default new Vuex.Store({
@@ -42,6 +42,7 @@ export default new Vuex.Store({
         //question
         user
     },
-    strict: debug,
-    plugins: [vuexCookie.plugin]
+    // strict: debug,
+    //  plugins: [vuexCookie.plugin]
+    plugins: [new VuexPersistence().plugin]
 })

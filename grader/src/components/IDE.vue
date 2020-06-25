@@ -109,7 +109,7 @@
     </v-row>
     <v-divider></v-divider>
     <!-- Console -->
-    <v-sheet id="logs" class="text-left mt-2 elevation-3" v-show="compile.show">
+    <v-sheet dark id="logs" class="text-left mt-2 elevation-3" v-show="compile.show">
         <!-- Result -->
         <v-card class="pa-5">
             <v-toolbar class="elevation-0">
@@ -117,10 +117,10 @@
                     <v-btn block :ripple="false" class="mt-1" id="result" color="info"><strong>Result</strong></v-btn>
                 </v-col>
                 <v-col cols="3">
-                    <v-btn v-if="compile.time" block outlined class="mt-1" id="result" color="info">Time Used : <strong>{{ compile.time + " s."}}</strong></v-btn>
+                    <v-btn :ripple="false" v-if="compile.time" block outlined class="mt-1" id="result" color="info">Time Used : <strong>{{ compile.time + " s."}}</strong></v-btn>
                 </v-col>
                 <v-row align="center" justify="end">
-                    <v-btn outlined class="mr-5">
+                    <v-btn outlined color="warning" class="mr-5">
                         <v-checkbox label="Compile With Sample" color="orange darken-1" class="ma-0" hide-details v-model="compile.withSample"></v-checkbox>
                     </v-btn>
 
@@ -135,19 +135,19 @@
 
             <span v-if="compile.withSample">
                 <v-skeleton-loader :loading="compile.skeleton" height="100%" type="table">
-                    <v-tabs show-arrows grow v-model="compile.tabSelect" slider-color="white">
+                    <v-tabs class="pa-5 ma-0" show-arrows v-model="compile.tabSelect" slider-color="transparent">
                         <template v-if="compile.withSample">
                             <v-tab :ripple="false" v-for="(i,index) in compile.compile_Status" :key="index">
-                                <v-btn text :ripple="false">
+                                <v-chip dark class="pa-4" :ripple="false">
                                     <span v-if="!standAloneCase(i)">
-                                        Case : {{index + 1}}
+                                        Case {{index+1}} :
                                         <v-icon v-if="i == 'P'" color="success" right>mdi-check-bold</v-icon>
                                         <v-icon v-else color="error" right>mdi-close</v-icon>
                                     </span>
                                     <span v-else>
                                         Compile Error Code : {{i}}
                                     </span>
-                                </v-btn>
+                                </v-chip>
                             </v-tab>
                         </template>
                         <!-- <v-tabs-items v-model="compile.tabSelect">
@@ -159,10 +159,12 @@
                     </v-tabs>
                 </v-skeleton-loader>
             </span>
+            <!-- without sample -->
             <span v-else>
-                <v-textarea class="mt-2 elevation-2" clearable label="Input Field" style="color:green;" rows="4" color="success" outlined hide-details v-model="compile.input">
+                <v-textarea placeholder="Your input here like : 1 2 3 " class="mt-2 elevation-2" clearable label="Input Field" style="color:green;" rows="4" color="success" outlined hide-details v-model="compile.input">
                 </v-textarea>
-                <v-textarea v-if="compile.log" class="mt-2 elevation-2" label="Compile Result" readonly style="color:green;" color="success" outlined hide-details v-model="compile.log">
+                <v-divider class="ma-5" color="transparent"></v-divider>
+                <v-textarea ref="compileLog" id="compileLog" v-if="compile.log" class="mt-2 elevation-2" label="Compile Result" readonly style="color:green;" color="success" outlined hide-details v-model="compile.log">
                 </v-textarea>
             </span>
 
@@ -184,6 +186,11 @@ import 'codemirror/mode/clike/clike.js'
 // import theme style
 import 'codemirror/theme/base16-dark.css'
 import 'codemirror/theme/base16-light.css'
+import 'codemirror/theme/elegant.css'
+import 'codemirror/theme/ayu-dark.css'
+import 'codemirror/theme/duotone-light.css'
+import 'codemirror/theme/blackboard.css'
+import 'codemirror/theme/eclipse.css'
 
 import mixin from '../components/mixins'
 
@@ -201,10 +208,11 @@ export default {
             cmOptions: {
                 tabSize: 6,
                 mode: 'text/x-c++src',
-                theme: 'base16-dark',
+                theme: 'base16-light',
                 lineNumbers: true,
                 line: true,
-                indentUnit: 0
+                indentUnit: 0,
+                readOnly: true
                 // more CodeMirror options...
             },
             ide: {
@@ -212,7 +220,7 @@ export default {
                 fonts: 16,
                 language: "C/C++",
                 wait: true,
-                editorThemes: ["base16-dark", "base16-light"],
+                editorThemes: ["base16-dark", "base16-light", "elegant", "ayu-dark", "duotone-light","blackboard","eclipse"],
                 dCode: "#include<stdio.h> \r\n\nint main() { \r\n printf(\"Hello!! CE-BoostUp 8\"); \r\n return 0; \r\n}",
                 code: " "
             },
@@ -230,7 +238,7 @@ export default {
                 withSample: false,
                 show: false,
                 // no sample
-                input: "Your Input Here",
+                input: "",
                 log: "",
                 time: "",
                 // with sample
@@ -320,7 +328,9 @@ export default {
             this.compile.show = !this.compile.show
             setTimeout(() => {
                 var logs = document.getElementById('logs')
-                logs.scrollIntoView();
+                logs.scrollIntoView({
+                    behavior: 'smooth'
+                });
             }, 200);
             this.compile.compile_Status = []
             this.compile.log = ""
@@ -336,9 +346,13 @@ export default {
 
             if (this.compile.withSample) {
                 // input
-                data.input = this.task.input
+                var ss = "$.$"
+                var input = this.task.input.split(ss)
+                var output = this.task.output.split(ss)
+
+                data.input = input.slice(0, 3).join(ss)
                 // output
-                data.output = this.task.output
+                data.output = output.slice(0, 3).join(ss)
                 // code
                 data.sourceCode = this.ide.code
             } else { // without sample
@@ -370,6 +384,14 @@ export default {
             }).catch(err => {
                 console.log(err)
             })
+
+            let logs = document.getElementById('compileLog')
+            logs.scrollIntoView({
+                behavior: 'smooth'
+            });
+            setTimeout(() => {
+                this.$refs.compileLog.focus()
+            }, 500);
 
         },
         Submit() {
@@ -409,23 +431,29 @@ export default {
     mounted() {
         if (this.code) {
             this.ide.code = this.code
+            this.ide.wait = false
+        } else {
+
+            setTimeout(() => {
+                this.ide.wait = false
+                var ss = sessionStorage.getItem(this.qId)
+                if (ss)
+                    this.ide.code = ss
+                else this.ide.code = this.ide.dCode
+            }, 1000)
+            window.onbeforeunload = () => {
+                this.saveSession()
+                return true;
+            }
         }
         if (!this.title) {
             this.ide.title = "Write Your Code Below.."
         }
-        setTimeout(() => {
-            this.ide.wait = false
-            var ss = sessionStorage.getItem(this.qId)
-            if (ss)
-                this.ide.code = ss
-            else this.ide.code = this.ide.dCode
-        }, 1000)
     },
     created() {
-        window.onbeforeunload = () => {
-            this.saveSession()
-            return true;
-        }
+        setTimeout(() => {
+            this.cmOptions.theme = this.ide.editorThemes[0]
+        }, 500)
     },
 
 }

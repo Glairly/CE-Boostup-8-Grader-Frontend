@@ -9,6 +9,7 @@ export default { // eslint-disable-next-line no-unused-vars
             detail: { email: "", avatar: "", name: "" },
             submission: [],
             questions: [],
+            expire: ""
         }
     },
 
@@ -65,12 +66,13 @@ export default { // eslint-disable-next-line no-unused-vars
             var data = state.data
             if (data.submission) {
                 for (let i = data.submission.length - 1; i > -1; --i) {
+
                     if (data.submission[i].questionId == id) {
-                        return data.submission[i]
+                        return data.submission[i].result
                     }
                 }
-                return []
-            } else return []
+                return ""
+            } else return ""
 
         },
     },
@@ -82,6 +84,7 @@ export default { // eslint-disable-next-line no-unused-vars
         },
         set(state, data) {
             state.data = data
+            state.expire = Date.now()
         },
         setQuestions(state, data) {
             state.data.questions = data

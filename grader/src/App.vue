@@ -31,7 +31,9 @@
 
 * {}
 
-.v-application,.v-application .text-h3,.v-application .headline {
+.v-application,
+.v-application .text-h3,
+.v-application .headline {
     font-family: 'Ubuntu', sans-serif !important;
 
 }
@@ -44,11 +46,10 @@
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
+    scroll-behavior: smooth !important;
     // cursor:  url(http://ani.cursors-4u.net/cursors/cur-13/cur1157.ani), url(http://ani.cursors-4u.net/cursors/cur-13/cur1157.png), auto !important;
     // background: rgb(250, 250, 250);
 }
-
-
 </style>
 
 <style>
