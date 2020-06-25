@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import store from '../store/index.js'
+import Cookies from 'vue-cookies'
 
 Vue.use(VueRouter)
 
@@ -121,9 +122,8 @@ router.beforeEach((to, from, next) => {
 
 
     var cookie = store.state.user.data
-
     if (to.name != 'Auth') {
-        if (Date.now() - cookie.expire >= 80000000) { //80000000
+        if (Date.now() - Cookies.get('expire') >= 80000000) { //80000000
             store.commit('user/clear')
             alert('User Expired!! Please Re-Login')
             next('/auth');

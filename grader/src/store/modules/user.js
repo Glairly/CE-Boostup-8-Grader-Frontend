@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Cookies from 'vue-cookies'
 
 export default { // eslint-disable-next-line no-unused-vars
     namespaced: true,
@@ -8,8 +9,7 @@ export default { // eslint-disable-next-line no-unused-vars
             username: "",
             detail: { email: "", avatar: "", name: "" },
             submission: [],
-            questions: [],
-            expire: ""
+            questions: []
         }
     },
 
@@ -84,7 +84,7 @@ export default { // eslint-disable-next-line no-unused-vars
         },
         set(state, data) {
             state.data = data
-            state.expire = Date.now()
+            Cookies.set('expire', Date.now())
         },
         setQuestions(state, data) {
             state.data.questions = data
