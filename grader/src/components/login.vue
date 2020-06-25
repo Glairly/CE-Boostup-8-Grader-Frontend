@@ -46,7 +46,7 @@
                                 <v-card-actions style="width:100%">
                                     <v-btn text :ripple="false"> Powered By Glairly </v-btn>
                                     <v-spacer></v-spacer>
-                                    <v-btn text :ripple="false"> Contact Staff </v-btn>
+                                    <v-btn text :ripple="false" @click="contactStaff('test')"> Contact Staff </v-btn>
                                 </v-card-actions>
                             </v-footer>
                         </v-col>
@@ -110,6 +110,7 @@
 import mixin from '../components/mixins'
 import themeSwitch from '../components/miniComp/switchTheme'
 import scaleOver from '../components/miniComp/scaleOver'
+
 
 export default {
     mixins: [mixin],
@@ -176,6 +177,9 @@ export default {
                     this.loginErrorMessage = err.response.data.msg
                     this.waitRegis = false
                 })
+        },
+        contact(){
+            this.contactStaff('Test')
         },
         login() {
             this.wait = true

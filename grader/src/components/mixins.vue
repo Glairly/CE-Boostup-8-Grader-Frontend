@@ -1,4 +1,5 @@
 <script>
+const qs = require('querystring')
 export default {
     computed: {
 
@@ -16,7 +17,23 @@ export default {
         getRandomInt(max) {
             return Math.floor(Math.random() * Math.floor(max));
         },
+        contactStaff(text) {
+            var mode = ["KywdxDsJg7ByoTjcKhY4hDW2DDilhWi7VieIT4T3Bgv","C03gyvCYaHMtxivJ3iBrFwFiOw8WXcTneJpsv4Y76D4"]
+            let config = {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Bearer ' + mode[0]
+                }
+            }
+            let lineBody = {
+                message: text
+            }
+            this.axios.post('/lineNotify', qs.stringify(lineBody), config).then(res => {
+                console.log(res)
+            })
+        },
     },
+
     beforeDestroy() {
         if (!this.$vuetify) return
 

@@ -38,6 +38,9 @@ export default { // eslint-disable-next-line no-unused-vars
         getToken: state => {
             return state.data.token
         },
+        getNickname: state => {
+            return state.data.detail.name
+        },
         getQuestions: (state) => {
             //   var sub = JSON.parse(JSON.stringify(state.data.submission))
             // var que = JSON.parse(JSON.stringify(state.data.questions))

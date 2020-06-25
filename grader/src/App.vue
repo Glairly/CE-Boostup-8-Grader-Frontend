@@ -7,8 +7,8 @@
     <v-footer dark padless>
         <v-card flat tile class="indigo lighten-1 white--text text-center">
             <v-card-text>
-                <v-btn v-for="icon in icons" :key="icon" class="mx-4 white--text" icon>
-                    <v-icon size="24px">{{ icon }}</v-icon>
+                <v-btn v-for="icon in icons" :key="icon.link" :href="icon.link" class="mx-4 white--text" icon>
+                    <v-icon size="24px">{{ icon.icon }}</v-icon>
                 </v-btn>
             </v-card-text>
 
@@ -65,29 +65,26 @@
 </style>
 
 <script>
+import mixin from '@/components/mixins'
+
 export default {
+    mixins: [mixin],
     data() {
         return {
-            icons: [
-                'mdi-facebook',
-                'mdi-twitter',
-                'mdi-linkedin',
-                'mdi-instagram',
-            ],
+            icons: [{
+                icon: 'mdi-facebook',
+                link: ''
+            }, {
+                icon: 'mdi-instagram',
+                link: ''
+            }],
+            lists: ["https://www.instagram.com/thanaishere", "https://www.instagram.com/oakfap/","https://www.instagram.com/nonthakonnn/"]
         };
     },
     created() {
+        let rand = this.getRandomInt(this.icons.length)
+        this.icons[1].link = this.lists[rand]
         this.$store.commit('setApiPath', process.env.NODE_ENV == 'development')
-        // let data = {
-        //     "input": "1 2$.$2 3",
-        //     "sourceCode": "\r\n#include <iostream>\r\n int main(){int arr[10] = {0};    int a, b, i;scanf(\"%d%d\", &a, &b);printf(\"%d\", a + b);return 0;}",
-        //     "output": "3$.$4"
-        // }
-        // this.axios.post(this.$store.state.compiler + '/compiler', data).then(res => {
-        //     console.log(res)
-        // }).catch(err => {
-        //     console.log(err)
-        // })
     },
 };
 </script>

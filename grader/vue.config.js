@@ -37,6 +37,14 @@ module.exports = {
                 pathRewrite: {
                     '^/compiler': ''
                 },
+            },
+            "/lineNotify": {
+                target: "https://notify-api.line.me/api/notify",
+                changeOrigin: true,
+                secure: false,
+                pathRewrite: {
+                    '^/lineNotify': ''
+                },
             }
         }
     },

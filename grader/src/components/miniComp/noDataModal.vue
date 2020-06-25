@@ -23,7 +23,7 @@
                 <v-footer height="55px" class="ma-0 pa-0" absolute>
                     <v-row style="height:100%" class="ma-0 pa-0  d-flex flex-row">
                         <v-col style="height:100%" cols="6" class="ma-0 pa-0">
-                            <v-btn color="error" style="height:100%" block tile @click="modal = false">
+                            <v-btn @click="contact()" color="error" style="height:100%" block tile>
                                 Contact Staff
                             </v-btn>
                         </v-col>
@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import mixin from '@/components/mixins'
 export default {
     props: {
         show: Boolean,
@@ -48,9 +49,16 @@ export default {
         primary: String,
         secondary: String
     },
+    mixins: [mixin],
     data() {
         return {
             modal: false
+        }
+    },
+    methods: {
+        contact() {
+            this.modal = false
+            this.contactStaff("N' " + this.$store.getters['user/getNickname'] +" need Help!!")
         }
     },
     mounted() {
