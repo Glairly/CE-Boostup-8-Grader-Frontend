@@ -46,7 +46,18 @@
                                 <v-card-actions style="width:100%">
                                     <v-btn text :ripple="false"> Powered By Glairly </v-btn>
                                     <v-spacer></v-spacer>
-                                    <v-btn text :ripple="false" @click="contactStaff('test')"> Contact Staff </v-btn>
+                                    <v-menu transition="slide-x-transition" v-model="menuIg" :close-on-content-click="false" :nudge-width="200" left offset-x offset-y>
+                                        <template v-slot:activator="{ on, attrs }">
+                                            <v-btn text :ripple="false" v-bind="attrs" v-on="on" @click.end="contact()"> Contact Staff </v-btn>
+                                        </template>
+
+                                        <v-card>
+                                            <v-row class=" ma-0 justify-center  ">
+                                                <v-img width="200px" :src="require('@/assets/ig/'+ig.src+'.png')" />
+                                            </v-row>
+                                        </v-card>
+                                    </v-menu>
+
                                 </v-card-actions>
                             </v-footer>
                         </v-col>
@@ -111,7 +122,6 @@ import mixin from '../components/mixins'
 import themeSwitch from '../components/miniComp/switchTheme'
 import scaleOver from '../components/miniComp/scaleOver'
 
-
 export default {
     mixins: [mixin],
     components: {
@@ -127,6 +137,7 @@ export default {
             userFill: "",
             passFill: "",
             show1: true,
+            menuIg: false,
             nameRange: [6, 20],
             nameRules: [
                 v => !!v || 'This Field is required',
@@ -144,7 +155,12 @@ export default {
             // register
             waitRegis: false,
             circleAround: ["c-top-left", "c-center", 'c-bottom-right'],
-            linearBee: ["l-center", "lr-top"]
+            linearBee: ["l-center", "lr-top"],
+            ig: {
+                list: ["non", "oakfap", "thana"],
+                path: "../assets/ig/",
+                src: "thana"
+            }
         }
     },
     computed: {
@@ -178,8 +194,9 @@ export default {
                     this.waitRegis = false
                 })
         },
-        contact(){
-            this.contactStaff('Test')
+        contact() {
+            if (!this.menuIg)
+                this.ig.src = this.ig.list[this.getRandomInt(this.ig.list.length)]
         },
         login() {
             this.wait = true

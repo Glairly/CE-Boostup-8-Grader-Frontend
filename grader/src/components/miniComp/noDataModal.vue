@@ -47,7 +47,8 @@ export default {
         show: Boolean,
         title: String,
         primary: String,
-        secondary: String
+        secondary: String,
+        mode : String
     },
     mixins: [mixin],
     data() {
@@ -57,8 +58,11 @@ export default {
     },
     methods: {
         contact() {
+            //String.fromCodePoint(
+            alert("Staff🧐  will contact you back ASAP. 💦💨"+ ``)
             this.modal = false
-            this.contactStaff("N' " + this.$store.getters['user/getNickname'] +" need Help!!")
+            let help = this.mode == "q" ? "โจทย์ไม่ขึ้น" : "Submission ไม่ขึ้น"
+            this.contactStaff("👉 น้อง" + this.$store.getters['user/getNickname'] +" 👈  💥 " + help +  "💥")
         }
     },
     mounted() {

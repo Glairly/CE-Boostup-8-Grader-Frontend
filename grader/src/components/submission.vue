@@ -3,7 +3,7 @@
     <v-overlay :value="wait && isReady">
         <v-progress-circular indeterminate color="white" size="64"></v-progress-circular>
     </v-overlay>
-    <noDataModal :show="isReady" title="Whoops.." :primary="modal.primary" :secondary="modal.secondary"></noDataModal>
+    <noDataModal :mode="'s'" :show="isReady" title="Whoops.." :primary="modal.primary" :secondary="modal.secondary"></noDataModal>
     <taskTable type="submission" animation="slide-in-elliptic-top-fwd" :tasks="tasks" title="All Submission" color="#de5721" ccolor="#e3af91"></taskTable>
 </div>
 </template>
