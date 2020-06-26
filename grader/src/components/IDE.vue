@@ -10,7 +10,7 @@
     </v-system-bar>
     <v-row>
         <!-- title -->
-        <v-col align="start">
+        <v-col cols="4" align="start">
             <v-btn text style="font-weight:bold;" class="title">{{ide.title}}</v-btn>
         </v-col>
         <!-- font Size -->
@@ -34,7 +34,7 @@
                 </v-col>
                 <!-- Language display -->
                 <v-col cols="3">
-                    <v-text-field style="width:200px" label="Language" class="ma-0" hide-details v-model="ide.language" outlined readonly>
+                    <v-text-field   label="Language" class="ma-0" hide-details v-model="ide.language" outlined readonly>
                         <template v-slot:append>
                             <v-icon>mdi-alphabetical-variant</v-icon>
                         </template>
@@ -113,24 +113,26 @@
         <!-- Result -->
         <v-card class="pa-5">
             <v-toolbar class="elevation-0">
-                <v-col class="ma-0 pa-0" cols="2">
+                <v-col cols="2">
                     <v-btn block :ripple="false" class="mt-1" id="result" color="info"><strong>Result</strong></v-btn>
                 </v-col>
                 <v-col cols="3">
                     <v-btn :ripple="false" v-if="compile.time" block outlined class="mt-1" id="result" color="info">Time Used : <strong>{{ compile.time + " s."}}</strong></v-btn>
                 </v-col>
-                <v-row align="center" justify="end">
-                    <v-btn outlined color="warning" class="mr-5">
-                        <v-checkbox label="Compile With Sample" color="orange darken-1" class="ma-0" hide-details v-model="compile.withSample"></v-checkbox>
-                    </v-btn>
-
-                    <v-col cols="3">
-                        <v-btn block class="mt-1" id="result" color="indigo" dark @click.end="Compiling()">
-                            <v-icon left>mdi-code-tags-check</v-icon> <strong>Compile !!</strong>
-                        </v-btn>
-                    </v-col>
-                </v-row>
-
+                <v-col class="ma-0 pa-0" align="end">
+                    <v-row class="ma-0 pa-0" align="center" justify="end">
+                        <v-col>
+                            <v-btn outlined color="warning">
+                                <v-checkbox label="Compile With Sample" color="orange darken-1" class="ma-0" hide-details v-model="compile.withSample"></v-checkbox>
+                            </v-btn>
+                        </v-col>
+                        <v-col cols="4">
+                            <v-btn block id="result" color="indigo" dark @click.end="Compiling()">
+                                <v-icon left>mdi-code-tags-check</v-icon> <strong>Compile !!</strong>
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </v-col>
             </v-toolbar>
 
             <span v-if="compile.withSample">
@@ -212,7 +214,7 @@ export default {
                 lineNumbers: true,
                 line: true,
                 indentUnit: 0,
-                readOnly: true
+                readOnly: this.footer ? false : true
                 // more CodeMirror options...
             },
             ide: {
@@ -220,7 +222,7 @@ export default {
                 fonts: 16,
                 language: "C/C++",
                 wait: true,
-                editorThemes: ["base16-dark", "base16-light", "elegant", "ayu-dark", "duotone-light","blackboard","eclipse"],
+                editorThemes: ["base16-dark", "base16-light", "elegant", "ayu-dark", "duotone-light", "blackboard", "eclipse"],
                 dCode: "#include<stdio.h> \r\n\nint main() { \r\n printf(\"Hello!! CE-BoostUp 8\"); \r\n return 0; \r\n}",
                 code: " "
             },
@@ -266,7 +268,7 @@ export default {
         },
         qId() {
             return this.task.id
-        }
+        },
     },
     methods: {
         saveSession() {
@@ -386,9 +388,10 @@ export default {
             })
 
             let logs = document.getElementById('compileLog')
-            logs.scrollIntoView({
-                behavior: 'smooth'
-            });
+            if (logs)
+                logs.scrollIntoView({
+                    behavior: 'smooth'
+                });
             setTimeout(() => {
                 this.$refs.compileLog.focus()
             }, 500);

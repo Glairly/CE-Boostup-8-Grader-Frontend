@@ -10,8 +10,8 @@
                     <!-- header -->
                     <v-flex class="d-flex ma-0 pa-0">
                         <v-col class="ma-0 pa-0">
-                            <v-sheet height="800" class="gradient t5-t2">
-                                <v-img :src="require('@/assets/loginBG.png')"></v-img>
+                            <v-sheet height="80vh" class="gradient t5-t2">
+                                <v-img height="80vh" :src="require('@/assets/loginBG.png')"></v-img>
                             </v-sheet>
                         </v-col>
                         <v-col class="ma-0 pa-0">

@@ -9,7 +9,11 @@ export default { // eslint-disable-next-line no-unused-vars
             username: "",
             detail: { email: "", avatar: "", name: "" },
             submission: [],
-            questions: []
+            questions: [],
+            doneQuestion: {
+                finished: [],
+                unfinished: []
+            }
         }
     },
 
@@ -41,28 +45,10 @@ export default { // eslint-disable-next-line no-unused-vars
         getNickname: state => {
             return state.data.detail.name
         },
+        getDoneQuestion: state => {
+            return state.data.doneQuestion
+        },
         getQuestions: (state) => {
-            //   var sub = JSON.parse(JSON.stringify(state.data.submission))
-            // var que = JSON.parse(JSON.stringify(state.data.questions))
-            // sub.forEach(el => {
-            //     el.userPassed = true
-            //     if (el.result)
-            //         for (let i = 0; i < el.result.length; i++) {
-            //             if (el.result.charAt(i) != 'P') {
-            //                 el.userPassed = false
-            //                 break
-            //             }
-            //         }
-            //     else {
-            //         el.userPassed = false
-            //     }
-            //     que.forEach(e => {
-            //         if (e.id == el.questionId) {
-            //             e.userPassed = el.userPassed
-            //         }
-            //     })
-            // })
-            // return que
             return state.data.questions
         },
         getLastSubmission: (state) => (id) => {
@@ -95,6 +81,30 @@ export default { // eslint-disable-next-line no-unused-vars
         setSubmission(state, data) {
             state.data.submission = data
         },
+        setDoneQuestion(state, data) {
+
+            state.data.doneQuestion = {
+                finished: [],
+                unfinished: []
+            }
+            var sub = JSON.parse(JSON.stringify(data))
+            sub.forEach(el => {
+                if (el.result) {
+                    var finished = true
+                    for (let i = 0; i < el.result.length; i++) {
+                        if (el.result.charAt(i) != 'P') {
+                            finished = false
+                            if (!state.data.doneQuestion.unfinished.includes(el.questionId))
+                                state.data.doneQuestion.unfinished.push(el.questionId)
+                            break
+                        }
+                    }
+                    if (finished && !state.data.doneQuestion.finished.includes(el.questionId))
+                        state.data.doneQuestion.finished.push(el.questionId)
+
+                }
+            })
+        },
         changeImage(state, url) {
             state.data.detail.avatar = url
         },
@@ -110,6 +120,7 @@ export default { // eslint-disable-next-line no-unused-vars
                 questions: [],
                 codeSession: []
             }
+            sessionStorage.clear();
         },
     },
     // eslint-disable-next-line no-unused-vars
@@ -131,6 +142,7 @@ export default { // eslint-disable-next-line no-unused-vars
                 var submission = response.data.data
                 if (!submission) submission = []
                 commit('setSubmission', submission)
+                commit('setDoneQuestion', submission)
             })
         },
         // autoSave({ state, commit }) {

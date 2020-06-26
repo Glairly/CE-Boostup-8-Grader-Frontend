@@ -44,7 +44,7 @@
                         <v-divider vertical class="mx-3"></v-divider>
                     </template>
                     <template v-else>
-                        <v-col cols="4">
+                        <v-col cols="3">
                             <v-tooltip left>
                                 <template v-slot:activator="{ on }">
                                     <v-checkbox v-on="on" v-model="filter.onlyPassed" color="white" label="Only Passed" hide-details></v-checkbox>
@@ -71,10 +71,10 @@
                                 <template v-slot:activator="{ on }">
                                     <v-col v-on="on" class="d-none d-md-flex d-xl-none d-md-none d-lg-flex">
                                         <v-btn-toggle v-model="sortDesc" mandatory>
-                                            <v-btn large depressed :value="false">
+                                            <v-btn depressed :value="false">
                                                 <v-icon>mdi-arrow-up</v-icon>
                                             </v-btn>
-                                            <v-btn large depressed :value="true">
+                                            <v-btn depressed :value="true">
                                                 <v-icon>mdi-arrow-down</v-icon>
                                             </v-btn>
                                         </v-btn-toggle>
@@ -94,18 +94,13 @@
                     <v-col v-for="(item,index) in props.items" :key="index" cols="12" sm="6" md="4" lg="3">
                         <v-hover v-slot:default="{ hover }" close-delay="50">
 
-                            <v-card class="rounded-xl" :color="item.userPassed ? 'light-green lighten-5': 'light'" light :class="animation" v-ripple :elevation="hover ? 16 : 2">
+                            <v-card class="rounded-xl" light :class="animation"   :elevation="hover ? 16 : 2">
+
                                 <v-fade-transition>
                                     <v-overlay v-if="hover" absolute color="grey lighten-5">
                                         <v-btn @click.end="toCoding(item,index)">Go to Coding</v-btn>
                                     </v-overlay>
                                 </v-fade-transition>
-
-                                <!-- <v-fade-transition>
-                                    <v-overlay absolute color="success lighten-5">
-                                        <v-btn @click.end="toCoding(item)">Finished</v-btn>
-                                    </v-overlay>
-                                </v-fade-transition> -->
 
                                 <v-row align="center" justify="center" :style="{ 'background' : ccolor}" style="color:black" class="ma-0 pa-0 rounded-t-xl subheading glow-2 font-weight-bold">
                                     <v-col cols="3">
@@ -160,7 +155,7 @@
                                     <v-col class="ma-0 pa-1">
                                         <v-row class="mx-5 pa-0" justify="start">
                                             <template v-for=" i in tagFilter(item.types)">
-                                                <v-chip outlined class="pa-1 mx-1" :key="i">
+                                                <v-chip style="z-index:10;background:white !important;" outlined class="pa-1 mx-1" :key="i">
                                                     {{ i }}
                                                 </v-chip>
                                             </template>
@@ -168,7 +163,12 @@
                                     </v-col>
                                 </v-row>
                                 <!-- {{item.types}} -->
-
+                                <span v-if="type != 'submission'">
+                                    <v-divider></v-divider>
+                                    <v-row :style="{backgroundColor:isDone(item)}" style="color:transparent" class="rounded-b-xl ma-0 pa-0">
+                                        _
+                                    </v-row>
+                                </span>
                             </v-card>
                         </v-hover>
                     </v-col>
@@ -255,6 +255,10 @@
 
 <script>
 import VueGlow from '../../../node_modules/vue-glow'
+import {
+    mapGetters
+} from 'vuex'
+
 export default {
     name: 'taskTable',
     components: {
@@ -324,6 +328,9 @@ export default {
         }
     },
     computed: {
+        ...mapGetters({
+            doneQuestion: 'user/getDoneQuestion'
+        }),
         // pagination
         numberOfPages() {
             if (this.tasks)
@@ -370,6 +377,14 @@ export default {
     },
     methods: {
         // pagination
+        isDone(question) {
+            let col = ["transparent", "#8BC34A", "#EF5350"]
+            let done = this.doneQuestion.finished.includes(question.id)
+            let unDone = this.doneQuestion.unfinished.includes(question.id)
+            let status = 0
+            status = done ? 1 : (unDone ? '2' : 0)
+            return col[status]
+        },
         nextPage() {
             if (this.page + 1 <= this.numberOfPages) this.page += 1
         },
@@ -418,6 +433,7 @@ export default {
                 align: 'center',
 
             })
+            this.sortDesc = true
         } else if (this.type == "question") {
             this.table.header.push({
                 text: 'Passed',

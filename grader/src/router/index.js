@@ -123,7 +123,7 @@ router.beforeEach((to, from, next) => {
 
     var cookie = store.state.user.data
     if (to.name != 'Auth') {
-        if (Date.now() - Cookies.get('expire') >= 80000000) { //80000000
+        if (Cookies.get('expire') && Date.now() - Cookies.get('expire') >= 80000000) { //80000000
             store.commit('user/clear')
             alert('User Expired!! Please Re-Login')
             next('/auth');

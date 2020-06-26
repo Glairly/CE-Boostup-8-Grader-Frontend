@@ -7,7 +7,7 @@
     <v-footer dark padless>
         <v-card flat tile class="indigo lighten-1 white--text text-center">
             <v-card-text>
-                <v-btn v-for="icon in icons" :key="icon.link" :href="icon.link" class="mx-4 white--text" icon>
+                <v-btn v-for="icon in icons" :key="icon.link" :href="icon.link" target="_blank" class="mx-4 white--text" icon>
                     <v-icon size="24px">{{ icon.icon }}</v-icon>
                 </v-btn>
             </v-card-text>
@@ -36,6 +36,15 @@
 .v-application .headline {
     font-family: 'Ubuntu', sans-serif !important;
 
+}
+
+html::-webkit-scrollbar {
+    display: none;
+}
+
+html {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 #app {
@@ -78,11 +87,11 @@ export default {
                 icon: 'mdi-instagram',
                 link: ''
             }],
-            lists: ["https://www.instagram.com/thanaishere", "https://www.instagram.com/oakfap/","https://www.instagram.com/nonthakonnn/"]
+            lists: ["https://www.instagram.com/thanaishere", "https://www.instagram.com/oakfap/", "https://www.instagram.com/nonthakonnn/"]
         };
     },
     created() {
-        let rand = this.getRandomInt(this.icons.length)
+        let rand = this.getRandomInt(this.lists.length)
         this.icons[1].link = this.lists[rand]
         this.$store.commit('setApiPath', process.env.NODE_ENV == 'development')
     },

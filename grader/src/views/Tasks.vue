@@ -35,7 +35,7 @@ export default {
     },
     computed: {
         ...mapGetters({
-            tasks: 'user/getQuestions'
+            tasks: 'user/getQuestions',
         }),
         isReady() {
             return !this.tasks || !this.tasks.length

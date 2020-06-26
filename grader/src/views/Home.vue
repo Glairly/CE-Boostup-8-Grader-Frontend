@@ -22,21 +22,37 @@
             </v-tabs>
         </template> -->
         <!--  -->
-        <v-tabs align-with-title id="nav" slider-color="#b15d2c">
-            <template v-for="(i , index) in navLink">
-                <v-tab :key="index" :to="i.link">{{i.name}}</v-tab>
-            </template>
-        </v-tabs>
+        <template v-if="!$vuetify.breakpoint.mobile">
+            <v-tabs align-with-title id="nav" slider-color="#b15d2c">
+                <template v-for="(i , index) in navLink">
+                    <v-tab :key="index" :to="i.link">{{i.name}}</v-tab>
+                </template>
+            </v-tabs>
+        </template>
+        <template v-else>
+            <v-menu  offset-y>
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn color="warning" dark v-bind="attrs" v-on="on">
+                        Menu
+                    </v-btn>
+                </template>
+                <v-list>
+                    <v-list-item v-for="(item, index) in  navLink" :key="index" :to="item.link">
+                        <v-list-item-title>{{ item.name }}</v-list-item-title>
+                    </v-list-item>
+                </v-list>
+            </v-menu>
+        </template>
         <v-spacer></v-spacer>
         <v-tooltip bottom>
             <template v-slot:activator="{ on }">
-                <v-btn color="#b15d2c" v-on="on">
+                <v-btn class="mx-3" color="#b15d2c" v-on="on">
                     <themeSwitch></themeSwitch>
                 </v-btn>
             </template>
             <span>Switch Theme</span>
         </v-tooltip>
-        <v-divider class="mx-3"></v-divider>
+        <!-- <v-divider class="mx-3"></v-divider> -->
         <v-menu color="white" offset-y transition="slide-x-transition">
             <template v-slot:activator="{ on }">
                 <v-chip v-on="on" class="pl-5 pr-12 py-5 elevation-3" pill dark @click="{}">
@@ -98,8 +114,6 @@
         </div>
     </span> -->
 
-
-    
 </v-sheet>
 </template>
 
