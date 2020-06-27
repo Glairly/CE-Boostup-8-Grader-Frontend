@@ -1,5 +1,6 @@
 import axios from 'axios'
 import Cookies from 'vue-cookies'
+// import Vue from 'vue'
 
 export default { // eslint-disable-next-line no-unused-vars
     namespaced: true,
@@ -49,6 +50,7 @@ export default { // eslint-disable-next-line no-unused-vars
             return state.data.doneQuestion
         },
         getQuestions: (state) => {
+            console.log('updateQ')
             return state.data.questions
         },
         getLastSubmission: (state) => (id) => {
@@ -128,11 +130,17 @@ export default { // eslint-disable-next-line no-unused-vars
         updateQuestion({ state, commit, rootState }) {
             var tok = state.data.token
             axios.get(rootState.api + "/api/v1/questions").then(res => {
-                var allQuestion = res.data.data
+
+                var allQuestion = JSON.parse(JSON.stringify(res.data.data))
+                var _allQuestion = []
                 for (var i = 0; i < allQuestion.length; i++) {
-                    allQuestion[i].i_d = i + 1;
+                    _allQuestion.push({
+                            ...allQuestion[i],
+                            i_d: i + 1
+                        })
+                        // Vue.set(allQuestion[i], 'i_d', i + 1);
                 }
-                commit('setQuestions', allQuestion)
+                commit('setQuestions', _allQuestion)
             }).catch(err => {
                 console.log(err)
             })

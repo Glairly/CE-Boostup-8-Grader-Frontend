@@ -11,10 +11,13 @@ export default {
         }
     },
     created() {
-        this.$store.dispatch('user/updateQuestion')
-        setInterval(() => {
-            this.$store.dispatch('user/updateQuestion')
-        }, 3000)
-    }
+
+    },
+    mounted() {
+        // this.$store.dispatch('user/updateQuestion')
+        // setInterval(() => {
+        //     this.$store.dispatch('user/updateQuestion')
+        // }, 3000)
+    },
 }
 </script>

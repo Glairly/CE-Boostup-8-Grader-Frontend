@@ -28,7 +28,7 @@ export default {
         return {
             modal: {
                 primary: "No data found !?",
-                secondary: "this may be caused by network latency or network connection \n try to refresh the page",
+                secondary: "this may be caused due to network latency or network connection \n try to refresh the page",
             },
             wait: true
         }

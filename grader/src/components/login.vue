@@ -183,12 +183,10 @@ export default {
                     "password": this.passFill,
                     "nickname": "anonymous"
                 })
-                .then(response => {
-                    console.log(response)
+                .then(() => {
                     this.waitRegis = false
                     this.login()
                 }).catch(err => {
-                    console.log(err)
                     this.loginValid = true
                     this.loginErrorMessage = err.response.data.msg
                     this.waitRegis = false
@@ -211,19 +209,17 @@ export default {
 
                     var tok = response.data.user.token
                     // login success
-                    console.log(response)
                     //https://cdn2.thecatapi.com/images/eh3.jpg
                     //'https://aws.random.cat/meow
                     this.axios.get('https://api.thecatapi.com/v1/images/search').then(res => {
                         this.loginSuccess(response.data.user, res, tok)
-                    }).catch(err => {
+                    }).catch( () => {
                         var res = {
                             data: [{
                                 url: " "
                             }]
                         }
                         this.loginSuccess(response.data.user, res, tok)
-                        console.log(err)
                     })
                 })
                 // login fail
@@ -233,15 +229,8 @@ export default {
                     this.loginErrorMessage = error.response.data.msg
                 });
 
-            // this.axios.get('https://aws.random.cat/meow').then(res => {
-            //     this.loginSuccess(res)
-            // }).catch(err => {
-            //     console.log(err)
-
-            // })
         },
         loginSuccess(res1, prof, token) {
-            console.log(prof)
             var data = {
                 token: token,
                 username: this.userFill,
