@@ -34,7 +34,7 @@
                 </v-col>
                 <!-- Language display -->
                 <v-col cols="3">
-                    <v-text-field   label="Language" class="ma-0" hide-details v-model="ide.language" outlined readonly>
+                    <v-text-field label="Language" class="ma-0" hide-details v-model="ide.language" outlined readonly>
                         <template v-slot:append>
                             <v-icon>mdi-alphabetical-variant</v-icon>
                         </template>
@@ -393,7 +393,8 @@ export default {
                     behavior: 'smooth'
                 });
             setTimeout(() => {
-                this.$refs.compileLog.focus()
+                if (this.$refs.compileLog)
+                    this.$refs.compileLog.focus()
             }, 500);
 
         },
