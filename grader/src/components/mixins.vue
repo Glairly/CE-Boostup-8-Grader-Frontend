@@ -32,7 +32,7 @@ export default {
                 let lineBody = {
                     message: text + " 💥 " + txt +  " 💥"
                 }
-                this.axios.post('/lineNotify', qs.stringify(lineBody), config)
+                this.axios.post('https://notify-api.line.me/api/notify', qs.stringify(lineBody), config)
             }
 
         },
