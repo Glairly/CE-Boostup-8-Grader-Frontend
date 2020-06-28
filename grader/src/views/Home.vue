@@ -1,6 +1,6 @@
 <template>
 <v-sheet class="home">
-    <scaleOver :scaleover="scaleover"></scaleOver>
+    <scaleOver style="transform:scale(20)" :scaleover="scaleover"></scaleOver>
     <v-app-bar :src="require('@/assets/navBee.png')" style="z-index:6 !important;" color="rgb(255,238,176)" app clipped-left>
         <!-- Title -->
 
@@ -30,7 +30,7 @@
             </v-tabs>
         </template>
         <template v-else>
-            <v-menu  offset-y>
+            <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
                     <v-btn color="warning" dark v-bind="attrs" v-on="on">
                         Menu
@@ -72,7 +72,6 @@
                         </v-list-item-avatar>
                         <v-list-item-content>
                             <v-list-item-title>{{user.detail.name}}</v-list-item-title>
-                            <v-list-item-subtitle>{{user.detail.email}}</v-list-item-subtitle>
                         </v-list-item-content>
                         <v-list-item-action>
                             <v-btn icon @click="menu = false">
@@ -105,14 +104,14 @@
 
     <router-view>
     </router-view>
-    <!-- <span v-if="$route.name != 'Coding'">
-        <div class="l-center" style="width:200px;height:200px;border-radius:50%;background:transparent;">
-            <v-img class="sineMovement" :src="require('@/assets/Bee-r.png')"></v-img>
+    <span v-if="$route.name != 'Coding'">
+        <div class="l-center" style="width:60px;height:60px;border-radius:50%;background:transparent;">
+            <v-img class="sineMovement glow-warning rounded-circle" :src="require('@/assets/Bee-r.png')"></v-img>
         </div>
-        <div class="lr-top" style="width:200px;height:200px;border-radius:50%;background:transparent;">
+        <!-- <div class="lr-top" style="width:200px;height:200px;border-radius:50%;background:transparent;">
             <v-img class="sineMovement" :src="require('@/assets/Bee-r.png')"></v-img>
-        </div>
-    </span> -->
+        </div> -->
+    </span>
 
 </v-sheet>
 </template>
@@ -181,7 +180,20 @@ export default {
         this.user = store.state.user.data
     },
     mounted() {
-        this.scaleover = "scale-over-out"
+        let ready = () => {
+            this.scaleover = "scale-over-out"
+        }
+
+        let f2 = async () => {
+            await this.$store.dispatch('user/computeStats')
+        }
+        this.$store.dispatch('user/fetch').then(() => {
+            f2().then(() => {
+                ready()
+            })
+
+        });
+
     },
 }
 </script>

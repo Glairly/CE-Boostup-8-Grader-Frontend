@@ -10,6 +10,9 @@ export default {
   name: 'Profile',
   components: {
     profile
-  }
+  },
+  created() {
+  },
 }
+
 </script>

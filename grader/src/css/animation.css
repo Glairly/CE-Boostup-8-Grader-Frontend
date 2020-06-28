@@ -53,7 +53,7 @@
     left: 0px;
     top: 0px;
     --radius: 300px;
-    animation: circleAround 10s normal infinite cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation: circleAround 8s normal infinite cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 
 .c-center {

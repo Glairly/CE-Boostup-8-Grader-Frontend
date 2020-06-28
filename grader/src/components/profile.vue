@@ -1,6 +1,6 @@
 <template>
 <v-row class="mx-auto my-12" justify="space-around">
-    <v-card class="elevation-8 radius-bottom-20" height="500" width="20%">
+    <v-card class="elevation-8 rounded-xl" height="500" width="20%">
         <v-hover v-slot:default="{ hover }">
             <v-img height="250" class="puff-in-center" :src="user.detail.avatar">
                 <v-fade-transition>
@@ -42,7 +42,7 @@
                 </template>
             </v-text-field>
         </v-card-text>
-        <v-footer absolute id="save" color="purple accent-4" v-ripple="{ class: `white--text` }" class="d-flex align-center justify-center pa-5 radius-bottom-20" style="color:white;font-weight:500;font-size:1.25rem" @click="save()">
+        <v-footer absolute id="save" color="purple accent-4" v-ripple="{ class: `white--text` }" class="d-flex align-center justify-center pa-5 rounded-b-xl" style="color:white;font-weight:500;font-size:1.25rem" @click="save()">
             Save Change
         </v-footer>
         <v-dialog v-model="edit.editError" persistent width="500">
@@ -53,7 +53,7 @@
             </div>
         </v-dialog>
     </v-card>
-    <v-card width="75%" class="elevation-8">
+    <v-card width="75%" class="elevation-8 rounded-xl">
         <v-img height="150" class="puff-in-center" src="https://source.unsplash.com/random">
             <template v-slot:placeholder>
                 <v-row class="fill-height ma-0" align="center" justify="center">
@@ -69,42 +69,70 @@
                 </v-tab>
             </v-tabs>
             <!-- dash-board -->
-            <v-tabs-items v-model="mode">
+            <v-tabs-items class="rounded-b-xl" v-model="mode">
                 <v-tab-item>
-                    <v-sheet class="d-flex" height="500">
+                    <v-sheet  class="d-flex flex-column rounded-b-xl ">
                         <!-- Score -->
-                        <v-col cols="6">
-                            <v-card style="height:100%;border-radius:5%" class="ma-0 mb-3 pa-5 elevation-3 d-flex flex-column align-center justify-space-between">
-                                <v-card-title primary-title text-xs-center>
-                                    <v-flex class="display-1 font-weight-black">
-                                        Overall Score
-                                    </v-flex>
-                                </v-card-title>
-                                <v-card-actions>
-                                    <v-progress-circular size="200" :value="pieScore" width="20" color="success">
-                                        {{ items[0].content.pie.score.current + "/" + items[0].content.pie.score.max }}
-                                    </v-progress-circular>
-                                </v-card-actions>
-                                <div></div>
-                            </v-card>
-                        </v-col>
-                        <!-- Passed Task -->
-                        <v-col cols="6">
-                            <v-card style="height:100%;border-radius:5%" class="ma-0 mb-3 pa-5 elevation-3 d-flex flex-column align-center justify-space-between">
-                                <v-card-title primary-title text-xs-center>
-                                    <v-flex class="display-1 font-weight-black">
-                                        Question Done
-                                    </v-flex>
-                                </v-card-title>
-                                <v-card-actions>
-                                    <v-progress-circular size="200" :value="pieQuestion" width="20" color="orange">
-                                        {{ items[0].content.pie.question.current + "/" + items[0].content.pie.question.max }}
-                                    </v-progress-circular>
-                                </v-card-actions>
-                                <v-btn color="orange" outlined>Stars Collected : 3 <v-icon right color="yellow darken-2" class="spin">mdi-star</v-icon>
-                                </v-btn>
-                            </v-card>
-                        </v-col>
+                        <v-row class="ma-0 pa-0 ">
+                            <v-col cols="6" class="">
+                                <v-tooltip bottom>
+                                    <template v-slot:activator="{on}">
+                                        <v-card v-on="on" style="height:100%;border-radius:5%" class="ma-0 mb-3 pa-5 elevation-3 d-flex flex-column align-center justify-space-between">
+                                            <v-card-text text-xs-center>
+                                                <v-flex style="font-size:2.125rem !important" class=" font-weight-black">
+                                                    Overall Score
+                                                </v-flex>
+                                            </v-card-text>
+                                            <v-card-actions>
+                                                <v-progress-circular size="200" :value="pieScore" width="20" color="success">
+                                                    {{ pie.score.now + "/" +  pie.score.max }}
+                                                </v-progress-circular>
+                                            </v-card-actions>
+                                        </v-card>
+                                    </template>
+                                    Score base on amount of question Done
+                                </v-tooltip>
+
+                            </v-col>
+                            <!-- Passed Task -->
+                            <v-col cols="6">
+                                <v-card style="height:100%;border-radius:5%" class="ma-0 mb-3 pa-5 elevation-3 d-flex flex-column align-center justify-space-between">
+                                    <v-card-text text-xs-center>
+                                        <v-flex style="font-size:2.125rem !important" class=" font-weight-black">
+                                            Question Done
+                                        </v-flex>
+                                    </v-card-text>
+                                    <v-card-actions>
+                                        <v-progress-circular size="200" :value="pieQuestion" width="20" color="orange">
+                                            {{ pie.question.now + "/" + pie.question.max }}
+                                        </v-progress-circular>
+                                    </v-card-actions>
+                                    <v-tooltip bottom>
+                                        <template v-slot:activator="{on}">
+                                            <v-btn v-on="on" color="orange" :ripple="false"  outlined>Stars Collected : {{pie.question.star}}
+                                                <v-icon right color="yellow darken-2" class="spin">mdi-star</v-icon>
+                                                </v-btn>
+                                        </template>
+                                        All finished Question Stars
+                                    </v-tooltip>
+
+                                </v-card>
+                            </v-col>
+                        </v-row>
+                        <!-- <v-row class="ma-0 pa-0">
+                            <v-col>
+                                <v-card style="height:100%;">
+                                    <v-card-text>
+                                        5555
+                                    </v-card-text>
+                                </v-card>
+                            </v-col>
+                            <v-col>
+                                <v-card style="height:100%;">
+
+                                </v-card>
+                            </v-col>
+                        </v-row> -->
 
                     </v-sheet>
                 </v-tab-item>
@@ -148,6 +176,9 @@
 
 <script>
 // import VueGlow from '../../node_modules/vue-glow'
+import {
+    mapGetters
+} from 'vuex'
 
 export default {
     components: {
@@ -159,18 +190,6 @@ export default {
         user: {},
         items: [{
                 tab: 'DashBoard',
-                content: {
-                    pie: {
-                        score: {
-                            current: 50,
-                            max: 100
-                        },
-                        question: {
-                            current: 1,
-                            max: 10
-                        }
-                    }
-                }
             },
 
             // {
@@ -187,16 +206,19 @@ export default {
     }),
     computed: {
         pieScore() {
-            var score = this.items[0].content.pie.score
-            return Math.floor((score.current * 100) / score.max)
+            var score = this.pie.score
+            return Math.floor((score.now * 100) / score.max)
         },
         pieQuestion() {
-            var question = this.items[0].content.pie.question
-            return Math.floor((question.current * 100) / question.max)
+            var question = this.pie.question
+            return Math.floor((question.now * 100) / question.max)
         },
         shake() {
             return this.edit.editError ? "shake-horizontal" : " ";
         },
+        ...mapGetters({
+            pie: 'user/getStats'
+        })
     },
     methods: {
         save() {
@@ -225,7 +247,6 @@ export default {
         var store = this.$store;
         this.user = store.state.user.data
         this.edit.data = this.user.detail.name
-
     },
     mounted() {
         var save = document.getElementById("save")

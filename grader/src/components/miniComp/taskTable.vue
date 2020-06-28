@@ -270,6 +270,7 @@
 
         </v-data-iterator>
     </v-card>
+
 </VueGlow>
 </template>
 
@@ -358,6 +359,7 @@ export default {
                 return Math.ceil(this.tasks.length / this.itemsPerPage)
             else return 0
         },
+
         filtered() {
             if (this.tasks)
                 return this.tasks.filter((el) => {
@@ -381,7 +383,8 @@ export default {
                                     onlyPassed = false
                             }
                     }
-                    return (inRank && intype && onlyPassed);
+                    let status = this.type == "submission" ? true : el.status
+                    return (inRank && intype && onlyPassed && status);
                 });
             else return []
         },

@@ -8,9 +8,21 @@ export default { // eslint-disable-next-line no-unused-vars
         data: {
             token: "",
             username: "",
-            detail: { email: "", avatar: "", name: "" },
+            detail: { avatar: "", name: "" },
             submission: [],
             questions: [],
+            stats: {
+                score: {
+                    max: 0,
+                    now: 0
+                },
+                question: {
+                    max: 0,
+                    now: 0,
+                    star: 0
+                },
+                submission: 0
+            },
             doneQuestion: {
                 finished: [],
                 unfinished: []
@@ -65,6 +77,9 @@ export default { // eslint-disable-next-line no-unused-vars
             } else return ""
 
         },
+        getStats: (state) => {
+            return state.data.stats
+        }
     },
 
     // eslint-disable-next-line no-unused-vars
@@ -89,22 +104,34 @@ export default { // eslint-disable-next-line no-unused-vars
                 unfinished: []
             }
             var sub = JSON.parse(JSON.stringify(data))
+            let doneQuestion = state.data.doneQuestion
             sub.forEach(el => {
                 if (el.result) {
                     var finished = true
                     for (let i = 0; i < el.result.length; i++) {
                         if (el.result.charAt(i) != 'P') {
                             finished = false
-                            if (!state.data.doneQuestion.unfinished.includes(el.questionId))
-                                state.data.doneQuestion.unfinished.push(el.questionId)
+                            if (!doneQuestion.finished.includes(el.questionId) && !doneQuestion.unfinished.includes(el.questionId))
+                                doneQuestion.unfinished.push(el.questionId)
                             break
                         }
                     }
-                    if (finished && !state.data.doneQuestion.finished.includes(el.questionId))
-                        state.data.doneQuestion.finished.push(el.questionId)
+                    if (finished) {
+                        // remove duplicate
+                        let isExisted = doneQuestion.unfinished.indexOf(el.questionId)
+                        if (isExisted > -1) {
+                            doneQuestion.unfinished.splice(isExisted, 1);
+                        }
+                        if (!doneQuestion.finished.includes(el.questionId)) {
+                            doneQuestion.finished.push(el.questionId)
+                        }
+                    }
 
                 }
             })
+        },
+        setStats(state, data) {
+            state.data.stats = data
         },
         changeImage(state, url) {
             state.data.detail.avatar = url
@@ -131,22 +158,21 @@ export default { // eslint-disable-next-line no-unused-vars
     },
     // eslint-disable-next-line no-unused-vars
     actions: {
-        updateQuestion({ state, commit, rootState }) {
+        async fetch({ state, commit, rootState }) {
             var tok = state.data.token
-            axios.get(rootState.api + "/api/v1/questions").then(res => {
+            await axios.get(rootState.api + "/api/v1/questions").then(res => {
 
                 var allQuestion = JSON.parse(JSON.stringify(res.data.data))
                 var _allQuestion = []
                 for (var i = 0; i < allQuestion.length; i++) {
                     _allQuestion.push({
-                            ...allQuestion[i],
-                            i_d: i + 1
-                        })
-                        // Vue.set(allQuestion[i], 'i_d', i + 1);
+                        ...allQuestion[i],
+                        i_d: i + 1
+                    })
                 }
                 commit('setQuestions', _allQuestion)
             })
-            axios.post(rootState.api + '/api/v1/list_submission', {
+            await axios.post(rootState.api + '/api/v1/list_submission', {
                 token: tok
             }).then(response => {
                 var submission = response.data.data
@@ -155,6 +181,55 @@ export default { // eslint-disable-next-line no-unused-vars
                 commit('setDoneQuestion', submission)
             })
         },
+        computeStats({ state, commit }) {
+            let q = JSON.parse(JSON.stringify(state.data.questions))
+            let s = JSON.parse(JSON.stringify(state.data.doneQuestion))
+            let sub = JSON.parse(JSON.stringify(state.data.submission))
+            let _q = q.map(el => el.id)
+            let _sub = sub.map(el => el.questionId)
+            let star = 0
+            let score = {
+                max: 0,
+                now: 0
+            }
+
+            s.finished.forEach(el => {
+                let ind = _q.indexOf(el)
+                star += q[ind].rank
+                    // score
+                let allCase = q[ind].output.split("$.$")
+                let sc = allCase.length * q[ind].scorePerCase
+                score.max += sc
+                score.now += sc
+            })
+
+            s.unfinished.forEach(el => {
+                let ind = _q.indexOf(el)
+                    // score
+                let allCase = q[ind].output.split("$.$")
+                score.max += allCase.length * q[ind].scorePerCase
+                    // query for best score
+                let arr = _sub.filter(e => e.questionId == el)
+                let max = 0
+                arr.forEach(i => {
+                    if (sub[i].score > max) max = sub[i].score
+                })
+                score.now += max
+
+            })
+
+            star /= 2
+            let stat = {
+                score: score,
+                question: {
+                    max: q.length,
+                    now: s.finished.length,
+                    star: star,
+                },
+                submission: sub.length
+            }
+            commit('setStats', stat)
+        }
         // autoSave({ state, commit }) {
 
         // }

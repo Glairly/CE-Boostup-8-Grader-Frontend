@@ -208,13 +208,14 @@ export default {
     data() {
         return {
             cmOptions: {
-                tabSize: 6,
+                tabSize: 4,
                 mode: 'text/x-c++src',
                 theme: 'base16-light',
                 lineNumbers: true,
                 line: true,
                 indentUnit: 0,
-                readOnly: this.footer ? false : true
+                readOnly: this.footer ? false : true,
+                smartIndent : true
                 // more CodeMirror options...
             },
             ide: {
@@ -223,7 +224,7 @@ export default {
                 language: "C/C++",
                 wait: true,
                 editorThemes: ["base16-dark", "base16-light", "elegant", "ayu-dark", "duotone-light", "blackboard", "eclipse"],
-                dCode: "#include<stdio.h> \r\n\nint main() { \r\n printf(\"Hello!! CE-BoostUp 8\"); \r\n return 0; \r\n}",
+                dCode: "#include<stdio.h> \r\n\nint main() { \r\n    printf(\"Hello!! CE-BoostUp 8\");\r\n    return 0;\n}",
                 code: " "
             },
             //  snackbar //

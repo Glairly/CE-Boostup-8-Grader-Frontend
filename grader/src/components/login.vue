@@ -157,7 +157,7 @@ export default {
             circleAround: ["c-top-left", "c-center", 'c-bottom-right'],
             linearBee: ["l-center", "lr-top"],
             ig: {
-                list: ["non", "oakfap", "thana","few"],
+                list: ["non", "oakfap", "thana", "few"],
                 src: "thana"
             }
         }
@@ -212,7 +212,7 @@ export default {
                     //'https://aws.random.cat/meow
                     this.axios.get('https://api.thecatapi.com/v1/images/search').then(res => {
                         this.loginSuccess(response.data.user, res, tok)
-                    }).catch( () => {
+                    }).catch(() => {
                         var res = {
                             data: [{
                                 url: " "
@@ -229,12 +229,11 @@ export default {
                 });
 
         },
-        loginSuccess(res1, prof, token) {
+        loginSuccess(res1, prof, token) { 
             var data = {
                 token: token,
                 username: this.userFill,
                 detail: {
-                    email: res1.nickname + "@kmitl.ac.th",
                     avatar: prof.data[0].url,
                     name: res1.nickname
                 },
