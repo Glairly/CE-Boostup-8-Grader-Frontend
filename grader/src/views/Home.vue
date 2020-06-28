@@ -104,6 +104,7 @@
 
     <router-view>
     </router-view>
+    
     <span v-if="$route.name != 'Coding'">
         <div class="l-center" style="width:60px;height:60px;border-radius:50%;background:transparent;">
             <v-img class="sineMovement glow-warning rounded-circle" :src="require('@/assets/Bee-r.png')"></v-img>

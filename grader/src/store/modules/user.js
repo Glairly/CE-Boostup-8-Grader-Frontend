@@ -55,6 +55,9 @@ export default { // eslint-disable-next-line no-unused-vars
         getToken: state => {
             return state.data.token
         },
+        getUserName: state => {
+            return state.data.username
+        },
         getNickname: state => {
             return state.data.detail.name
         },

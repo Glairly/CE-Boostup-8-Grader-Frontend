@@ -10,6 +10,9 @@
                 <v-btn v-for="icon in icons" :key="icon.link" :href="icon.link" target="_blank" class="mx-4 white--text" icon>
                     <v-icon size="24px">{{ icon.icon }}</v-icon>
                 </v-btn>
+                <v-btn @click.end="contactStaff(lineMsg)" class="mx-4 white--text">
+                    Contact Staff
+                </v-btn>
             </v-card-text>
 
             <v-card-text class="white--text pt-0">
@@ -87,7 +90,8 @@ export default {
                 icon: 'mdi-instagram',
                 link: ''
             }],
-            lists: ["https://www.instagram.com/thanaishere", "https://www.instagram.com/oakfap/", "https://www.instagram.com/nonthakonnn/", "https://www.instagram.com/few_raweeroj/"]
+            lists: ["https://www.instagram.com/thanaishere", "https://www.instagram.com/oakfap/", "https://www.instagram.com/nonthakonnn/", "https://www.instagram.com/few_raweeroj/"],
+            lineMsg: "👉 น้อง" + this.$store.getters['user/getUserName'] + " 👈 "
         };
     },
     created() {
@@ -95,10 +99,10 @@ export default {
         this.icons[1].link = this.lists[rand]
         this.$store.commit('setApiPath', process.env.NODE_ENV == 'development')
 
-    
         // setInterval(() => {
         //     this.$store.dispatch('user/updateQuestion')
         // }, 3000)
     },
+
 };
 </script>
