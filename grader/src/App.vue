@@ -82,12 +82,12 @@ export default {
         return {
             icons: [{
                 icon: 'mdi-facebook',
-                link: ''
+                link: 'https://www.facebook.com/ceboostup'
             }, {
                 icon: 'mdi-instagram',
                 link: ''
             }],
-            lists: ["https://www.instagram.com/thanaishere", "https://www.instagram.com/oakfap/", "https://www.instagram.com/nonthakonnn/"]
+            lists: ["https://www.instagram.com/thanaishere", "https://www.instagram.com/oakfap/", "https://www.instagram.com/nonthakonnn/","https://www.instagram.com/few_raweeroj/"]
         };
     },
     created() {

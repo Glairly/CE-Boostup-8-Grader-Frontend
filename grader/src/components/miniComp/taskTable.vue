@@ -94,7 +94,7 @@
                     <v-col v-for="(item,index) in props.items" :key="index" cols="12" sm="6" md="4" lg="3">
                         <v-hover v-slot:default="{ hover }" close-delay="50">
 
-                            <v-card class="rounded-xl" light :class="animation"   :elevation="hover ? 16 : 2">
+                            <v-card class="rounded-xl" light :class="animation" :elevation="hover ? 16 : 2">
 
                                 <v-fade-transition>
                                     <v-overlay v-if="hover" absolute color="grey lighten-5">
@@ -180,6 +180,18 @@
                 <v-card class="ma-3 pa-5 elevation-3 rounded-xl">
                     <v-data-table single-expand :show-expand="isTagged" item-key="i_d" hide-default-footer :items-per-page.sync="itemsPerPage" :page="page" :search="search" @dblclick:row="toCoding" :headers="table.header" :items="props.items">
 
+                        <template v-slot:item.i_d="{item}">
+                            <v-tooltip bottom>
+                                <template v-slot:activator="{on}">
+                                    <v-btn v-on="on" @click.end="toCoding(item,0)" :color="isDone(item)">
+                                        {{item.i_d}}
+                                    </v-btn>
+                                </template>
+                                click to go coding
+                            </v-tooltip>
+
+                        </template>
+
                         <template v-slot:item.rank="{ item }">
                             <v-rating background-color="grey lighten-1" :half-icon="ratingIcon.half" :full-icon="item.rank/2 >= 5 ? ratingIcon.full : ratingIcon.default" :value="item.rank/2" style="flex: none;" :color="ratingCol(item.rank)" dense half-increments readonly size="20"></v-rating>
                         </template>
@@ -192,7 +204,7 @@
                             <td v-if="item.types" class="ma-0 pa-3" :colspan="headers.length">
                                 <template v-for=" (i,index) in tagFilter(item.types)">
 
-                                    <v-chip color="info" class="ma-1" :key="index">
+                                    <v-chip color="warning" class="ma-1" :key="index">
                                         {{ i }}
                                     </v-chip>
                                 </template>
@@ -224,6 +236,14 @@
                             </v-list>
 
                         </v-menu>
+
+                        <v-spacer></v-spacer>
+                        <v-icon color="#8BC34A" style="border:2px solid black;background:#8BC34A;" class="rounded-circle">mdi-checkbox-blank-circle</v-icon>
+                        <span class="mx-3">Finished </span>
+                        <v-icon color="#EF5350" style="border:2px solid black;background:#EF5350;" class="rounded-circle">mdi-checkbox-blank-circle</v-icon>
+                        <span class="mx-3">Wrong</span>
+                        <v-icon color="white" style="border:2px solid black;background:white;" class="rounded-circle">mdi-checkbox-blank-circle</v-icon>
+                        <span class="mx-3">Undone</span>
 
                         <v-spacer></v-spacer>
                         <span class="mr-4 font-weight-black">
@@ -290,6 +310,7 @@ export default {
                 header: [{
                         text: 'ID',
                         value: 'i_d',
+                        align: 'center'
                     },
                     {
                         text: 'Title',
@@ -309,14 +330,14 @@ export default {
                     // },
                 ],
                 types: [
-                    "Pattern",
-                    "Basic I/O",
-                    "Shift bit",
-                    "If-Else",
-                    "Loop",
-                    "Array",
-                    "Function",
-                    "Pointer",
+                    "pattern",
+                    "basici/o",
+                    "shiftbit",
+                    "if-else",
+                    "loop",
+                    "array",
+                    "function",
+                    "pointer",
                 ]
             },
             mode: false,
@@ -347,11 +368,10 @@ export default {
                     if (this.types.length && el.types) {
                         var sp = "$.$"
                         var typeArr = el.types.split(sp)
-                        console.log(el)
                         if (!this.filter.typeSingle) {
-                            intype = typeArr.some(t => this.types.includes(t))
+                            intype = typeArr.some(t => this.types.includes(t.replace(/\s+/g, '').toLocaleLowerCase()))
                         } else {
-                            intype = typeArr.every(t => this.types.includes(t))
+                            intype = typeArr.every(t => this.types.includes(t.replace(/\s+/g, '').toLocaleLowerCase()))
                         }
                     }
                     if (this.filter.onlyPassed) {
@@ -378,6 +398,7 @@ export default {
     methods: {
         // pagination
         isDone(question) {
+            if (this.type == "submission") return "transparent"
             let col = ["transparent", "#8BC34A", "#EF5350"]
             let done = this.doneQuestion.finished.includes(question.id)
             let unDone = this.doneQuestion.unfinished.includes(question.id)

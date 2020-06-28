@@ -19,9 +19,9 @@
 
                         <!-- Details -->
                         <v-tab-item>
-                            <v-card tile class="py-3 bordered-left-15-indigo">
+                            <v-card tile class="py-3 " :class="rightNav.user.data.finished ? 'bordered-left-15-green':'bordered-left-15-red'">
                                 <!-- question title -->
-                                <v-card-title class="display-1 mb-1" primary-title>
+                                <v-card-title class="display-1 mb-1 " primary-title>
                                     <strong> {{task.i_d}} | {{task.title}}</strong>
                                     <v-col cols="1"></v-col>
                                     <v-col class="pa-0 ma-0">
@@ -226,20 +226,18 @@ export default {
                     this.rightNav.other.seeCode = false
                     this.rightNav.other.data = arr[arr.length - 1]
                 }
-            }).catch(err => {
+            }).catch(() => {
                 this.rightNav.seeCode = true
-                console.log(err)
+
             })
             // user
             this.axios.post(this.$store.state.api + "/api/v1/submission_code", body, config).then(res => {
                 var arr = res.data.data
-                console.log(arr)
                 if (arr.length) {
                     this.rightNav.user.data = arr[0]
                 }
-            }).catch(err => {
+            }).catch(() => {
                 this.rightNav.seeCode = true
-                console.log(err)
             })
 
         },
@@ -295,7 +293,6 @@ export default {
             const direction = "right"
 
             function resize(e) {
-                console.log(e)
                 document.body.style.cursor = "ew-resize";
                 let f = direction === "right" ?
                     document.body.scrollWidth - e.clientX :

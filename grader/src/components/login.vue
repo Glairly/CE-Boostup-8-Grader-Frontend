@@ -157,8 +157,7 @@ export default {
             circleAround: ["c-top-left", "c-center", 'c-bottom-right'],
             linearBee: ["l-center", "lr-top"],
             ig: {
-                list: ["non", "oakfap", "thana"],
-                path: "../assets/ig/",
+                list: ["non", "oakfap", "thana","few"],
                 src: "thana"
             }
         }

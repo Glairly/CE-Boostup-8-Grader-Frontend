@@ -21,13 +21,11 @@ Vue.use(VueCookies);
 
 export default new Vuex.Store({
     state: {
-        // usage console.log(this.$store.state.apiToken)
         api: "",
         compiler: ""
 
     },
     mutations: {
-        // usage this.$store.commit('setAPiToken',param1)
         setApiPath(state, dev) {
             if (dev) {
                 state.api = " " // point to localhost

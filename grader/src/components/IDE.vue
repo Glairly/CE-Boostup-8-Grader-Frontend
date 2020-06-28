@@ -371,7 +371,7 @@ export default {
                     'Content-Type': 'application/json'
                 }
             }).then(res => {
-                console.log(res)
+
                 if (this.compile.withSample) {
                     this.compile.compile_Status = []
                     for (var i = 0; i < res.data.result.length; i++) {
@@ -383,8 +383,6 @@ export default {
                     this.compile.log = res.data.result;
                     this.compile.time = res.data.timeUsage
                 }
-            }).catch(err => {
-                console.log(err)
             })
 
             let logs = document.getElementById('compileLog')
@@ -410,14 +408,13 @@ export default {
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            }).then(res => {
+            }).then(() => {
                 this.text = "Submiting was Done Successfully"
                 this.submitWait = false
-                console.log(res)
-            }).catch(err => {
+            }).catch(() => {
                 this.submitWait = false
                 this.text = "Submiting Come in Failure"
-                console.log(err)
+
             })
         },
         fontIns() {

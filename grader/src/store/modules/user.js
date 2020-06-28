@@ -50,7 +50,6 @@ export default { // eslint-disable-next-line no-unused-vars
             return state.data.doneQuestion
         },
         getQuestions: (state) => {
-            console.log('updateQ')
             return state.data.questions
         },
         getLastSubmission: (state) => (id) => {
@@ -114,6 +113,11 @@ export default { // eslint-disable-next-line no-unused-vars
             state.data.detail.name = name
         },
         clear(state) {
+            // clear interval
+            for (let i = 0; i < 100; i++) {
+                window.clearInterval(i);
+                window.clearTimeout(i);
+            }
             state.data = {
                 token: "",
                 username: "",
@@ -141,8 +145,6 @@ export default { // eslint-disable-next-line no-unused-vars
                         // Vue.set(allQuestion[i], 'i_d', i + 1);
                 }
                 commit('setQuestions', _allQuestion)
-            }).catch(err => {
-                console.log(err)
             })
             axios.post(rootState.api + '/api/v1/list_submission', {
                 token: tok

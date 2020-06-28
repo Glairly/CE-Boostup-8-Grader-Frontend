@@ -203,8 +203,7 @@ export default {
             this.axios.post(this.$store.state.api + '/api/v1/nickname/', {
                 nickname: this.edit.data,
                 token: this.$store.getters['user/getToken'],
-            }).then(res => {
-                console.log(res)
+            }).then(() => {
                 this.$store.commit('user/changeName', this.edit.data)
                 alert("Refresh!!")
                 location.reload();
