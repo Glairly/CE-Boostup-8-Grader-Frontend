@@ -1,5 +1,5 @@
 <template>
-<div class="mx-12 pt-10 d-flex" style="background:transparent;height:100%">
+<div class="mx-12 pt-10 d-flex" style="background:transparent;">
     <v-overlay :value="wait && isReady">
         <v-progress-circular indeterminate color="white" size="64"></v-progress-circular>
     </v-overlay>

@@ -54,7 +54,7 @@
                         </v-col>
                     </template>
 
-                    <template v-if="$vuetify.breakpoint.mdAndUp">
+                    <template>
                         <v-row justify="start" align="center">
                             <!-- Diff filter -->
                             <v-tooltip bottom>
@@ -238,12 +238,14 @@
                         </v-menu>
 
                         <v-spacer></v-spacer>
-                        <v-icon color="#8BC34A" style="border:2px solid black;background:#8BC34A;" class="rounded-circle">mdi-checkbox-blank-circle</v-icon>
-                        <span class="mx-3">Finished </span>
-                        <v-icon color="#EF5350" style="border:2px solid black;background:#EF5350;" class="rounded-circle">mdi-checkbox-blank-circle</v-icon>
-                        <span class="mx-3">Wrong</span>
-                        <v-icon color="white" style="border:2px solid black;background:white;" class="rounded-circle">mdi-checkbox-blank-circle</v-icon>
-                        <span class="mx-3">Undone</span>
+                        <template v-if="!$vuetify.breakpoint.mobile">
+                            <v-icon color="#8BC34A" style="border:2px solid black;background:#8BC34A;" class="rounded-circle">mdi-checkbox-blank-circle</v-icon>
+                            <span class="mx-3">Finished </span>
+                            <v-icon color="#EF5350" style="border:2px solid black;background:#EF5350;" class="rounded-circle">mdi-checkbox-blank-circle</v-icon>
+                            <span class="mx-3">Wrong</span>
+                            <v-icon color="white" style="border:2px solid black;background:white;" class="rounded-circle">mdi-checkbox-blank-circle</v-icon>
+                            <span class="mx-3">Undone</span>
+                        </template>
 
                         <v-spacer></v-spacer>
                         <span class="mr-4 font-weight-black">
