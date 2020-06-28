@@ -22,7 +22,6 @@ export default {
     },
     data() {
         return {
-
             sortBy: 'rank',
             page: 1,
             sortDesc: false,

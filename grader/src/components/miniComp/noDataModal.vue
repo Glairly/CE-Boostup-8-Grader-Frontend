@@ -59,10 +59,10 @@ export default {
     methods: {
         contact() {
             //String.fromCodePoint(
-            alert("Staff🧐  will contact you back ASAP. 💦💨"+ ``)
+            //alert("Staff🧐  will contact you back ASAP. 💦💨"+ ``)
             this.modal = false
-            let help = this.mode == "q" ? "โจทย์ไม่ขึ้น" : "Submission ไม่ขึ้น"
-            this.contactStaff("👉 น้อง" + this.$store.getters['user/getNickname'] +" 👈  💥 " + help +  "💥")
+            // let help = this.mode == "q" ? "โจทย์ไม่ขึ้น" : "Submission ไม่ขึ้น"
+            this.contactStaff("👉 น้อง" + this.$store.getters['user/getNickname'] +" 👈 " )
         }
     },
     mounted() {

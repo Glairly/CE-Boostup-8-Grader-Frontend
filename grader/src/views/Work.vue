@@ -7,17 +7,9 @@
 export default {
     data() {
         return {
-
         }
     },
-    created() {
-
-    },
-    mounted() {
-        // this.$store.dispatch('user/updateQuestion')
-        // setInterval(() => {
-        //     this.$store.dispatch('user/updateQuestion')
-        // }, 3000)
-    },
+    created() {},
+    mounted() {},
 }
 </script>

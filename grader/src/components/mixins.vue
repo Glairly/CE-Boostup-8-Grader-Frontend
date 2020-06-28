@@ -18,17 +18,23 @@ export default {
             return Math.floor(Math.random() * Math.floor(max));
         },
         contactStaff(text) {
-            var mode = ["KywdxDsJg7ByoTjcKhY4hDW2DDilhWi7VieIT4T3Bgv","C03gyvCYaHMtxivJ3iBrFwFiOw8WXcTneJpsv4Y76D4"," "]
+            var mode = [" ","KywdxDsJg7ByoTjcKhY4hDW2DDilhWi7VieIT4T3Bgv", "C03gyvCYaHMtxivJ3iBrFwFiOw8WXcTneJpsv4Y76D4"]
             let config = {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
-                    'Authorization': 'Bearer ' + mode[0]
+                    'Authorization': 'Bearer ' + mode[2]
                 }
             }
-            let lineBody = {
-                message: text
+            var txt = prompt("ระบุปัญหาที่พบ", "login ไม่ได้");
+            if (txt == null || txt == "") {
+                 text   
+            } else {
+                let lineBody = {
+                    message: text + " 💥 " + txt +  " 💥"
+                }
+                this.axios.post('/lineNotify', qs.stringify(lineBody), config)
             }
-            this.axios.post('/lineNotify', qs.stringify(lineBody), config) 
+
         },
     },
 
