@@ -184,7 +184,9 @@ export default {
         let ready = () => {
             this.scaleover = "scale-over-out"
             setInterval(() => {
-                this.$store.dispatch('user/fetch')
+                this.$store.dispatch('user/fetch').then(() => {
+                    f2()
+                });
             }, 3000)
         }
 
