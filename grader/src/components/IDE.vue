@@ -215,7 +215,7 @@ export default {
                 line: true,
                 indentUnit: 0,
                 readOnly: this.footer ? false : true,
-                smartIndent : true
+                smartIndent: true
                 // more CodeMirror options...
             },
             ide: {
@@ -349,13 +349,13 @@ export default {
 
             if (this.compile.withSample) {
                 // input
-                // var ss = "$.$"
-                // var input = this.task.input.split(ss)
-                // var output = this.task.output.split(ss)
+                var ss = "$.$"
+                var input = this.task.input.split(ss)
+                var output = this.task.output.split(ss)
 
-                data.input = this.task.input
+                data.input = input
                 // output
-                data.output = this.task.output
+                data.output = output
                 // code
                 data.sourceCode = this.ide.code
             } else { // without sample
@@ -366,7 +366,7 @@ export default {
                 }
             }
             data = JSON.stringify(data)
-    
+
             this.axios.post(this.$store.state.compiler + '/compiler', data, {
                 headers: {
                     'Content-Type': 'application/json'

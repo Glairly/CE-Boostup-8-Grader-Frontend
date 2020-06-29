@@ -104,7 +104,7 @@
 
     <router-view>
     </router-view>
-    
+
     <span v-if="$route.name != 'Coding'">
         <div class="l-center" style="width:60px;height:60px;border-radius:50%;background:transparent;">
             <v-img class="sineMovement glow-warning rounded-circle" :src="require('@/assets/Bee-r.png')"></v-img>
@@ -183,6 +183,9 @@ export default {
     mounted() {
         let ready = () => {
             this.scaleover = "scale-over-out"
+            setInterval(() => {
+                this.$store.dispatch('user/fetch')
+            }, 3000)
         }
 
         let f2 = async () => {
