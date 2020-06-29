@@ -353,9 +353,9 @@ export default {
                 var input = this.task.input.split(ss)
                 var output = this.task.output.split(ss)
 
-                data.input = input.slice(0, 3).join(ss)
+                data.input = input 
                 // output
-                data.output = output.slice(0, 3).join(ss)
+                data.output = output 
                 // code
                 data.sourceCode = this.ide.code
             } else { // without sample

@@ -22,7 +22,8 @@ export default {
             let config = {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
-                    'Authorization': 'Bearer ' + mode[2]
+                    'Authorization': 'Bearer ' + mode[2],
+                    'Access-Control-Allow-Origin': '*'
                 }
             }
             var txt = prompt("ระบุปัญหาที่พบ", "login ไม่ได้");
