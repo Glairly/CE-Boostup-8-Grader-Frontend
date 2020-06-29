@@ -215,7 +215,7 @@ export default {
                 line: true,
                 indentUnit: 0,
                 readOnly: this.footer ? false : true,
-                smartIndent: true
+                smartIndent : true
                 // more CodeMirror options...
             },
             ide: {
@@ -353,9 +353,9 @@ export default {
                 var input = this.task.input.split(ss)
                 var output = this.task.output.split(ss)
 
-                data.input = input
+                data.input = input.slice(0, 3).join(ss)
                 // output
-                data.output = output
+                data.output = output.slice(0, 3).join(ss)
                 // code
                 data.sourceCode = this.ide.code
             } else { // without sample
@@ -471,6 +471,10 @@ export default {
 
 .CodeMirror-scroll {
     text-align: left !important;
+}
+
+.CodeMirror-gutter-filler, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-vscrollbar{
+    z-index: 2 !important;
 }
 
 .textfield-noarrow input::-webkit-outer-spin-button,
