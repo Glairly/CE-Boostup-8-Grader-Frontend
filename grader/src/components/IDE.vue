@@ -349,13 +349,13 @@ export default {
 
             if (this.compile.withSample) {
                 // input
-                var ss = "$.$"
-                var input = this.task.input.split(ss)
-                var output = this.task.output.split(ss)
+                // var ss = "$.$"
+                // var input = this.task.input.split(ss)
+                // var output = this.task.output.split(ss)
 
-                data.input = input 
+                data.input = this.task.input
                 // output
-                data.output = output 
+                data.output = this.task.output
                 // code
                 data.sourceCode = this.ide.code
             } else { // without sample
@@ -366,7 +366,7 @@ export default {
                 }
             }
             data = JSON.stringify(data)
-
+    
             this.axios.post(this.$store.state.compiler + '/compiler', data, {
                 headers: {
                     'Content-Type': 'application/json'
