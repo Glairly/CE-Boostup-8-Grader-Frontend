@@ -165,8 +165,8 @@
                                 <!-- {{item.types}} -->
                                 <span v-if="type != 'submission'">
                                     <v-divider></v-divider>
-                                    <v-row :style="{backgroundColor:isDone(item)}" style="color:transparent" class="rounded-b-xl ma-0 pa-0">
-                                        _
+                                    <v-row :style="{backgroundColor:isDone(item)}" class="rounded-b-xl ma-0 pa-3">
+
                                     </v-row>
                                 </span>
                             </v-card>
@@ -178,13 +178,13 @@
             <!-- table data list -->
             <template v-else v-slot:default="props">
                 <v-card class="ma-3 pa-5 elevation-3 rounded-xl">
-                    <v-data-table item-key="i_d" hide-default-footer :items-per-page.sync="itemsPerPage" :page="page" :search="search"  :headers="table.header" :items="props.items">
+                    <v-data-table item-key="i_d" hide-default-footer :items-per-page.sync="itemsPerPage" :page="page" :search="search" :headers="table.header" :items="props.items">
 
                         <template v-slot:item.i_d="{item}">
                             <span v-if="type == 'question'">
                                 <v-tooltip bottom>
                                     <template v-slot:activator="{on}">
-                                        <v-btn v-on="on" @click.end="toCoding(item,0)" :color="isDone(item)">
+                                        <v-btn v-on="on" @click.end="toCoding(item,0)" class="black--text" :color="isDone(item)">
                                             {{item.i_d}}
                                         </v-btn>
                                     </template>
@@ -246,12 +246,12 @@
                         </v-menu>
 
                         <v-spacer></v-spacer>
-                        <template v-if="!$vuetify.breakpoint.mobile">
+                        <template v-if="!$vuetify.breakpoint.mobile && type == 'question'">
                             <v-icon color="#8BC34A" style="border:2px solid black;background:#8BC34A;" class="rounded-circle">mdi-checkbox-blank-circle</v-icon>
                             <span class="mx-3">Finished </span>
                             <v-icon color="#EF5350" style="border:2px solid black;background:#EF5350;" class="rounded-circle">mdi-checkbox-blank-circle</v-icon>
                             <span class="mx-3">Wrong</span>
-                            <v-icon color="white" style="border:2px solid black;background:white;" class="rounded-circle">mdi-checkbox-blank-circle</v-icon>
+                            <v-icon color="#ffeeb0" style="border:2px solid black;background:#ffeeb0;" class="rounded-circle">mdi-checkbox-blank-circle</v-icon>
                             <span class="mx-3">Undone</span>
                         </template>
 
@@ -413,7 +413,7 @@ export default {
         // pagination
         isDone(question) {
             if (this.type == "submission") return "transparent"
-            let col = ["white", "#8BC34A", "#EF5350"]
+            let col = [this.ccolor, "#8BC34A", "#EF5350"]
             let done = this.doneQuestion.finished.includes(question.id)
             let unDone = this.doneQuestion.unfinished.includes(question.id)
             let status = 0
