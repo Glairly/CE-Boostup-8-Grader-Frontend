@@ -15,7 +15,7 @@
                         <span>Switch Table Style</span>
                     </v-tooltip>
 
-                    <v-divider vertical class="mx-3"></v-divider>
+                    <v-divider vertical class="mx-3" ></v-divider>
                     <!-- Search Bar -->
                     <v-col cols="3">
                         <v-text-field v-model="search" clearable solo hide-details prepend-inner-icon="search" label="Search Name"></v-text-field>
@@ -153,7 +153,7 @@
                                     </v-col>
                                     <v-divider vertical> </v-divider>
                                     <v-col class="ma-0 pa-1">
-                                        <v-row class="mx-5 pa-0" justify="start">
+                                        <v-row class="mx-5 pa-0" justify="center">
                                             <template v-for=" (i,index) in tagFilter(item.types)">
                                                 <v-chip style="z-index:10;background:tranparent !important;" outlined class="pa-1 mx-1" :key="index">
                                                     {{ i }}
