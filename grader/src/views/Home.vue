@@ -53,7 +53,7 @@
             <span>Switch Theme</span>
         </v-tooltip>
         <!-- <v-divider class="mx-3"></v-divider> -->
-        <v-menu color="white" offset-y transition="slide-x-transition">
+        <v-menu style="z-index:15" color="white" offset-y transition="slide-x-transition">
             <template v-slot:activator="{ on }">
                 <v-chip v-on="on" class="pl-5 pr-12 py-5 elevation-3" pill dark @click="{}">
                     <v-badge bordered bottom color="green accent-4" dot offset-x="15" offset-y="10">

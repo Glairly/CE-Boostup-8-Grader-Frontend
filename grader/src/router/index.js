@@ -65,7 +65,7 @@ const routes = [{
                 }
             },
             {
-                path: '/Home/learn2',
+                path: 'learn2',
                 name: 'learn2',
                 beforeEnter() {
                     window.open('https://stackoverflow.com/', '_blank');

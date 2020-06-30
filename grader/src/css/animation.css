@@ -83,7 +83,7 @@
 
 .lr-top {
     position: fixed;
-    z-index: 100;
+    z-index: 10;
     left: 0;
     top: 20%;
     animation: linearAround-r 10s normal infinite ease-in-out;

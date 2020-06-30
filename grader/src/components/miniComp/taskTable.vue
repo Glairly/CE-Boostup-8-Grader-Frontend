@@ -432,6 +432,7 @@ export default {
             this.$router.push({
                 name: 'Coding'
             })
+            this.$cookies.remove('task')
             this.$cookies.set('task', data, '1d')
         },
         customFilter(items, search) {

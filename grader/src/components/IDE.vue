@@ -107,11 +107,11 @@
             </v-row>
         </v-col>
     </v-row>
-    <v-divider></v-divider>
+    <!-- <v-divider></v-divider> -->
     <!-- Console -->
-    <v-sheet dark id="logs" class="text-left mt-2 elevation-3" v-show="compile.show">
+    <v-sheet dark id="logs" class="text-left mt-2 elevation-3 rounded-xl" v-show="compile.show">
         <!-- Result -->
-        <v-card class="pa-5">
+        <v-card class="pa-5 rounded-xl">
             <v-toolbar class="elevation-0">
                 <v-col cols="2">
                     <v-btn block :ripple="false" class="mt-1" id="result" color="info"><strong>Result</strong></v-btn>

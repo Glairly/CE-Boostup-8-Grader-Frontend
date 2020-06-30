@@ -26,20 +26,20 @@
                                     <v-col cols="1"></v-col>
                                     <v-col class="pa-0 ma-0">
                                         <v-row class="pa-0 ma-0" justify="start">
-                                            <div>
+                                            <!-- <div>
                                                 <v-tooltip bottom>
                                                     <template v-slot:activator="{on}">
-                                                        <v-chip pill class="ma-2 pa-5 font-weight-black glow-black" color="black" v-on="on" outlined>{{question.details.timeLimit}}</v-chip>
+                                                        <v-chip pill class="ma-2 pa-5 glow-black" style="border:1px black solid;" color="dark" v-on="on" outlined>{{question.details.timeLimit}}</v-chip>
                                                     </template>
                                                     <span>Time Limit</span>
                                                 </v-tooltip>
                                                 <v-tooltip bottom>
                                                     <template v-slot:activator="{on}">
-                                                        <v-chip pill class="ma-2 pa-5 font-weight-black glow-black" color="black" v-on="on" outlined>{{question.details.memoryLimit}}</v-chip>
+                                                        <v-chip pill class="ma-2 pa-5 glow-black" style="border:1px black solid;" color="dark"  v-on="on" outlined>{{question.details.memoryLimit}}</v-chip>
                                                     </template>
                                                     <span>Memory Limit</span>
                                                 </v-tooltip>
-                                            </div>
+                                            </div> -->
                                             <div>
                                                 <v-tooltip bottom>
                                                     <template v-slot:activator="{on}">
@@ -120,13 +120,21 @@
             </v-col>
             <!-- toggle -->
             <v-col :cols="rightNav.show ? 12 : 1" class="ma-0 pa-0">
-                <v-row style="height:100%" class="ma-0 pa-0 expandable" width="100" align="center" justify="center">
-                    <v-icon v-if="rightNav.show" x-large @click.stop="toggleRightNav">
-                        mdi-chevron-right
-                    </v-icon>
-                    <v-icon v-else x-large @click.stop="toggleRightNav">
-                        mdi-chevron-left
-                    </v-icon>
+                <v-row style="height:100%" class="d-flex flex-column ma-0 pa-0" width="100">
+                    <v-col class="expandable" align="center" justify="start">
+                        <v-btn text icon>
+                            <v-icon>mdi-arrow-expand-horizontal</v-icon>
+                        </v-btn>
+                    </v-col>
+
+                    <v-col align="center">
+                        <v-icon v-if="rightNav.show" x-large @click.stop="toggleRightNav">
+                            mdi-chevron-right
+                        </v-icon>
+                        <v-icon v-else x-large @click.stop="toggleRightNav">
+                            mdi-chevron-left
+                        </v-icon>
+                    </v-col>
                 </v-row>
             </v-col>
         </v-row>
@@ -199,10 +207,11 @@ export default {
     },
     created() {},
     mounted() {
+        this.setBorderWidth()
+        this.setEvents()
         this.update()
     },
     methods: {
-
         codePopup(code) {
             this.rightNav.code = code;
             if (this.rightNav.code)
@@ -240,6 +249,8 @@ export default {
                 this.rightNav.seeCode = true
             })
 
+            this.rightNav.show = false
+
         },
         setBorderWidth() {
             let i = this.$refs.drawer.$el.querySelector(
@@ -248,25 +259,22 @@ export default {
             i.style.cursor = "ew-resize";
         },
         setEvents() {
-            const minSize = this.rightNav.borderSize;
+            const minSize = 500;
             const el = this.$refs.drawer.$el;
             const drawerBorder = el.querySelector(".expandable");
             const vm = this;
-            const direction = "right"
 
             function resize(e) {
                 document.body.style.cursor = "ew-resize";
-                let f = direction === "right" ?
-                    document.body.scrollWidth - e.clientX :
-                    e.clientX;
-
+                let f = e.clientX;
                 if (f >= 600)
-                    el.style.width = f + "px";
+                    el.style.width = f + 50 + "px";
             }
 
             drawerBorder.addEventListener(
                 "mousedown",
                 e => {
+                    console.log(e)
                     if (e.offsetX < minSize) {
                         el.style.transition = 'initial';
                         document.addEventListener("mousemove", resize, false);
@@ -277,7 +285,7 @@ export default {
             );
 
             drawerBorder.addEventListener(
-                "mouseup",
+                "click",
                 () => {
                     el.style.transition = '';
                     vm.rightNav.width = el.style.width;
