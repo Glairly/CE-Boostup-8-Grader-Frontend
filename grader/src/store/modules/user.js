@@ -196,7 +196,6 @@ export default { // eslint-disable-next-line no-unused-vars
                 now: 0
             }
 
-
             s.finished.forEach(el => {
                 let ind = _q.indexOf(el)
                 if (ind > -1) {
@@ -208,7 +207,6 @@ export default { // eslint-disable-next-line no-unused-vars
                     score.now += sc
                 }
             })
-
 
             s.unfinished.forEach(el => {
 

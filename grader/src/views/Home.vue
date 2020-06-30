@@ -155,7 +155,7 @@ export default {
             drawerToggle: true,
             scaleover: "",
             navLink: [{
-                name: "DashBoard",
+                name: "Home",
                 link: "/Home/dashboard"
             }, {
                 name: "Tasks",

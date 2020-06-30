@@ -4,7 +4,7 @@
         <v-row class="ma-0 pa-0" style="height:95%">
             <!-- Question  -->
             <v-col v-show="!rightNav.show" class="ma-0 pa-0">
-                <v-tabs style="height:100%" grow color="#FFEEB0" v-model="rightNav.tab_select" slider-color="#B15D2C" class="elevation-5">
+                <v-tabs style="height:100%" grow color="#FFEEB0" v-model="rightNav.tab_select" slider-color="transparent" class="elevation-5">
                     <v-tab>
                         <v-icon>mdi-file-pdf</v-icon>
                     </v-tab>
@@ -121,8 +121,8 @@
             <!-- toggle -->
             <v-col :cols="rightNav.show ? 12 : 1" class="ma-0 pa-0">
                 <v-row style="height:100%" class="d-flex flex-column ma-0 pa-0" width="100">
-                    <v-col class="expandable" align="center" justify="start">
-                        <v-btn text icon>
+                    <v-col align="center" justify="start">
+                        <v-btn class="expandable" v-if="!rightNav.show" text icon>
                             <v-icon>mdi-arrow-expand-horizontal</v-icon>
                         </v-btn>
                     </v-col>
@@ -207,8 +207,6 @@ export default {
     },
     created() {},
     mounted() {
-        this.setBorderWidth()
-        this.setEvents()
         this.update()
     },
     methods: {
@@ -237,7 +235,6 @@ export default {
                 }
             }).catch(() => {
                 this.rightNav.seeCode = true
-
             })
             // user
             this.axios.post(this.$store.state.api + "/api/v1/submission_code", body, config).then(res => {
@@ -249,14 +246,10 @@ export default {
                 this.rightNav.seeCode = true
             })
 
-            this.rightNav.show = false
+            setTimeout(() => {
+                this.toggleRightNav()
+            }, 500);
 
-        },
-        setBorderWidth() {
-            let i = this.$refs.drawer.$el.querySelector(
-                ".expandable"
-            );
-            i.style.cursor = "ew-resize";
         },
         setEvents() {
             const minSize = 500;
@@ -267,17 +260,16 @@ export default {
             function resize(e) {
                 document.body.style.cursor = "ew-resize";
                 let f = e.clientX;
-                if (f >= 600)
+                if ( f >= 600)
                     el.style.width = f + 50 + "px";
             }
 
             drawerBorder.addEventListener(
                 "mousedown",
                 e => {
-                    console.log(e)
                     if (e.offsetX < minSize) {
                         el.style.transition = 'initial';
-                        document.addEventListener("mousemove", resize, false);
+                        document.addEventListener("mousemove", resize, true);
                     }
                     e.preventDefault()
                 },
@@ -285,44 +277,38 @@ export default {
             );
 
             drawerBorder.addEventListener(
-                "click",
+                "mouseup",
                 () => {
                     el.style.transition = '';
                     vm.rightNav.width = el.style.width;
                     document.body.style.cursor = "";
-                    document.removeEventListener("mousemove", resize, false);
+                    document.removeEventListener("mousemove", resize, true);
                 },
                 false
             );
         },
         unExpand() {
             const el = this.$refs.drawer.$el;
-            const drawerBorder = el.querySelector(".expandable");
-            const direction = "right"
 
             function resize(e) {
                 document.body.style.cursor = "ew-resize";
-                let f = direction === "right" ?
-                    document.body.scrollWidth - e.clientX :
-                    e.clientX;
-
+                let f = e.clientX;
                 if (f >= 600)
-                    el.style.width = f + "px";
+                    el.style.width = f + 50 + "px";
             }
-            drawerBorder.removeEventListener(
-                "mousedown", resize, false
-            );
+            document.removeEventListener("mousemove", resize, true);
 
-            drawerBorder.removeEventListener(
-                "mouseup", resize, false
-            );
         },
         toggleRightNav() {
             this.rightNav.show = !this.rightNav.show
-            if (!this.rightNav.show) {
-                this.unExpand()
+            if (this.rightNav.show) {
+                setTimeout(() => {
+                    this.unExpand()
+                }, 500);
             } else {
-                this.setEvents()
+                setTimeout(() => {
+                    this.setEvents()
+                }, 1000);
             }
             this.rightNav.tab_select = 0
         }

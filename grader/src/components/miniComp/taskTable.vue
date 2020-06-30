@@ -94,10 +94,10 @@
                     <v-col v-for="(item,index) in props.items" :key="index" cols="12" sm="6" md="4" lg="3">
                         <v-hover v-slot:default="{ hover }" close-delay="50">
 
-                            <v-card class="rounded-xl" light :class="animation" :elevation="hover ? 16 : 2">
+                            <v-card class="rounded-xl" :class="animation" :elevation="hover ? 16 : 2">
 
                                 <v-fade-transition>
-                                    <v-overlay v-if="hover" absolute color="grey lighten-5">
+                                    <v-overlay v-if="hover && type == 'question'" absolute color="grey lighten-5">
                                         <v-btn @click.end="toCoding(item,index)">Go to Coding</v-btn>
                                     </v-overlay>
                                 </v-fade-transition>
@@ -154,8 +154,8 @@
                                     <v-divider vertical> </v-divider>
                                     <v-col class="ma-0 pa-1">
                                         <v-row class="mx-5 pa-0" justify="start">
-                                            <template v-for=" i in tagFilter(item.types)">
-                                                <v-chip style="z-index:10;background:white !important;" outlined class="pa-1 mx-1" :key="i">
+                                            <template v-for=" (i,index) in tagFilter(item.types)">
+                                                <v-chip style="z-index:10;background:tranparent !important;" outlined class="pa-1 mx-1" :key="index">
                                                     {{ i }}
                                                 </v-chip>
                                             </template>
@@ -178,17 +178,21 @@
             <!-- table data list -->
             <template v-else v-slot:default="props">
                 <v-card class="ma-3 pa-5 elevation-3 rounded-xl">
-                    <v-data-table single-expand :show-expand="isTagged" item-key="i_d" hide-default-footer :items-per-page.sync="itemsPerPage" :page="page" :search="search" @dblclick:row="toCoding" :headers="table.header" :items="props.items">
+                    <v-data-table item-key="i_d" hide-default-footer :items-per-page.sync="itemsPerPage" :page="page" :search="search"  :headers="table.header" :items="props.items">
 
                         <template v-slot:item.i_d="{item}">
-                            <v-tooltip bottom>
-                                <template v-slot:activator="{on}">
-                                    <v-btn v-on="on" @click.end="toCoding(item,0)" :color="isDone(item)">
-                                        {{item.i_d}}
-                                    </v-btn>
-                                </template>
-                                click to go coding
-                            </v-tooltip>
+                            <span v-if="type == 'question'">
+                                <v-tooltip bottom>
+                                    <template v-slot:activator="{on}">
+                                        <v-btn v-on="on" @click.end="toCoding(item,0)" :color="isDone(item)">
+                                            {{item.i_d}}
+                                        </v-btn>
+                                    </template>
+                                    click to go coding
+                                </v-tooltip>
+                            </span>
+                            <span v-else> {{item.i_d}}
+                            </span>
 
                         </template>
 
@@ -197,19 +201,23 @@
                         </template>
 
                         <template v-slot:item.types="{ item }">
-                            <v-icon @click="item.showTag = true">mdi-tag-plus-outline</v-icon>
+                            <!-- <v-icon @click="item.showTag = true">mdi-tag-plus-outline</v-icon> -->
+                            <template v-for=" (i,index) in tagFilter(item.types)">
+                                <v-chip color="warning" class="ma-1" :key="index">
+                                    {{ i }}
+                                </v-chip>
+                            </template>
                         </template>
 
-                        <template v-slot:expanded-item="{ headers, item }">
+                        <!-- <template v-slot:expanded-item="{ headers, item }">
                             <td v-if="item.types" class="ma-0 pa-3" :colspan="headers.length">
                                 <template v-for=" (i,index) in tagFilter(item.types)">
-
                                     <v-chip color="warning" class="ma-1" :key="index">
                                         {{ i }}
                                     </v-chip>
                                 </template>
                             </td>
-                        </template>
+                        </template> -->
 
                     </v-data-table>
                 </v-card>
@@ -313,7 +321,8 @@ export default {
                 header: [{
                         text: 'ID',
                         value: 'i_d',
-                        align: 'center'
+                        align: 'center',
+                        width: '8%'
                     },
                     {
                         text: 'Title',
@@ -404,7 +413,7 @@ export default {
         // pagination
         isDone(question) {
             if (this.type == "submission") return "transparent"
-            let col = ["transparent", "#8BC34A", "#EF5350"]
+            let col = ["white", "#8BC34A", "#EF5350"]
             let done = this.doneQuestion.finished.includes(question.id)
             let unDone = this.doneQuestion.unfinished.includes(question.id)
             let status = 0
@@ -458,9 +467,9 @@ export default {
                 text: 'Result',
                 value: 'result',
                 align: 'center',
-
             })
             this.sortDesc = true
+
         } else if (this.type == "question") {
             this.table.header.push({
                 text: 'Passed',
@@ -469,7 +478,9 @@ export default {
             })
             this.table.header.push({
                 text: 'Tags',
-                value: 'data-table-expand'
+                value: 'types',
+                align: 'center',
+                width: '30%'
             })
         }
 
