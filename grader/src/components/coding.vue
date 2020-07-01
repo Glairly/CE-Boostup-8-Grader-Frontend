@@ -1,5 +1,5 @@
 <template>
-<v-sheet class="ma-0" tile>
+<v-sheet v-if="task(qId)" class="ma-0" tile>
     <v-navigation-drawer ref="drawer" no-gutters clipped app :mini-variant.sync="rightNav.show" width="50%" dark class="elevation-5" :style="Zindex" permanent>
         <v-row class="ma-0 pa-0" style="height:95%">
             <!-- Question  -->
@@ -14,7 +14,7 @@
                     <v-tabs-items style="height:100%" v-model="rightNav.tab_select">
                         <!-- PDF -->
                         <v-tab-item>
-                            <iframe style="transition:all 2s;width:100%;height:100%" :src="task.questionBody"></iframe>
+                            <iframe style="transition:all 2s;width:100%;height:100%" :src="task(qId).questionBody"></iframe>
                         </v-tab-item>
 
                         <!-- Details -->
@@ -22,7 +22,7 @@
                             <v-card tile class="py-3 " :class="rightNav.user.data.finished ? 'bordered-left-15-green':'bordered-left-15-red'">
                                 <!-- question title -->
                                 <v-card-title class="display-1 mb-1 " primary-title>
-                                    <strong> {{task.i_d}} | {{task.title}}</strong>
+                                    <strong> {{task(qId).i_d}} | {{task(qId).title}}</strong>
                                     <v-col cols="1"></v-col>
                                     <v-col class="pa-0 ma-0">
                                         <v-row class="pa-0 ma-0" justify="start">
@@ -52,11 +52,7 @@
                                         </v-row>
                                     </v-col>
                                 </v-card-title>
-                                <v-card-subtitle class="pa-0">
-                                    <v-col cols="3" class="pa-0">
-                                        <strong>Author : {{question.by}}</strong>
-                                    </v-col>
-                                </v-card-subtitle>
+
                             </v-card>
                             <v-sheet class="pa-5 mt-2">
                                 <!-- question detail -->
@@ -65,7 +61,7 @@
                                         <v-btn block :ripple="false" class="mt-1 glow-warning" color="warning"><strong>Question's Rank</strong></v-btn>
                                     </v-col>
                                     <v-col>
-                                        <v-rating background-color="grey lighten-1" :value="task.rank/2" color="amber" dense half-increments readonly size="20"></v-rating>
+                                        <v-rating background-color="grey lighten-1" :value="task(qId).rank/2" color="amber" dense half-increments readonly size="20"></v-rating>
                                     </v-col>
                                 </v-row>
                                 <v-row align="center">
@@ -73,7 +69,7 @@
                                         <v-btn block :ripple="false" class="mt-1 glow-warning" color="warning"><strong>Score Per Case</strong></v-btn>
                                     </v-col>
                                     <v-col>
-                                        {{task.scorePerCase}}
+                                        {{task(qId).scorePerCase}}
                                     </v-col>
                                 </v-row>
                                 <!-- other lastest -->
@@ -102,7 +98,7 @@
                                             </v-col>
 
                                             <v-col align="center">
-                                                {{userLastest(task.id) ? userLastest(task.id) : 'No Submission Result'}}
+                                                {{userLastest(task(qId).id) ? userLastest(task(qId).id) : 'No Submission Result'}}
                                             </v-col>
                                             <v-col align="end">
                                                 <v-btn :disabled="!rightNav.user.data.code" outlined class="mt-1 glow-indigo" color="indigo" @click="codePopup(rightNav.user.data.code)"><strong>See Code</strong></v-btn>
@@ -144,8 +140,8 @@
         <v-btn color="error" tile @click="rightNav.codePopup = !rightNav.codePopup"><strong>Close</strong></v-btn>
         <IDE :code="rightNav.code" :footer="false" title="Lastest Code"></IDE>
     </v-dialog>
-    <IDE :task="task" :qId="task.qId" footer class="pa-5"></IDE>
-    <!-- {{ userLastest(task.id) }} {{ rightNav.other.data }} -->
+    <IDE :task="task(qId)" :qId="task(qId).qId" footer class="pa-5"></IDE>
+    <!-- {{ userLastest(task(qId).id) }} {{ rightNav.other.data }} -->
 </v-sheet>
 </template>
 
@@ -160,23 +156,9 @@ export default {
     components: {
         IDE
     },
+
     data: () => ({
         mini: false,
-        question: {
-            pdf_url: "https://drive.google.com/file/d/1T4caIXAj9L4qq9kBVToQzThsJZ7sbWZy/preview",
-            title: "Magic Pooh",
-            id: "1",
-            qId: "",
-            rank: 2,
-            passed: "3234",
-            by: "Glairy",
-            status: "Passed",
-            details: {
-                timeLimit: "1 sec",
-                memoryLimit: "64 Mb",
-                list: "PPPPP"
-            }
-        },
         rightNav: {
             show: true,
             borderSize: 5,
@@ -193,7 +175,7 @@ export default {
                 data: {}
             },
         },
-        task: Object
+        qId: ""
     }),
     computed: {
         Zindex() {
@@ -202,13 +184,14 @@ export default {
             }
         },
         ...mapGetters({
-            userLastest: 'user/getLastSubmission'
+            userLastest: 'user/getLastSubmission',
+            task: 'user/getQuestion'
         })
     },
-    created() {},
-    mounted() {
+    created() {
         this.update()
     },
+    mounted() {},
     methods: {
         codePopup(code) {
             this.rightNav.code = code;
@@ -216,10 +199,10 @@ export default {
                 this.rightNav.codePopup = true
         },
         update() {
-            this.task = this.$cookies.get('task')
+            this.qId = this.$cookies.get('task')
             var body = {
                 token: this.$store.getters['user/getToken'],
-                questionId: this.task.id
+                questionId: this.task(this.qId).id
             }
             let config = {
                 headers: {
@@ -260,8 +243,14 @@ export default {
             function resize(e) {
                 document.body.style.cursor = "ew-resize";
                 let f = e.clientX;
-                if ( f >= 600)
+                if (f >= 600)
                     el.style.width = f + 50 + "px";
+                else {
+                    el.style.transition = '';
+                    vm.rightNav.width = el.style.width;
+                    document.body.style.cursor = "";
+                    document.removeEventListener("mousemove", resize, true);
+                }
             }
 
             drawerBorder.addEventListener(

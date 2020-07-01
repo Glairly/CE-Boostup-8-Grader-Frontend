@@ -67,6 +67,9 @@ export default { // eslint-disable-next-line no-unused-vars
         getQuestions: (state) => {
             return state.data.questions
         },
+        getQuestion: (state) => (id) => {
+            return state.data.questions.filter(el => el.id == id)[0]
+        },
         getLastSubmission: (state) => (id) => {
             var data = state.data
             if (data.submission) {

@@ -10,9 +10,7 @@
                 <v-btn v-for="icon in icons" :key="icon.link" :href="icon.link" target="_blank" class="mx-4 white--text" icon>
                     <v-icon size="24px">{{ icon.icon }}</v-icon>
                 </v-btn>
-                <v-btn @click.end="contactStaff(lineMsg)" class="mx-4 white--text">
-                    Contact Staff
-                </v-btn>
+
             </v-card-text>
 
             <v-card-text class="white--text pt-0">
@@ -31,22 +29,21 @@
         <!-- Load Facebook SDK for JavaScript -->
         <div id="fb-root"></div>
         <!-- Your Chat Plugin code -->
-        <div class="fb-customerchat" attribution=setup_tool page_id="103668084746155" theme_color="#0084ff" logged_in_greeting="สวัสดีครับหิวข้าวจังยังไม่ได้นอน" logged_out_greeting="สวัสดีครับหิวข้าวจังยังไม่ได้นอน">
+        <div class="fb-customerchat" attribution=setup_tool page_id="103668084746155" theme_color="#0084ff" logged_in_greeting="สวัสดีครับหิวข้าวจังยังไม่ได้นอน" logged_out_greeting="ระบบอาจจะไม่ค่อยดี แต่ความห่วงใยที่มี พี่พร้อมให้น้อง">
         </div>
     </div>
 </v-app>
 </template>
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@500&family=Ubuntu:wght@500&display=swap');
 
 * {}
 
 .v-application,
 .v-application .text-h3,
 .v-application .headline {
-    font-family: 'Ubuntu', 'Robato', sans-serif !important;
-
+    font-family: 'Ubuntu', 'Kanit', sans-serif !important;
 }
 
 html::-webkit-scrollbar {
@@ -56,12 +53,14 @@ html::-webkit-scrollbar {
 html {
     -ms-overflow-style: none;
     scrollbar-width: none;
+    background: rgba(255, 238, 176,0.1) !important;
 }
+
 
 #app {
     // font-family: Roboto;
     // font-family: 'Roboto', sans-serif;\
-    font-family: 'Ubuntu', sans-serif;
+    font-family: 'Ubuntu', 'Kanit', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
@@ -91,6 +90,7 @@ export default {
     mixins: [mixin],
     data() {
         return {
+            fbPageId: "",
             icons: [{
                 icon: 'mdi-facebook',
                 link: 'https://www.facebook.com/ceboostup'

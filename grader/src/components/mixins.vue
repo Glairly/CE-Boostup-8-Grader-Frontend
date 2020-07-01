@@ -1,5 +1,5 @@
 <script>
-const qs = require('querystring')
+// const qs = require('querystring')
 export default {
     computed: {
 
@@ -17,26 +17,26 @@ export default {
         getRandomInt(max) {
             return Math.floor(Math.random() * Math.floor(max));
         },
-        contactStaff(text) {
-            var mode = [" ","KywdxDsJg7ByoTjcKhY4hDW2DDilhWi7VieIT4T3Bgv", "C03gyvCYaHMtxivJ3iBrFwFiOw8WXcTneJpsv4Y76D4"]
-            let config = {
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'Authorization': 'Bearer ' + mode[2],
-                    'Access-Control-Allow-Origin': '*'
-                }
-            }
-            var txt = prompt("ระบุปัญหาที่พบ", "login ไม่ได้");
-            if (txt == null || txt == "") {
-                 text   
-            } else {
-                let lineBody = {
-                    message: text + " 💥 " + txt +  " 💥"
-                }
-                this.axios.post('https://notify-api.line.me/api/notify', qs.stringify(lineBody), config)
-            }
+        // contactStaff(text) {
+        //     var mode = [" ","KywdxDsJg7ByoTjcKhY4hDW2DDilhWi7VieIT4T3Bgv", "C03gyvCYaHMtxivJ3iBrFwFiOw8WXcTneJpsv4Y76D4"]
+        //     let config = {
+        //         headers: {
+        //             'Content-Type': 'application/x-www-form-urlencoded',
+        //             'Authorization': 'Bearer ' + mode[2],
+        //             'Access-Control-Allow-Origin': '*'
+        //         }
+        //     }
+        //     var txt = prompt("ระบุปัญหาที่พบ", "login ไม่ได้");
+        //     if (txt == null || txt == "") {
+        //          text   
+        //     } else {
+        //         let lineBody = {
+        //             message: text + " 💥 " + txt +  " 💥"
+        //         }
+        //         this.axios.post('https://notify-api.line.me/api/notify', qs.stringify(lineBody), config)
+        //     }
 
-        },
+        // },
     },
 
     beforeDestroy() {

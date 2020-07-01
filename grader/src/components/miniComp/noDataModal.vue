@@ -23,7 +23,7 @@
                 <v-footer height="55px" class="ma-0 pa-0" absolute>
                     <v-row style="height:100%" class="ma-0 pa-0  d-flex flex-row">
                         <v-col style="height:100%" cols="6" class="ma-0 pa-0">
-                            <v-btn @click="contact()" color="error" style="height:100%" block tile>
+                            <v-btn   color="error" style="height:100%" block tile>
                                 Contact Staff
                             </v-btn>
                         </v-col>
@@ -57,13 +57,13 @@ export default {
         }
     },
     methods: {
-        contact() {
-            //String.fromCodePoint(
-            //alert("Staff🧐  will contact you back ASAP. 💦💨"+ ``)
-            this.modal = false
-            // let help = this.mode == "q" ? "โจทย์ไม่ขึ้น" : "Submission ไม่ขึ้น"
-            this.contactStaff("👉 น้อง" + this.$store.getters['user/getUserName'] +" 👈 " )
-        }
+        // contact() {
+        //     //String.fromCodePoint(
+        //     //alert("Staff🧐  will contact you back ASAP. 💦💨"+ ``)
+        //     this.modal = false
+        //     // let help = this.mode == "q" ? "โจทย์ไม่ขึ้น" : "Submission ไม่ขึ้น"
+        //     this.contactStaff("👉 น้อง" + this.$store.getters['user/getUserName'] +" 👈 " )
+        // }
     },
     mounted() {
         setTimeout(() => {

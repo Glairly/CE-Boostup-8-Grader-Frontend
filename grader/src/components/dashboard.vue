@@ -3,12 +3,12 @@
 
     <v-card class="pa-5 d-flex flex-column justify-center align-center" height="500" style="width:100%">
         <v-spacer></v-spacer>
-        <span class="text-h2">
-            Welcome to CE-Boost Up Grader
+        <span class="text-h2  font-weight-medium ">
+            <v-icon class="text-h2 spin" color="orange">mdi-bee</v-icon> Welcome to CE-Boost Up Grader <v-icon class="text-h2 spin-r" color="yellow">mdi-bee</v-icon>
         </span>
         <v-card-text>
             Check out Something interesting By the Slide-Show Below. Have Fun :)
-        </v-card-text>
+        </v-card-text> 
         <v-spacer></v-spacer>
         <v-card-actions class="d-flex align-center  justify-md-center" style="width:100%">
             <v-col v-for="(i,index) in btnItems" :key="index" :cols="12/btnItems.length -1 ">
@@ -39,14 +39,14 @@
 </v-flex>
 </template>
 
-<style >
-.theme--light.v-btn:not(.v-btn--flat):not(.v-btn--text):not(.v-btn--outlined){
+<style>
+.theme--light.v-btn:not(.v-btn--flat):not(.v-btn--text):not(.v-btn--outlined) {
     background: transparent;
 }
 
- .v-btn:not(.v-btn--text):not(.v-btn--outlined):hover:before{
-     opacity: 0 !important;
- }
+.v-btn:not(.v-btn--text):not(.v-btn--outlined):hover:before {
+    opacity: 0 !important;
+}
 </style>
 
 <script>
@@ -69,13 +69,13 @@ export default {
             btnItems: [{
                     title: "Start Coding",
                     hTitle: "Are you ready?",
-                    link: "/Home/work/task",
+                    link: "/work/task",
                     icon: "mdi-code-tags",
 
                 }, {
                     title: "View Your Work",
                     hTitle: "Keep up the good Work",
-                    link: "/Home/work/submission",
+                    link: "/work/submission",
                     icon: ""
                 },
                 {

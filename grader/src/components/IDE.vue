@@ -94,6 +94,7 @@
                             <v-progress-circular :value="20" indeterminate></v-progress-circular>
                         </v-col>
                         <span style="width:100%" v-else>
+                            <v-icon class="mx-2 pa-0" :color="snackbarIconColor">{{snackbarIcon}}</v-icon>
                             {{ text }}
                         </span>
                     </v-row>
@@ -215,7 +216,7 @@ export default {
                 line: true,
                 indentUnit: 0,
                 readOnly: this.footer ? false : true,
-                smartIndent : true
+                smartIndent: true
                 // more CodeMirror options...
             },
             ide: {
@@ -231,6 +232,8 @@ export default {
             snackbar: false,
             submitWait: false,
             text: 'Submit Success',
+            snackbarIcon: '',
+            snackbarIconColor: '',
             ///////////////
             // read file //
             uploadError: null,
@@ -411,9 +414,13 @@ export default {
                 }
             }).then(() => {
                 this.text = "Submiting was Done Successfully"
+                this.snackbarIcon = "mdi-check-bold"
+                this.snackbarIconColor = "success"
                 this.submitWait = false
             }).catch(() => {
                 this.submitWait = false
+                this.snackbarIcon = "mdi-close"
+                this.snackbarIconColor = "error"
                 this.text = "Submiting Come in Failure"
 
             })
@@ -473,7 +480,10 @@ export default {
     text-align: left !important;
 }
 
-.CodeMirror-gutter-filler, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-vscrollbar{
+.CodeMirror-gutter-filler,
+.CodeMirror-hscrollbar,
+.CodeMirror-scrollbar-filler,
+.CodeMirror-vscrollbar {
     z-index: 2 !important;
 }
 

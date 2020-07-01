@@ -24,7 +24,7 @@
      }
  }
  
- $color: ("white": rgb(255, 255, 255), "lightblue": rgb(33, 150, 243), "success":rgb(78, 175, 80), "indigo":rgb(75, 0, 13), "warning":#fb8c00, "error":#ff5252, "black":#000000);
+ $color: ("white": rgb(255, 255, 255), "lightblue": rgb(33, 150, 243), "success":rgb(78, 175, 80), "indigo":rgb(75, 0, 13), "warning":#fb8c00, "error":#ff5252, "black":#000000, "purple-a4":#aa00ff);
  @each $c,
  $col in $color {
      .glow-#{$c} {
