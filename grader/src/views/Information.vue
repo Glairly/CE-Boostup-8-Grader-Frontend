@@ -1,5 +1,7 @@
 <template>
 <div class="text-left">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
     <div class="w3-container w3-animate-left">
         <h1>
             วิธีการใช้งาน

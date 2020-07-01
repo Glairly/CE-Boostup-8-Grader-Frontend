@@ -114,10 +114,10 @@ export default {
 
 };
 window.fbAsyncInit = function () {
-    FB.init({
-        xfbml: true,
-        version: 'v7.0'
-    });
+    // FB.init({
+    //     xfbml: true,
+    //     version: 'v7.0'
+    // });
 };
 
 (function (d, s, id) {
