@@ -114,6 +114,7 @@ export default {
 
 };
 window.fbAsyncInit = function () {
+    // eslint-disable-next-line no-undef
     FB.init({
         xfbml: true,
         version: 'v7.0'
