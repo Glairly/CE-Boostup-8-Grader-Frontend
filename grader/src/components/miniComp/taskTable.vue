@@ -1,6 +1,6 @@
 <template>
 <VueGlow :color="color" mode="hex" style="width:100%" elevation="15" intense>
-    <v-card class="">
+    <v-card class="slide-in-top">
         <v-data-iterator :items="filtered" :custom-filter="customFilter" :items-per-page.sync="itemsPerPage" :page="page" :search="search" :sort-by="sortBy.toLowerCase()" :sort-desc="sortDesc" hide-default-footer>
             <!-- search bar etc. -->
             <template v-slot:header>
@@ -95,7 +95,6 @@
                         <v-hover v-slot:default="{ hover }" close-delay="50">
 
                             <v-card class="rounded-xl" :class="animation" :elevation="hover ? 16 : 2">
-
                                 <v-fade-transition>
                                     <v-overlay v-if="hover && type == 'question'" absolute color="grey lighten-5">
                                         <v-btn @click.end="toCoding(item,index)">Go to Coding</v-btn>
@@ -201,23 +200,12 @@
                         </template>
 
                         <template v-slot:item.types="{ item }">
-                            <!-- <v-icon @click="item.showTag = true">mdi-tag-plus-outline</v-icon> -->
                             <template v-for=" (i,index) in tagFilter(item.types)">
                                 <v-chip color="warning" class="ma-1" :key="index">
                                     {{ i }}
                                 </v-chip>
                             </template>
                         </template>
-
-                        <!-- <template v-slot:expanded-item="{ headers, item }">
-                            <td v-if="item.types" class="ma-0 pa-3" :colspan="headers.length">
-                                <template v-for=" (i,index) in tagFilter(item.types)">
-                                    <v-chip color="warning" class="ma-1" :key="index">
-                                        {{ i }}
-                                    </v-chip>
-                                </template>
-                            </td>
-                        </template> -->
 
                     </v-data-table>
                 </v-card>
@@ -448,7 +436,7 @@ export default {
             var allowRow = ["title"]
             return items.filter(el => {
                 return allowRow.some(key => {
-                    return el[key].toString().includes(search)
+                    return el[key].toString().toLocaleLowerCase().includes(search.toLocaleLowerCase())
                 })
             })
         },

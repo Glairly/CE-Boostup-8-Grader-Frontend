@@ -203,11 +203,13 @@ export default { // eslint-disable-next-line no-unused-vars
                 let ind = _q.indexOf(el)
                 if (ind > -1) {
                     star += q[ind].rank
-                        // score
-                    let allCase = q[ind].output.split("$.$")
-                    let sc = allCase.length * q[ind].scorePerCase
-                    score.max += sc
-                    score.now += sc
+
+                    if (q[ind].output) {
+                        let allCase = q[ind].output.split("$.$")
+                        let sc = allCase.length * q[ind].scorePerCase
+                        score.max += sc
+                        score.now += sc
+                    }
                 }
             })
 
@@ -216,15 +218,17 @@ export default { // eslint-disable-next-line no-unused-vars
                 let ind = _q.indexOf(el)
                     // score
                 if (ind > -1) {
-                    let allCase = q[ind].output.split("$.$")
-                    score.max += allCase.length * q[ind].scorePerCase
-                        // query for best score
-                    let arr = _sub.filter(e => e.questionId == el)
-                    let max = 0
-                    arr.forEach(i => {
-                        if (sub[i].score > max) max = sub[i].score
-                    })
-                    score.now += max
+                    if (q[ind].output) {
+                        let allCase = q[ind].output.split("$.$")
+                        score.max += allCase.length * q[ind].scorePerCase
+                            // query for best score
+                        let arr = _sub.filter(e => e.questionId == el)
+                        let max = 0
+                        arr.forEach(i => {
+                            if (sub[i].score > max) max = sub[i].score
+                        })
+                        score.now += max
+                    }
                 }
             })
 

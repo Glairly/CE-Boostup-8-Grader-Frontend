@@ -6,7 +6,7 @@
             <!-- Title -->
 
             <v-toolbar class="elevation-0" color="transparent">
-                <v-avatar :tile="true">
+                <v-avatar class="scale-in-center" :tile="true">
                     <img :src="require('@/assets/beeLogo1.png')" alt="logo">
                 </v-avatar>
                 <v-toolbar-title class="ml-2">CE-BU 8 | Grader </v-toolbar-title>
@@ -186,11 +186,11 @@ export default {
         let ready = () => {
             this.scaleover = "scale-over-out"
             this.ready = true
-            setInterval(() => {
-                this.$store.dispatch('user/fetch').then(() => {
-                    f2()
-                });
-            }, 3000)
+            // setInterval(() => {
+            //     this.$store.dispatch('user/fetch').then(() => {
+            //         f2()
+            //     });
+            // }, 3000)
         }
 
         let f2 = async () => {

@@ -1,11 +1,11 @@
 <template>
-<v-row class="mx-auto py-10" align="center" justify="space-around">
-    <v-card class="elevation-8 rounded-xl  " height="610" width="20%">
+<v-card  class="d-flex justify-space-around align-center" height="100%">
+    <v-card class="glow-lg-purple-a4 rounded-xl slide-in-left " height="610" width="20%">
         <v-hover v-slot:default="{ hover }">
             <v-img height="250" class="puff-in-center" :src="user.detail.avatar">
                 <v-fade-transition>
                     <div v-if="hover" class="d-flex transition-fast-in-fast-out v-card--reveal overlay-inner" style="height: 100%;">
-                        <v-row align="end" justify="end" class="ma-0 pa-2">
+                        <v-row align="end" justify="end" class="  pa-2">
                             <!-- change image -->
                             <v-tooltip bottom>
                                 <template v-slot:activator="{ on }">
@@ -77,10 +77,10 @@
             </div>
         </v-dialog>
     </v-card>
-    <v-card width="75%" class="elevation-8 rounded-xl  ">
+    <v-card width="75%" class="glow-lg-warning rounded-xl  slide-in-right ">
         <v-img height="150" class="puff-in-center" src="https://source.unsplash.com/random">
             <template v-slot:placeholder>
-                <v-row class="fill-height ma-0" align="center" justify="center">
+                <v-row class="fill-height  " align="center" justify="center">
                     <v-progress-circular indeterminate color="dark lighten-5"></v-progress-circular>
                 </v-row>
             </template>
@@ -97,11 +97,11 @@
                 <v-tab-item>
                     <v-sheet class="d-flex flex-column rounded-b-xl ">
                         <!-- Score -->
-                        <v-row class="ma-0 pa-5">
+                        <v-row class="pa-5">
                             <v-col cols="6" class="">
                                 <v-tooltip bottom>
                                     <template v-slot:activator="{on}">
-                                        <v-card v-on="on" style="height:100%;border-radius:5%" class="ma-0 mb-3 pa-5 elevation-3 d-flex flex-column align-center justify-space-between">
+                                        <v-card v-on="on" style="height:100%;border-radius:5%" class="slide-in-top  mb-3 pa-5 elevation-3 d-flex flex-column align-center justify-space-between">
                                             <v-card-text text-xs-center>
                                                 <v-flex style="font-size:2.125rem !important" class=" font-weight-black">
                                                     Overall Score
@@ -120,7 +120,7 @@
                             </v-col>
                             <!-- Passed Task -->
                             <v-col cols="6">
-                                <v-card style="height:100%;border-radius:5%" class="ma-0 mb-3 pa-5 elevation-3 d-flex flex-column align-center justify-space-between">
+                                <v-card style="height:100%;border-radius:5%" class="slide-in-top  mb-3 pa-5 elevation-3 d-flex flex-column align-center justify-space-between">
                                     <v-card-text text-xs-center>
                                         <v-flex style="font-size:2.125rem !important" class=" font-weight-black">
                                             Question Done
@@ -151,7 +151,7 @@
         </v-tabs>
 
     </v-card>
-</v-row>
+</v-card>
 </template>
 
 <style lang="scss" scoped>

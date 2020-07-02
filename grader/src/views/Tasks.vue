@@ -7,7 +7,7 @@
 
     <noDataModal :mode="'q'" :show="isReady" title="Whoops.." :primary="modal.primary" :secondary="modal.secondary"></noDataModal>
 
-    <taskTable type="question" animation="swing-in-top-bck" :tasks="tasks" title="All Questions" color="#fb8c00" ccolor="#ffeeb0"></taskTable>
+    <taskTable type="question" animation="puff-in-center" :tasks="tasks" title="All Questions" color="#fb8c00" ccolor="#ffeeb0"></taskTable>
 </div>
 </template>
 

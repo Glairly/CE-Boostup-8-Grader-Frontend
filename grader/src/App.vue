@@ -29,7 +29,7 @@
         <!-- Load Facebook SDK for JavaScript -->
         <div id="fb-root"></div>
         <!-- Your Chat Plugin code -->
-        <div class="fb-customerchat" attribution=setup_tool page_id="103668084746155" theme_color="#0084ff" logged_in_greeting="สวัสดีครับหิวข้าวจังยังไม่ได้นอน" logged_out_greeting="ระบบอาจจะไม่ค่อยดี แต่ความห่วงใยที่มี พี่พร้อมให้น้อง">
+        <div class="fb-customerchat" attribution=setup_tool page_id="103668084746155" theme_color="#0084ff" logged_in_greeting="มีปัญหาอะไรสอบถามได้น๊า~ ถ้าเหงาก็มาคุยกันได้ >_<" logged_out_greeting="ระบบอาจจะไม่ค่อยดี แต่ความห่วงใยที่มี พี่พร้อมให้น้อง">
         </div>
     </div>
 </v-app>
@@ -42,7 +42,9 @@
 
 .v-application,
 .v-application .text-h3,
-.v-application .headline {
+.v-application .headline,
+.v-application .text-h1,
+.v-application .text-h2 {
     font-family: 'Ubuntu', 'Kanit', sans-serif !important;
 }
 
@@ -53,34 +55,25 @@ html::-webkit-scrollbar {
 html {
     -ms-overflow-style: none;
     scrollbar-width: none;
-    background: rgba(255, 238, 176,0.1) !important;
+    background: rgba(255, 238, 176, 0.1) !important;
+}
+
+.col,.row {
+    margin: 0 !important;
 }
 
 
+
 #app {
-    // font-family: Roboto;
-    // font-family: 'Roboto', sans-serif;\
     font-family: 'Ubuntu', 'Kanit', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
     scroll-behavior: smooth !important;
-    // cursor:  url(http://ani.cursors-4u.net/cursors/cur-13/cur1157.ani), url(http://ani.cursors-4u.net/cursors/cur-13/cur1157.png), auto !important;
-    // background: rgb(250, 250, 250);
-}
-</style>
-
-<style>
-.task-rounded-top {
-    border-top-left-radius: 20px !important;
-    border-top-right-radius: 20px !important;
 }
 
-.task-rounded-bot {
-    border-bottom-left-radius: 20px !important;
-    border-bottom-right-radius: 20px !important;
-}
+ 
 </style>
 
 <script>

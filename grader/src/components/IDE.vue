@@ -1,6 +1,6 @@
 <template>
 <!-- Two-way Data-Binding -->
-<v-card style="border-radius: 0px;" class="pa-5">
+<v-card style="border-radius: 0px; " class="pa-5 slide-in-bottom ">
     <v-system-bar color="transparent">
         <v-icon color="green lighten-1">mdi-checkbox-blank-circle</v-icon>
 
@@ -15,7 +15,7 @@
         </v-col>
         <!-- font Size -->
         <v-col align="end">
-            <v-row class="ma-0 pa-0" align="center" justify="end">
+            <v-row class="  pa-0" align="center" justify="end">
                 <v-col cols="3">
                     <v-text-field class="textfield-noarrow" v-model="ide.fonts" type="number" label="Font Size" hide-details outlined min="12" max="30">
                         <template v-slot:append>
@@ -34,7 +34,7 @@
                 </v-col>
                 <!-- Language display -->
                 <v-col cols="3">
-                    <v-text-field label="Language" class="ma-0" hide-details v-model="ide.language" outlined readonly>
+                    <v-text-field label="Language" class=" " hide-details v-model="ide.language" outlined readonly>
                         <template v-slot:append>
                             <v-icon>mdi-alphabetical-variant</v-icon>
                         </template>
@@ -42,7 +42,7 @@
                 </v-col>
                 <!-- Theme select -->
                 <v-col cols="4">
-                    <v-select hide-details :items="ide.editorThemes" :menu-props="{ bottom: true, offsetY: true }" class="ma-0" v-model="cmOptions.theme" outlined label="Editor Theme">
+                    <v-select hide-details :items="ide.editorThemes" :menu-props="{ bottom: true, offsetY: true }" class=" " v-model="cmOptions.theme" outlined label="Editor Theme">
                         <template v-slot:prepend-inner>
                             <v-icon>mdi-theme-light-dark</v-icon>
                         </template>
@@ -59,7 +59,7 @@
     <!-- action button -->
     <v-row v-if="footer" full-width justify="space-between" align="center">
         <v-col>
-            <v-row class="ma-0" justify="start">
+            <v-row class=" " justify="start">
                 <!-- Upload local Code -->
                 <v-btn @click="$refs.inputUpload.click()" color="info" raised>
                     <v-icon left>mdi-upload</v-icon> Upload Code
@@ -77,7 +77,7 @@
         </v-col>
 
         <v-col>
-            <v-row class="ma-0" justify="end">
+            <v-row class=" " justify="end">
 
                 <!-- Complie sample -->
                 <v-btn color="warning" class="mr-5" raised @click.end="openCompile()">
@@ -88,22 +88,25 @@
                     <v-icon left>mdi-cloud-upload</v-icon> Submit
                 </v-btn>
                 <!-- submit warning -->
-                <v-snackbar v-model="snackbar">
-                    <v-row style="width:100%" class="ma-0 pa-0">
-                        <v-col v-if="submitWait" class="ma-0 pa-0">
-                            <v-progress-circular :value="20" indeterminate></v-progress-circular>
-                        </v-col>
-                        <span style="width:100%" v-else>
-                            <v-icon class="mx-2 pa-0" :color="snackbarIconColor">{{snackbarIcon}}</v-icon>
-                            {{ text }}
-                        </span>
-                    </v-row>
-                    <template v-slot:action="{ attrs }">
-                        <v-btn v-if="!submitWait" color="pink" text v-bind="attrs" @click="snackbar = false">
-                            Close
-                        </v-btn>
-                    </template>
-                </v-snackbar>
+                <v-dialog width="500" persistent v-model="snackbar">
+                    <v-card dark>
+                        <v-card-title >
+                            <span v-if="submitWait"  >
+                                <v-progress-circular :value="20" indeterminate></v-progress-circular>
+                            </span>
+                            <span v-else>
+                                <v-icon class="mx-auto pa-0" :color="snackbarIconColor">{{snackbarIcon}}</v-icon>
+                                {{ text }}
+                            </span>
+                        </v-card-title>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn v-if="!submitWait" v-on="on" color="pink" text v-bind="attrs" @click="snackbar = false">
+                                Close
+                            </v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
 
             </v-row>
         </v-col>
@@ -120,15 +123,15 @@
                 <v-col cols="3">
                     <v-btn :ripple="false" v-if="compile.time" block outlined class="mt-1" id="result" color="info">Time Used : <strong>{{ compile.time + " s."}}</strong></v-btn>
                 </v-col>
-                <v-col class="ma-0 pa-0" align="end">
-                    <v-row class="ma-0 pa-0" align="center" justify="end">
+                <v-col class="  pa-0" align="end">
+                    <v-row class="  pa-0" align="center" justify="end">
                         <v-col>
                             <v-btn outlined color="warning">
-                                <v-checkbox label="Compile With Sample" color="orange darken-1" class="ma-0" hide-details v-model="compile.withSample"></v-checkbox>
+                                <v-checkbox label="Compile With Sample" color="orange darken-1" class=" " hide-details v-model="compile.withSample"></v-checkbox>
                             </v-btn>
                         </v-col>
                         <v-col cols="4">
-                            <v-btn block id="result" color="indigo" dark @click.end="Compiling()">
+                            <v-btn block id="result" :loading="compile.wait" color="indigo" dark @click.end="Compiling()">
                                 <v-icon left>mdi-code-tags-check</v-icon> <strong>Compile !!</strong>
                             </v-btn>
                         </v-col>
@@ -138,7 +141,7 @@
 
             <span v-if="compile.withSample">
                 <v-skeleton-loader :loading="compile.skeleton" height="100%" type="table">
-                    <v-tabs class="pa-5 ma-0" show-arrows v-model="compile.tabSelect" slider-color="transparent">
+                    <v-tabs class="pa-5  " show-arrows v-model="compile.tabSelect" slider-color="transparent">
                         <template v-if="compile.withSample">
                             <v-tab :ripple="false" v-for="(i,index) in compile.compile_Status" :key="index">
                                 <v-chip dark class="pa-4" :ripple="false">
@@ -250,7 +253,7 @@ export default {
                 // with sample
                 compile_Status: [],
                 tabSelect: 0,
-                skeleton: false
+                wait: false
             } // length depend on question's sample
         }
     },
@@ -342,13 +345,12 @@ export default {
             this.compile.log = ""
         },
         Compiling() {
-
+            this.compile.wait = true
             // no sample
             let data = {
-                input: "",
                 sourceCode: ""
             }
-            this.compile.log = "Waiting for response"
+            this.compile.log = "Waiting for response..."
 
             if (this.compile.withSample) {
                 // input
@@ -375,7 +377,7 @@ export default {
                     'Content-Type': 'application/json'
                 }
             }).then(res => {
-
+                this.compile.wait = false
                 if (this.compile.withSample) {
                     this.compile.compile_Status = []
                     for (var i = 0; i < res.data.result.length; i++) {
@@ -383,7 +385,6 @@ export default {
                     }
                     this.compile.time = res.data.timeUsage
                 } else {
-                    // var standAlone = ["C" , "B" , "L" , "F"]
                     this.compile.log = res.data.result;
                     this.compile.time = res.data.timeUsage
                 }
