@@ -1,23 +1,21 @@
 <template>
 <v-app id="inspire">
     <scaleOver :scaleover="scaleover"></scaleOver>
-    <themeSwitch style="position:absolute;right:0;top:0;z-index:4;"></themeSwitch>
     <v-main>
-
-        <v-container style="background:transparent;position:absolute;" fill-height fluid>
-
+        <v-container style="background:transparent;" width="1200px" fill-height fluid>
             <v-row align="center" justify="center">
                 <!-- <v-fab-transition> -->
-                <v-card v-show="cardShow" class=" scale-in-center elevation-12 fab-trans"   style="z-index:4">
-                    <v-responsive :aspect-ratio="16/9">
+                <v-card v-show="cardShow" class=" scale-in-center elevation-12 fab-trans" :width="$vuetify.breakpoint.mobile? 700:1200" style="z-index:4">
                         <!-- header -->
                         <v-flex class="d-flex   pa-0">
-                            <v-col class="  pa-0">
+                            <v-col cols="6" class="  pa-0">
                                 <v-sheet class="gradient t5-t2">
-                                    <v-img height="700" :src="require('@/assets/loginBG.png')"></v-img>
+                                    <v-img :height="$vuetify.breakpoint.mobile? 600: 700" :src="require('@/assets/loginBG.png')"></v-img>
                                 </v-sheet>
                             </v-col>
-                            <v-col class="  pa-0">
+                            <v-col cols="6" class="  pa-0">
+                                <themeSwitch style="position:absolute;right:0;top:0;z-index:4;"></themeSwitch>
+
                                 <!--  -->
                                 <v-row class="  d-flex flex-column align-center justify-center" style="height:100%">
 
@@ -66,7 +64,6 @@
                             </v-col>
                         </v-flex>
                         <!--  -->
-                    </v-responsive>
                 </v-card>
                 <!-- </v-fab-transition> -->
                 <!-- Login progress bar -->

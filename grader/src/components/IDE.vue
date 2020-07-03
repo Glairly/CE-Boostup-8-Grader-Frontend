@@ -1,6 +1,6 @@
 <template>
 <!-- Two-way Data-Binding -->
-<v-card style="border-radius: 0px; " class="pa-5 slide-in-bottom ">
+<v-card style="border-radius: 0px;  " class="pa-5 slide-in-bottom ">
     <v-system-bar color="transparent">
         <v-icon color="green lighten-1">mdi-checkbox-blank-circle</v-icon>
 
@@ -365,7 +365,7 @@ export default {
 
             this.axios.post(this.$store.state.compiler + '/compiler', data, {
                 headers: {
-                    'Content-Type' : 'application/json'
+                    'Content-Type': 'application/json'
                 }
             }).then(res => {
                 this.compile.wait = false

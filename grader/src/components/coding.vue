@@ -140,7 +140,7 @@
         <v-btn color="error" tile @click="rightNav.codePopup = !rightNav.codePopup"><strong>Close</strong></v-btn>
         <IDE :code="rightNav.code" :footer="false" title="Lastest Code"></IDE>
     </v-dialog>
-    <IDE :task="task(qId)" :qId="task(qId).qId" footer class="pa-5"></IDE>
+    <IDE  :task="task(qId)" :qId="task(qId).qId" footer class="pa-5"></IDE>
     <!-- {{ userLastest(task(qId).id) }} {{ rightNav.other.data }} -->
 </v-sheet>
 </template>

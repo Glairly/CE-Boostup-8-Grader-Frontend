@@ -5,23 +5,6 @@ module.exports = {
     // dev mode
     devServer: {
         proxy: {
-            "/gists": {
-                target: "https://api.github.com",
-                changeOrigin: true,
-                secure: false,
-                pathRewrite: {
-                    '^/gists': ''
-                },
-
-            },
-            "/goo": {
-                target: "https://www.google.co.th/",
-                changeOrigin: true,
-                secure: false,
-                pathRewrite: {
-                    '^/goo': ''
-                },
-            },
             "/api/*": {
                 target: "http://localhost:5000/api",
                 changeOrigin: true,
@@ -38,14 +21,6 @@ module.exports = {
                     '^/compiler': ''
                 },
             },
-            "/lineNotify": {
-                target: "https://notify-api.line.me/api/notify",
-                changeOrigin: true,
-                secure: false,
-                pathRewrite: {
-                    '^/lineNotify': ''
-                },
-            }
         }
     },
     chainWebpack: config => {

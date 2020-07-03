@@ -7,8 +7,8 @@
     <span class="slide-in-top-1">
         <v-card-text style="font-size:1.1rem ">
             <v-container grid-list-xs>
-                สวัสดีน้องๆ รุ่นใหม่ไฟเเรง เเละผู้ที่หลงเข้ามาทุกท่าน ระบบ Grader นี้ได้รวมโจทย์ที่เหมาะกับการฝึกเขียนโค้ด
-                หากท่านเป็นมือใหม่หรือไม่เคยรู้จักกับภาษา C/C++ สามารถเรียนรู้โดยปุ่ม Learn ด้านล่างได้ เเต่ถ้าคุณพร้อมเเล้วก็ลุยที่ Start Coding กันเลย!!!
+                สวัสดีน้องๆ รุ่นใหม่ไฟเเรง เเละผู้ที่หลงเข้ามาทุกท่าน ระบบ Grader นี้ได้รวบรวมโจทย์ที่เหมาะกับการฝึกเขียนโค้ดไว้พร้อมสำหรับท่านเเล้ว
+                หากท่านเป็นมือใหม่หรือไม่เคยรู้จักกับภาษา C/C++ มาก่อน สามารถเรียนรู้โดยปุ่ม Learn ด้านล่างได้เลย เเต่ถ้าคุณพร้อมเเล้วก็ลุยที่ Start Coding กันเลย!!!
             </v-container>
         </v-card-text>
 
@@ -60,7 +60,7 @@
         </v-container>
     </v-card-text>
 
-    <v-footer absolute style="font-size:1.5rem;" class="white d-flex justify-center align-center font-weight-bold my-2">
+    <v-footer absolute style="font-size:1.5rem;" class="light d-flex justify-center align-center font-weight-bold my-2">
         <v-icon class="text-h2 red--text spin mdi-flip-h">mdi-balloon</v-icon> The Best Grader in 2020<v-icon class="text-h2 blue--text spin ">mdi-balloon</v-icon>
     </v-footer>
 </v-card>

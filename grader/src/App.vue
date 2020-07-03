@@ -38,15 +38,6 @@
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@500&family=Ubuntu:wght@500&display=swap');
 
-* {}
-
-.v-application,
-.v-application .text-h3,
-.v-application .headline,
-.v-application .text-h1,
-.v-application .text-h2 {
-    font-family: 'Ubuntu', 'Kanit', sans-serif !important;
-}
 
 html::-webkit-scrollbar {
     display: none;
@@ -74,6 +65,18 @@ html {
 }
 
  
+.v-application,
+.v-application .text-h3,
+.v-application .headline,
+.v-application .text-h1,
+.v-application .text-h2 {
+    font-family: 'Ubuntu', 'Kanit', sans-serif !important;
+}
+
+.theme--light.v-footer{
+    background: #ffffff !important;
+}
+
 </style>
 
 <script>
