@@ -252,7 +252,7 @@ export default {
             // animation sake
             setTimeout(() => {
                 try {
-                    this.$router.push('/Home')
+                    this.$router.push('/Home/dashboard')
                 } catch (e) {
                     console.log("Router Err : " + e)
                 }

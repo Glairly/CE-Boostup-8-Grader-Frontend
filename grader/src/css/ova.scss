@@ -24,7 +24,11 @@
      }
  }
  
+<<<<<<< HEAD
  $color: ("blue":blue, "green": green, "red":red, "white": rgb(255, 255, 255), "lightblue": rgb(33, 150, 243), "success":rgb(78, 175, 80), "indigo":rgb(75, 0, 13), "warning":#fb8c00, "error":#ff5252, "black":#000000, "purple-a4":#aa00ff);
+=======
+ $color: ("white": rgb(255, 255, 255), "lightblue": rgb(33, 150, 243), "success":rgb(78, 175, 80), "indigo":rgb(75, 0, 13), "warning":#fb8c00, "error":#ff5252, "black":#000000);
+>>>>>>> parent of ee172cb... -password -bugfix -ui improve -scaleoverfix
  @each $c,
  $col in $color {
      .glow-#{$c} {

@@ -5,7 +5,7 @@
 <script>
 export default {
     props: {
-        scaleover: String
+        scaleover : String
     }
 }
 </script>
@@ -16,10 +16,10 @@ export default {
     background: var(--theme-1);
     border-radius: 50%;
     position: fixed;
+    top: -250px;
+    right: -250px;
     z-index: 15;
-    top: -1px;
-    right: -1px;
-    width: 1px;
-    height: 1px;
+    width: 250px;
+    height: 250px;
 }
 </style>

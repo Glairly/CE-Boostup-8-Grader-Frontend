@@ -9,15 +9,20 @@ Vue.use(VueRouter)
 const routes = [{
         path: '/',
         name: 'Index',
+        component: Home
+    },
+    {
+        path: '/Home',
+        name: 'Home',
         component: Home,
         children: [{
-                path: 'home',
-                name: 'Home',
+                path: 'dashboard',
+                name: 'Dashboard',
                 component: () =>
                     import ('../views/Dashboard.vue')
             },
             {
-                path: 'work',
+                path: '/Home/work',
                 name: 'Work',
                 component: () =>
                     import ('../views/Work.vue'),
@@ -69,7 +74,7 @@ const routes = [{
                 }
             },
             {
-                path: 'information',
+                path: '/Home/information',
                 name: 'Information',
                 component: () =>
                     import ('@/views/Information.vue')
@@ -114,8 +119,6 @@ router.beforeEach((to, from, next) => {
                 })
         })
     })
-
-    if (to.name == 'Index') next('Home')
 
 
     var cookie = store.state.user.data

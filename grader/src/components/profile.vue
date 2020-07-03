@@ -1,6 +1,11 @@
 <template>
+<<<<<<< HEAD
 <v-card  class="d-flex justify-space-around align-center" height="100%">
     <v-card class="glow-lg-purple-a4 rounded-xl slide-in-left " height="610" width="20%">
+=======
+<v-row class="mx-auto my-12" justify="space-around">
+    <v-card class="elevation-8 rounded-xl" height="500" width="20%">
+>>>>>>> parent of ee172cb... -password -bugfix -ui improve -scaleoverfix
         <v-hover v-slot:default="{ hover }">
             <v-img height="250" class="puff-in-center" :src="user.detail.avatar">
                 <v-fade-transition>
@@ -9,7 +14,7 @@
                             <!-- change image -->
                             <v-tooltip bottom>
                                 <template v-slot:activator="{ on }">
-                                    <v-btn @click="changeMeow()" color="purple accent-4" dark fab v-on="on">
+                                    <v-btn @click="changeMeow()" color="info" dark fab v-on="on">
                                         <v-icon>mdi-autorenew</v-icon>
                                     </v-btn>
                                 </template>
@@ -22,12 +27,11 @@
             </v-img>
         </v-hover>
 
-        <v-tabs color="purple accent-4" grow slider-color="purple accent-4">
-            <v-tab :ripple="false">
+        <v-tabs color="primary" grow slider-color="primary">
+            <v-tab>
                 Profile
             </v-tab>
         </v-tabs>
-        <!-- Name change -->
         <v-card-text>
             <v-text-field label="Your Name" outlined :value="edit.data" v-model="edit.data" :readonly="edit.mode" :hide-details="edit.mode" persistent-hint hint="Edit your name here">
                 <template v-slot:append>
@@ -43,32 +47,9 @@
                 </template>
             </v-text-field>
         </v-card-text>
-        <!-- Password change -->
-        <v-card-text class="">
-            <v-hover v-slot:default="{ hover }">
-                <v-btn style="z-index:5" @click="editP.mode = !editP.mode" block dark class="pa-5" :class="hover ? 'glow-lg-purple-a4':''" color="purple accent-4">
-                    Change Password <v-icon right>{{ editP.mode ? 'mdi-arrow-up':'mdi-arrow-down'}}</v-icon>
-                </v-btn>
-            </v-hover>
-            <v-text-field class="slide-in-top mt-3" v-if="editP.mode" label="New password" outlined :value="editP.data" v-model="editP.data" :hide-details="editP.mode" persistent-hint hint="Type your new Password here">
-                <template v-slot:append>
-                    <template>
-                        <v-tooltip bottom>
-                            <template v-slot:activator="{ on }">
-                                <v-icon @click.end="editP.mode = false" v-on="on">mdi-close</v-icon>
-                            </template>
-                            <span>Type new Password.</span>
-                        </v-tooltip>
-                    </template>
-                </template>
-            </v-text-field>
-        </v-card-text>
-
-        <v-hover v-slot:default="{hover}">
-            <v-footer absolute id="save" :class="hover ? 'glow-purple-a4' : '' " color="purple accent-4" v-ripple="{ class: `white--text` }" class="d-flex align-center justify-center pa-3 rounded-b-xl" style="color:white;font-weight:500;font-size:1.25rem" @click="save()">
-                <v-icon class="white--text mr-3">mdi-floppy</v-icon> Save Change
-            </v-footer>
-        </v-hover>
+        <v-footer absolute id="save" color="purple accent-4" v-ripple="{ class: `white--text` }" class="d-flex align-center justify-center pa-5 rounded-b-xl" style="color:white;font-weight:500;font-size:1.25rem" @click="save()">
+            Save Change
+        </v-footer>
         <v-dialog v-model="edit.editError" persistent width="500">
             <div class="pa-5" color="transparent">
                 <v-alert class="mb-0" prominent dense :class="shake" v-model="edit.editError" dismissible color="indigo" border="left" elevation="2" colored-border icon="mdi-close-circle-outline">
@@ -77,7 +58,11 @@
             </div>
         </v-dialog>
     </v-card>
+<<<<<<< HEAD
     <v-card width="75%" class="glow-lg-warning rounded-xl  slide-in-right ">
+=======
+    <v-card width="75%" class="elevation-8 rounded-xl">
+>>>>>>> parent of ee172cb... -password -bugfix -ui improve -scaleoverfix
         <v-img height="150" class="puff-in-center" src="https://source.unsplash.com/random">
             <template v-slot:placeholder>
                 <v-row class="fill-height  " align="center" justify="center">
@@ -87,17 +72,21 @@
         </v-img>
 
         <v-tabs grow>
-            <v-tabs v-model="mode" color="warning" slider-color="warning">
-                <v-tab :ripple="false" v-for="item in items" :key="item.tab">
+            <v-tabs v-model="mode" color="primary" slider-color="primary">
+                <v-tab v-for="item in items" :key="item.tab">
                     {{ item.tab }}
                 </v-tab>
             </v-tabs>
             <!-- dash-board -->
             <v-tabs-items class="rounded-b-xl" v-model="mode">
                 <v-tab-item>
-                    <v-sheet class="d-flex flex-column rounded-b-xl ">
+                    <v-sheet  class="d-flex flex-column rounded-b-xl ">
                         <!-- Score -->
+<<<<<<< HEAD
                         <v-row class="pa-5">
+=======
+                        <v-row class="ma-0 pa-0 ">
+>>>>>>> parent of ee172cb... -password -bugfix -ui improve -scaleoverfix
                             <v-col cols="6" class="">
                                 <v-tooltip bottom>
                                     <template v-slot:activator="{on}">
@@ -133,9 +122,9 @@
                                     </v-card-actions>
                                     <v-tooltip bottom>
                                         <template v-slot:activator="{on}">
-                                            <v-btn v-on="on" color="orange" :ripple="false" outlined>Stars Collected : {{pie.question.star}}
+                                            <v-btn v-on="on" color="orange" :ripple="false"  outlined>Stars Collected : {{pie.question.star}}
                                                 <v-icon right color="yellow darken-2" class="spin">mdi-star</v-icon>
-                                            </v-btn>
+                                                </v-btn>
                                         </template>
                                         All finished Question Stars
                                     </v-tooltip>
@@ -143,10 +132,46 @@
                                 </v-card>
                             </v-col>
                         </v-row>
+                        <!-- <v-row class="ma-0 pa-0">
+                            <v-col>
+                                <v-card style="height:100%;">
+                                    <v-card-text>
+                                        5555
+                                    </v-card-text>
+                                </v-card>
+                            </v-col>
+                            <v-col>
+                                <v-card style="height:100%;">
+
+                                </v-card>
+                            </v-col>
+                        </v-row> -->
 
                     </v-sheet>
                 </v-tab-item>
-
+                <!--  -->
+                <!-- setting -->
+                <!-- <v-tab-item>
+                    <v-sheet class="d-flex" height="500">
+                        <v-row class="ma-0 pa-0">
+                            <v-col cols="6" class="ma-0 pa-0" style="background:blue">
+                                <v-row align="center" class="ma-0 pa-0" justify="center" style="height:100%">
+                                    <v-avatar size="200" color="grey">
+                                        <v-icon size="100">mdi-camera</v-icon>
+                                    </v-avatar>
+                                </v-row>
+                            </v-col>
+                            <v-col cols="6">
+                                <v-row align="center" class="pl-10" justify="start" style="height:100%">
+                                    <v-form>
+                                        <v-text-field outlined rounded label="Nick Name" name="login" prepend-inner-icon="person" type="text"></v-text-field>
+                                        <v-text-field outlined rounded label="Something" name="login" prepend-inner-icon="person" type="text"></v-text-field>
+                                    </v-form>
+                                </v-row>
+                            </v-col>
+                        </v-row>
+                    </v-sheet>
+                </v-tab-item> -->
             </v-tabs-items>
         </v-tabs>
 
@@ -189,12 +214,8 @@ export default {
             mode: true,
             data: {},
             editError: false,
-            editError_Msg: "",
+            editError_Msg: ""
         },
-        editP: {
-            mode: false,
-            data: "",
-        }
     }),
     computed: {
         pieScore() {
@@ -214,27 +235,12 @@ export default {
     },
     methods: {
         save() {
-            this.axios.post(this.$store.state.api + '/api/v1/nickname', {
+            this.axios.post(this.$store.state.api + '/api/v1/nickname/', {
                 nickname: this.edit.data,
                 token: this.$store.getters['user/getToken'],
             }).then(() => {
-                alert("Change Name Success")
                 this.$store.commit('user/changeName', this.edit.data)
-                location.reload();
-            }).catch(err => {
-                this.edit.editError = true
-                this.edit.editError_Msg = err.response.data.msg
-            })
-            if (this.editP.data) {
-                this.changePass()
-            }
-        },
-        changePass() {
-            this.axios.post(this.$store.state.api + '/api/v1/change_password', {
-                password: this.editP.data,
-                token: this.$store.getters['user/getToken'],
-            }).then(() => {
-                alert("Change Password and Name SuccessFul Refrsh!!")
+                alert("Refresh!!")
                 location.reload();
             }).catch(err => {
                 this.edit.editError = true

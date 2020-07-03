@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
 <span>
     <scaleOver style="transfrom:scale(20);" :scaleover="scaleover"></scaleOver>
     <v-sheet v-if="ready" class="home" color="rgba(255, 238, 176,0.1)">
@@ -14,93 +15,52 @@
 
             <!-- tabs menu -->
             <!-- <template v-slot:extension>
+=======
+<v-sheet class="home">
+    <scaleOver style="transform:scale(20)" :scaleover="scaleover"></scaleOver>
+    <v-app-bar :src="require('@/assets/navBee.png')" style="z-index:6 !important;" color="rgb(255,238,176)" app clipped-left>
+        <!-- Title -->
+
+        <v-toolbar class="elevation-0" color="transparent">
+            <v-avatar :tile="true">
+                <img :src="require('@/assets/beeLogo1.png')" alt="logo">
+            </v-avatar>
+            <v-toolbar-title class="ml-2">CE-BU 8 | Grader </v-toolbar-title>
+        </v-toolbar>
+
+        <!-- tabs menu -->
+        <!-- <template v-slot:extension>
+>>>>>>> parent of ee172cb... -password -bugfix -ui improve -scaleoverfix
             <v-tabs align-with-title id="nav" slider-color="success">
-                <v-tab to="">Home</v-tab>
-                <v-tab to="/task">Tasks</v-tab>
-                <v-tab to="/submission">Submissions</v-tab>
+                <v-tab to="/Home">Home</v-tab>
+                <v-tab to="/Home/task">Tasks</v-tab>
+                <v-tab to="/Home/submission">Submissions</v-tab>
                 <v-tab href="https://stackoverflow.com/">Learn</v-tab>
                 
             </v-tabs>
         </template> -->
-            <!--  -->
-            <template v-if="!$vuetify.breakpoint.mobile">
-                <v-tabs align-with-title id="nav" slider-color="#b15d2c">
-                    <template v-for="(i , index) in navLink">
-                        <v-tab :key="index" :to="i.link">{{i.name}}</v-tab>
-                    </template>
-                </v-tabs>
-            </template>
-            <template v-else>
-                <v-menu offset-y>
-                    <template v-slot:activator="{ on, attrs }">
-                        <v-btn color="warning" dark v-bind="attrs" v-on="on">
-                            Menu
-                        </v-btn>
-                    </template>
-                    <v-list>
-                        <v-list-item v-for="(item, index) in  navLink" :key="index" :to="item.link">
-                            <v-list-item-title>{{ item.name }}</v-list-item-title>
-                        </v-list-item>
-                    </v-list>
-                </v-menu>
-            </template>
-            <v-spacer></v-spacer>
-            <v-tooltip bottom>
-                <template v-slot:activator="{ on }">
-                    <v-btn class="mx-3" color="#b15d2c" v-on="on">
-                        <themeSwitch></themeSwitch>
+        <!--  -->
+        <template v-if="!$vuetify.breakpoint.mobile">
+            <v-tabs align-with-title id="nav" slider-color="#b15d2c">
+                <template v-for="(i , index) in navLink">
+                    <v-tab :key="index" :to="i.link">{{i.name}}</v-tab>
+                </template>
+            </v-tabs>
+        </template>
+        <template v-else>
+            <v-menu offset-y>
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn color="warning" dark v-bind="attrs" v-on="on">
+                        Menu
                     </v-btn>
                 </template>
-                <span>Switch Theme</span>
-            </v-tooltip>
-            <!-- <v-divider class="mx-3"></v-divider> -->
-            <v-menu style="z-index:15" color="white" offset-y transition="slide-x-transition">
-                <template v-slot:activator="{ on }">
-                    <v-chip v-on="on" class="pl-5 pr-12 py-5 elevation-3" pill dark @click="{}">
-                        <v-badge bordered bottom color="green accent-4" dot offset-x="15" offset-y="10">
-                            <v-avatar v-on="on" left>
-                                <v-img :src="user.detail.avatar"></v-img>
-                            </v-avatar>
-                        </v-badge>
-                        {{user.detail.name}}
-                    </v-chip>
-                </template>
-                <v-card width="300">
-                    <v-list dark>
-                        <v-list-item>
-                            <v-list-item-avatar>
-                                <v-img :src="user.detail.avatar"></v-img>
-                            </v-list-item-avatar>
-                            <v-list-item-content>
-                                <v-list-item-title>{{user.detail.name}}</v-list-item-title>
-                            </v-list-item-content>
-                            <v-list-item-action>
-                                <v-btn icon @click="menu = false">
-                                    <v-icon>mdi-close</v-icon>
-                                </v-btn>
-                            </v-list-item-action>
-                        </v-list-item>
-                    </v-list>
-                    <v-list>
-                        <v-list-item :ripple="false">
-                            <v-list-item-action>
-                                <v-icon>account_box</v-icon>
-                            </v-list-item-action>
-                            <v-list-item-subtitle>
-                                <v-btn block dark to="/profile">Profile</v-btn>
-                            </v-list-item-subtitle>
-                        </v-list-item>
-                        <v-list-item :ripple="false">
-                            <v-list-item-action>
-                                <v-icon>mdi-exit-to-app</v-icon>
-                            </v-list-item-action>
-                            <v-list-item-subtitle>
-                                <v-btn block dark @click.end="logout()">Logout</v-btn>
-                            </v-list-item-subtitle>
-                        </v-list-item>
-                    </v-list>
-                </v-card>
+                <v-list>
+                    <v-list-item v-for="(item, index) in  navLink" :key="index" :to="item.link">
+                        <v-list-item-title>{{ item.name }}</v-list-item-title>
+                    </v-list-item>
+                </v-list>
             </v-menu>
+<<<<<<< HEAD
         </v-app-bar>
 d
         <router-view>
@@ -111,16 +71,86 @@ d
                 <v-img class="sineMovement glow-warning rounded-circle" :src="require('@/assets/Bee-r.png')"></v-img>
             </div>
             <!-- <div class="lr-top" style="width:200px;height:200px;border-radius:50%;background:transparent;">
+=======
+        </template>
+        <v-spacer></v-spacer>
+        <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+                <v-btn class="mx-3" color="#b15d2c" v-on="on">
+                    <themeSwitch></themeSwitch>
+                </v-btn>
+            </template>
+            <span>Switch Theme</span>
+        </v-tooltip>
+        <!-- <v-divider class="mx-3"></v-divider> -->
+        <v-menu style="z-index:15" color="white" offset-y transition="slide-x-transition">
+            <template v-slot:activator="{ on }">
+                <v-chip v-on="on" class="pl-5 pr-12 py-5 elevation-3" pill dark @click="{}">
+                    <v-badge bordered bottom color="green accent-4" dot offset-x="15" offset-y="10">
+                        <v-avatar v-on="on" left>
+                            <v-img :src="user.detail.avatar"></v-img>
+                        </v-avatar>
+                    </v-badge>
+                    {{user.detail.name}}
+                </v-chip>
+            </template>
+            <v-card width="300">
+                <v-list dark>
+                    <v-list-item>
+                        <v-list-item-avatar>
+                            <v-img :src="user.detail.avatar"></v-img>
+                        </v-list-item-avatar>
+                        <v-list-item-content>
+                            <v-list-item-title>{{user.detail.name}}</v-list-item-title>
+                        </v-list-item-content>
+                        <v-list-item-action>
+                            <v-btn icon @click="menu = false">
+                                <v-icon>mdi-close</v-icon>
+                            </v-btn>
+                        </v-list-item-action>
+                    </v-list-item>
+                </v-list>
+                <v-list>
+                    <v-list-item :ripple="false">
+                        <v-list-item-action>
+                            <v-icon>account_box</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-subtitle>
+                            <v-btn block dark to="/Home/profile">Profile</v-btn>
+                        </v-list-item-subtitle>
+                    </v-list-item>
+                    <v-list-item :ripple="false">
+                        <v-list-item-action>
+                            <v-icon>mdi-exit-to-app</v-icon>
+                        </v-list-item-action>
+                        <v-list-item-subtitle>
+                            <v-btn block dark @click.end="logout()">Logout</v-btn>
+                        </v-list-item-subtitle>
+                    </v-list-item>
+                </v-list>
+            </v-card>
+        </v-menu>
+    </v-app-bar>
+
+    <router-view>
+    </router-view>
+
+    <span v-if="$route.name != 'Coding'">
+        <div class="l-center" style="width:60px;height:60px;border-radius:50%;background:transparent;">
+            <v-img class="sineMovement glow-warning rounded-circle" :src="require('@/assets/Bee-r.png')"></v-img>
+        </div>
+        <!-- <div class="lr-top" style="width:200px;height:200px;border-radius:50%;background:transparent;">
+>>>>>>> parent of ee172cb... -password -bugfix -ui improve -scaleoverfix
             <v-img class="sineMovement" :src="require('@/assets/Bee-r.png')"></v-img>
         </div> -->
-        </span>
-    </v-sheet>
-</span>
+    </span>
+
+</v-sheet>
 </template>
 
 <script>
 import themeSwitch from '@/components/miniComp/switchTheme'
-import scaleOver from '@/components/miniComp/scaleOverOut'
+import scaleOver from '@/components/miniComp/scaleOver'
 import mixin from '@/components/mixins'
 
 export default {
@@ -135,7 +165,6 @@ export default {
             mini: false,
             right: true,
             drawer: true,
-            ready: false,
             user: {},
             items: [{
                     title: "Home",
@@ -145,12 +174,12 @@ export default {
                 {
                     title: "My Account",
                     icon: "mdi-account",
-                    to: "/profile"
+                    to: "/Home/profile"
                 },
                 {
                     title: "My Tasks",
                     icon: "mdi-file-document",
-                    to: "/submission"
+                    to: "/Home/submission"
                 }
             ],
             login: true,
@@ -158,22 +187,22 @@ export default {
             scaleover: "",
             navLink: [{
                 name: "Home",
-                link: "/home"
+                link: "/Home/dashboard"
             }, {
                 name: "Tasks",
-                link: "/work/task"
+                link: "/Home/work/task"
             }, {
                 name: "Submission",
-                link: "/work/submission"
+                link: "/Home/work/submission"
             }, {
                 name: "Learn",
-                link: "/learn"
+                link: "/Home/learn"
             }, {
                 name: "Fix the Bugs",
-                link: "/learn2"
+                link: "/Home/learn2"
             }, {
                 name: "Information",
-                link: "/information"
+                link: "/Home/information"
             }]
 
         }
@@ -185,12 +214,20 @@ export default {
     mounted() {
         let ready = () => {
             this.scaleover = "scale-over-out"
+<<<<<<< HEAD
             this.ready = true
             // setInterval(() => {
             //     this.$store.dispatch('user/fetch').then(() => {
             //         f2()
             //     });
             // }, 3000)
+=======
+            setInterval(() => {
+                this.$store.dispatch('user/fetch').then(() => {
+                    f2()
+                });
+            }, 3000)
+>>>>>>> parent of ee172cb... -password -bugfix -ui improve -scaleoverfix
         }
 
         let f2 = async () => {

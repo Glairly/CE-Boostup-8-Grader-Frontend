@@ -430,7 +430,7 @@ export default {
                 name: 'Coding'
             })
             this.$cookies.remove('task')
-            this.$cookies.set('task', data.id, '1d')
+            this.$cookies.set('task', data, '1d')
         },
         customFilter(items, search) {
             var allowRow = ["title"]

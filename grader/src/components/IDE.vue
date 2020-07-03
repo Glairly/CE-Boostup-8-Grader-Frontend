@@ -88,6 +88,7 @@
                     <v-icon left>mdi-cloud-upload</v-icon> Submit
                 </v-btn>
                 <!-- submit warning -->
+<<<<<<< HEAD
                 <v-dialog width="500" persistent v-model="snackbar">
                     <v-card dark>
                         <v-card-title >
@@ -107,6 +108,23 @@
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
+=======
+                <v-snackbar v-model="snackbar">
+                    <v-row style="width:100%" class="ma-0 pa-0">
+                        <v-col v-if="submitWait" class="ma-0 pa-0">
+                            <v-progress-circular :value="20" indeterminate></v-progress-circular>
+                        </v-col>
+                        <span style="width:100%" v-else>
+                            {{ text }}
+                        </span>
+                    </v-row>
+                    <template v-slot:action="{ attrs }">
+                        <v-btn v-if="!submitWait" color="pink" text v-bind="attrs" @click="snackbar = false">
+                            Close
+                        </v-btn>
+                    </template>
+                </v-snackbar>
+>>>>>>> parent of ee172cb... -password -bugfix -ui improve -scaleoverfix
 
             </v-row>
         </v-col>
@@ -219,7 +237,7 @@ export default {
                 line: true,
                 indentUnit: 0,
                 readOnly: this.footer ? false : true,
-                smartIndent: true
+                smartIndent : true
                 // more CodeMirror options...
             },
             ide: {
@@ -235,8 +253,6 @@ export default {
             snackbar: false,
             submitWait: false,
             text: 'Submit Success',
-            snackbarIcon: '',
-            snackbarIconColor: '',
             ///////////////
             // read file //
             uploadError: null,
@@ -415,13 +431,9 @@ export default {
                 }
             }).then(() => {
                 this.text = "Submiting was Done Successfully"
-                this.snackbarIcon = "mdi-check-bold"
-                this.snackbarIconColor = "success"
                 this.submitWait = false
             }).catch(() => {
                 this.submitWait = false
-                this.snackbarIcon = "mdi-close"
-                this.snackbarIconColor = "error"
                 this.text = "Submiting Come in Failure"
 
             })
@@ -481,10 +493,7 @@ export default {
     text-align: left !important;
 }
 
-.CodeMirror-gutter-filler,
-.CodeMirror-hscrollbar,
-.CodeMirror-scrollbar-filler,
-.CodeMirror-vscrollbar {
+.CodeMirror-gutter-filler, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-vscrollbar{
     z-index: 2 !important;
 }
 
