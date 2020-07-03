@@ -1,11 +1,6 @@
 <template>
-<<<<<<< HEAD
 <v-card  class="d-flex justify-space-around align-center" height="100%">
     <v-card class="glow-lg-purple-a4 rounded-xl slide-in-left " height="610" width="20%">
-=======
-<v-row class="mx-auto my-12" justify="space-around">
-    <v-card class="elevation-8 rounded-xl" height="500" width="20%">
->>>>>>> parent of ee172cb... -password -bugfix -ui improve -scaleoverfix
         <v-hover v-slot:default="{ hover }">
             <v-img height="250" class="puff-in-center" :src="user.detail.avatar">
                 <v-fade-transition>
@@ -58,11 +53,7 @@
             </div>
         </v-dialog>
     </v-card>
-<<<<<<< HEAD
     <v-card width="75%" class="glow-lg-warning rounded-xl  slide-in-right ">
-=======
-    <v-card width="75%" class="elevation-8 rounded-xl">
->>>>>>> parent of ee172cb... -password -bugfix -ui improve -scaleoverfix
         <v-img height="150" class="puff-in-center" src="https://source.unsplash.com/random">
             <template v-slot:placeholder>
                 <v-row class="fill-height  " align="center" justify="center">
@@ -82,11 +73,7 @@
                 <v-tab-item>
                     <v-sheet  class="d-flex flex-column rounded-b-xl ">
                         <!-- Score -->
-<<<<<<< HEAD
                         <v-row class="pa-5">
-=======
-                        <v-row class="ma-0 pa-0 ">
->>>>>>> parent of ee172cb... -password -bugfix -ui improve -scaleoverfix
                             <v-col cols="6" class="">
                                 <v-tooltip bottom>
                                     <template v-slot:activator="{on}">

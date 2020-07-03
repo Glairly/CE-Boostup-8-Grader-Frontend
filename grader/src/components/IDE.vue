@@ -88,27 +88,6 @@
                     <v-icon left>mdi-cloud-upload</v-icon> Submit
                 </v-btn>
                 <!-- submit warning -->
-<<<<<<< HEAD
-                <v-dialog width="500" persistent v-model="snackbar">
-                    <v-card dark>
-                        <v-card-title >
-                            <span v-if="submitWait"  >
-                                <v-progress-circular :value="20" indeterminate></v-progress-circular>
-                            </span>
-                            <span v-else>
-                                <v-icon class="mx-auto pa-0" :color="snackbarIconColor">{{snackbarIcon}}</v-icon>
-                                {{ text }}
-                            </span>
-                        </v-card-title>
-                        <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn v-if="!submitWait" v-on="on" color="pink" text v-bind="attrs" @click="snackbar = false">
-                                Close
-                            </v-btn>
-                        </v-card-actions>
-                    </v-card>
-                </v-dialog>
-=======
                 <v-snackbar v-model="snackbar">
                     <v-row style="width:100%" class="ma-0 pa-0">
                         <v-col v-if="submitWait" class="ma-0 pa-0">
@@ -124,7 +103,6 @@
                         </v-btn>
                     </template>
                 </v-snackbar>
->>>>>>> parent of ee172cb... -password -bugfix -ui improve -scaleoverfix
 
             </v-row>
         </v-col>

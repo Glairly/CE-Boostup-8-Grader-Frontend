@@ -3,77 +3,73 @@
     <scaleOver :scaleover="scaleover"></scaleOver>
     <themeSwitch style="position:absolute;right:0;top:0;z-index:4;"></themeSwitch>
     <v-main>
-
         <v-container style="background:transparent;position:absolute;" fill-height fluid>
-
             <v-row align="center" justify="center">
                 <!-- <v-fab-transition> -->
-                <v-card v-show="cardShow" class=" scale-in-center elevation-12 fab-trans"   style="z-index:4">
-                    <v-responsive :aspect-ratio="16/9">
-                        <!-- header -->
-                        <v-flex class="d-flex   pa-0">
-                            <v-col class="  pa-0">
-                                <v-sheet class="gradient t5-t2">
-                                    <v-img height="700" :src="require('@/assets/loginBG.png')"></v-img>
-                                </v-sheet>
-                            </v-col>
-                            <v-col class="  pa-0">
+                <v-card v-show="cardShow" class=" scale-in-center elevation-12 fab-trans" width="1200" style="z-index:4">
+                    <!-- header -->
+                    <v-flex class="d-flex ma-0 pa-0">
+                        <v-col class="ma-0 pa-0">
+                            <v-sheet height="80vh" class="gradient t5-t2">
+                                <v-img height="80vh" :src="require('@/assets/loginBG.png')"></v-img>
+                            </v-sheet>
+                        </v-col>
+                        <v-col class="ma-0 pa-0">
+                            <!--  -->
+                            <v-row class="ma-0 d-flex flex-column align-center justify-center" style="height:100%">
+
+                                <v-col class="ma-0 pa-5 d-flex flex-column align-center justify-center" cols="4" style="max-width:100%">
+                                    <span class="text-h3 pa-5 font-weight-black">Sign in</span>
+                                    <span class="text-h6 pa-2 font-weight-black">Login or "Try" to Register</span>
+                                </v-col>
+                                <!-- error alert -->
+                                <v-alert :class="shake" v-model="loginValid" dismissible color="indigo" border="left" elevation="2" colored-border icon="mdi-close-circle-outline">
+                                    Oops. : <span style="color:red;">{{loginErrorMessage}} </span>
+                                </v-alert>
                                 <!--  -->
-                                <v-row class="  d-flex flex-column align-center justify-center" style="height:100%">
+                                <!-- login form -->
+                                <v-col class="ma-0 px-3" cols="6" style="max-width:100%">
+                                    <v-form class="pa-5" ref="form" v-model="valid">
+                                        <v-text-field color="warning" outlined rounded label="Username" :rules="nameRules" counter name="login" prepend-inner-icon="person" type="text" v-model="userFill" required></v-text-field>
+                                        <v-text-field color="warning" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" outlined rounded id="password" :rules="nameRules" counter label="Password" name="password" prepend-inner-icon="lock" :type=" !show1 ? 'text' : 'password'" v-model="passFill" @click:append="show1 = !show1" required></v-text-field>
 
-                                    <v-col class="  pa-5 d-flex flex-column align-center justify-center" cols="4" style="max-width:100%">
-                                        <span class="text-h3 pa-5 font-weight-black">Sign in</span>
-                                        <span class="text-h6 pa-2 font-weight-black">Login or "Try" to Register</span>
-                                    </v-col>
-                                    <!-- error alert -->
-                                    <v-alert :class="shake" v-model="loginValid" dismissible color="indigo" border="left" elevation="2" colored-border icon="mdi-close-circle-outline">
-                                        Oops. : <span style="color:red;">{{loginErrorMessage}} </span>
-                                    </v-alert>
-                                    <!--  -->
-                                    <!-- login form -->
-                                    <v-col class="  px-3" cols="6" style="max-width:100%">
-                                        <v-form class="pa-5" ref="form" v-model="valid">
-                                            <v-text-field color="warning" outlined rounded label="Username" :rules="nameRules" counter name="login" prepend-inner-icon="person" type="text" v-model="userFill" required></v-text-field>
-                                            <v-text-field color="warning" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" outlined rounded id="password" :rules="nameRules" counter label="Password" name="password" prepend-inner-icon="lock" :type=" !show1 ? 'text' : 'password'" v-model="passFill" @click:append="show1 = !show1" required></v-text-field>
+                                        <v-btn rounded class="ma-2 pa-6 glow-warning" :class="scaleIn" v-show="loginValid && this.loginErrorMessage == 'No data or User is not existed.'" @click.end="register()" color="warning" style="text-decoration-line:none;color:white">Register With This User ?</v-btn>
+                                        <v-btn rounded class="ma-2 pa-6 glow-warning " :loading="wait" @click.end="login()" :disabled="!valid" color="warning" style="text-decoration-line:none;color:white">Login</v-btn>
 
-                                            <v-btn rounded class="ma-2 pa-6 glow-warning" :class="scaleIn" v-show="loginValid && this.loginErrorMessage == 'No data or User is not existed.'" @click.end="register()" color="warning" style="text-decoration-line:none;color:white">Register With This User ?</v-btn>
-                                            <v-btn rounded class="ma-2 pa-6 glow-warning " :loading="wait" @click.end="login()" :disabled="!valid" color="warning" style="text-decoration-line:none;color:white">Login</v-btn>
+                                    </v-form>
+                                </v-col>
+                            </v-row>
+                            <!--  -->
 
-                                        </v-form>
-                                    </v-col>
-                                </v-row>
-                                <!--  -->
+                            <!-- action button -->
+                            <v-footer color="warning" dark absolute>
+                                <v-card-actions style="width:100%">
+                                    <v-btn text :ripple="false"> Powered By Glairly </v-btn>
+                                    <v-spacer></v-spacer>
+                                    <v-menu transition="slide-x-transition" v-model="menuIg" :close-on-content-click="false" :nudge-width="200" left offset-x offset-y>
+                                        <template v-slot:activator="{ on, attrs }">
+                                            <v-btn text :ripple="false" v-bind="attrs" v-on="on" @click.end="contact()"> Contact Staff </v-btn>
+                                        </template>
 
-                                <!-- action button -->
-                                <v-footer color="warning" dark absolute>
-                                    <v-card-actions style="width:100%">
-                                        <v-btn text :ripple="false"> Powered By Glairly </v-btn>
-                                        <v-spacer></v-spacer>
-                                        <v-menu transition="slide-x-transition" v-model="menuIg" :close-on-content-click="false" :nudge-width="200" left offset-x offset-y>
-                                            <template v-slot:activator="{ on, attrs }">
-                                                <v-btn text :ripple="false" v-bind="attrs" v-on="on" @click.end="contact()"> Contact Staff </v-btn>
-                                            </template>
+                                        <v-card>
+                                            <v-row class=" ma-0 justify-center  ">
+                                                <v-img width="200px" :src="require('@/assets/ig/'+ig.src+'.png')" />
+                                            </v-row>
+                                        </v-card>
+                                    </v-menu>
 
-                                            <v-card>
-                                                <v-row class="   justify-center  ">
-                                                    <v-img width="200px" :src="require('@/assets/ig/'+ig.src+'.png')" />
-                                                </v-row>
-                                            </v-card>
-                                        </v-menu>
-
-                                    </v-card-actions>
-                                </v-footer>
-                            </v-col>
-                        </v-flex>
-                        <!--  -->
-                    </v-responsive>
+                                </v-card-actions>
+                            </v-footer>
+                        </v-col>
+                    </v-flex>
+                    <!--  -->
                 </v-card>
                 <!-- </v-fab-transition> -->
                 <!-- Login progress bar -->
                 <v-dialog v-model="wait" persistent width="500">
                     <v-card color="warning" dark>
-                        <v-card-text class="pa-5  ">
-                            <v-row class="  pa-0" align="center" justify="center" style="height:100%">
+                        <v-card-text class="pa-5 ma-0">
+                            <v-row class="ma-0 pa-0" align="center" justify="center" style="height:100%">
                                 <v-col>
                                     <span class="mb-2 text-h6">We are Logging You in...</span>
 
@@ -86,8 +82,8 @@
                 <!-- Register -->
                 <v-dialog v-model="waitRegis" persistent width="500">
                     <v-card color="indigo" dark>
-                        <v-card-text class="pa-5  ">
-                            <v-row class="  pa-0" align="center" justify="center" style="height:100%">
+                        <v-card-text class="pa-5 ma-0">
+                            <v-row class="ma-0 pa-0" align="center" justify="center" style="height:100%">
                                 <v-col>
                                     <span class="mb-2 text-h6">Waiting For Registration...</span>
 
@@ -95,7 +91,6 @@
                                 </v-col>
                             </v-row>
                         </v-card-text>
-
                     </v-card>
                 </v-dialog>
             </v-row>
@@ -234,7 +229,7 @@ export default {
                 });
 
         },
-        loginSuccess(res1, prof, token) {
+        loginSuccess(res1, prof, token) { 
             var data = {
                 token: token,
                 username: this.userFill,

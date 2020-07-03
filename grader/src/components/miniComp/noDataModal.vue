@@ -20,17 +20,10 @@
                         {{secondary}}
                     </v-card-text>
                 </v-row>
-<<<<<<< HEAD
                 <v-footer height="55px" class="  pa-0" absolute>
                     <v-row style="height:100%" class="  pa-0  d-flex flex-row">
                         <v-col style="height:100%" cols="6" class="  pa-0">
                             <v-btn color="error" style="height:100%" block tile>
-=======
-                <v-footer height="55px" class="ma-0 pa-0" absolute>
-                    <v-row style="height:100%" class="ma-0 pa-0  d-flex flex-row">
-                        <v-col style="height:100%" cols="6" class="ma-0 pa-0">
-                            <v-btn @click="contact()" color="error" style="height:100%" block tile>
->>>>>>> parent of ee172cb... -password -bugfix -ui improve -scaleoverfix
                                 Contact Staff
                             </v-btn>
                         </v-col>

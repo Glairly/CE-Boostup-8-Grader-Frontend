@@ -16,22 +16,7 @@
         </v-card-text>
     </span>
 
-<<<<<<< HEAD
     <div class="divider rounded-pill "></div>
-=======
-    <v-card class="pa-5 d-flex flex-column justify-center align-center" height="500" style="width:100%">
-        <v-spacer></v-spacer>
-        <span class="text-h2">
-            Welcome to CE-Boost Up Grader
-        </span>
-        <v-card-text>
-            Check out Something interesting By the Slide-Show Below. Have Fun :)
-        </v-card-text>
-        <v-spacer></v-spacer>
-        <v-card-actions class="d-flex align-center  justify-md-center" style="width:100%">
-            <v-col v-for="(i,index) in btnItems" :key="index" :cols="12/btnItems.length -1 ">
-                <v-hover v-slot:default="{ hover }">
->>>>>>> parent of ee172cb... -password -bugfix -ui improve -scaleoverfix
 
     <v-card-actions class="d-flex align-center  justify-md-center" style="width:100%">
         <v-col v-for="(i,index) in btnItems" :key="index" align="center">
@@ -71,7 +56,6 @@
     background: transparent;
 }
 
-<<<<<<< HEAD
 .v-btn:not(.v-btn--text):not(.v-btn--outlined):hover:before {
     opacity: 0 !important;
 }
@@ -83,11 +67,6 @@
     margin-top: 15px !important;
     margin-bottom: 15px !important;
 }
-=======
- .v-btn:not(.v-btn--text):not(.v-btn--outlined):hover:before{
-     opacity: 0 !important;
- }
->>>>>>> parent of ee172cb... -password -bugfix -ui improve -scaleoverfix
 </style>
 
 <script>
@@ -110,7 +89,6 @@ export default {
             btnItems: [{
                     title: "Start Coding",
                     hTitle: "Are you ready?",
-<<<<<<< HEAD
                     link: "/work/task",
                     color: "red"
                 }, {
@@ -118,16 +96,6 @@ export default {
                     hTitle: "Keep up the good Work",
                     link: "/work/submission",
                     color: "green"
-=======
-                    link: "/Home/work/task",
-                    icon: "mdi-code-tags",
-
-                }, {
-                    title: "View Your Work",
-                    hTitle: "Keep up the good Work",
-                    link: "/Home/work/submission",
-                    icon: ""
->>>>>>> parent of ee172cb... -password -bugfix -ui improve -scaleoverfix
                 },
                 {
                     title: "Learn",
