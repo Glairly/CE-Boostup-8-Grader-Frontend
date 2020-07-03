@@ -78,7 +78,7 @@
                                     <template v-slot:activator="{on}">
                                         <v-row v-on="on" align="center">
                                             <v-col cols="4">
-                                                <v-btn block :ripple="false" class="mt-1 glow-warning" color="warning"><strong>Question's Lastest Submit</strong></v-btn>
+                                                <v-btn block :ripple="false" class="mt-1 glow-warning" color="warning"><strong>Most Recent Submit</strong></v-btn>
                                             </v-col>
 
                                             <v-col align="center">

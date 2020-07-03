@@ -90,8 +90,8 @@
                 <!-- submit warning -->
                 <v-dialog width="500" persistent v-model="snackbar">
                     <v-card dark>
-                        <v-card-title >
-                            <span v-if="submitWait"  >
+                        <v-card-title>
+                            <span v-if="submitWait">
                                 <v-progress-circular :value="20" indeterminate></v-progress-circular>
                             </span>
                             <span v-else>
@@ -347,21 +347,12 @@ export default {
         Compiling() {
             this.compile.wait = true
             // no sample
-            let data = {
-                sourceCode: ""
-            }
+            let data = {}
             this.compile.log = "Waiting for response..."
 
             if (this.compile.withSample) {
                 // input
-                var ss = "$.$"
-                var input = this.task.input.split(ss)
-                var output = this.task.output.split(ss)
-
-                data.input = input.slice(0, 3).join(ss)
-                // output
-                data.output = output.slice(0, 3).join(ss)
-                // code
+                data.questionId = this.task.id
                 data.sourceCode = this.ide.code
             } else { // without sample
                 if (!this.compile.input) this.compile.input = " "
@@ -374,7 +365,7 @@ export default {
 
             this.axios.post(this.$store.state.compiler + '/compiler', data, {
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type' : 'application/json'
                 }
             }).then(res => {
                 this.compile.wait = false

@@ -1,6 +1,7 @@
 <template>
-<v-card class="pa-5 d-flex flex-column justify-center align-center" height="100%">
-    <span class="font-weight-medium slide-in-top  " style="font-size:3.75rem">
+<v-card class="d-flex flex-column justify-start align-center" height="100%">
+    <v-parallax class="align-start slide-in-left" :src="require('@/assets/dashboard.jpg')" style="width:100%;top:0"></v-parallax>
+    <span class="font-weight-medium slide-in-top mt-10  " style="font-size:3.75rem">
         <v-icon class="text-h2 spin" color="orange">mdi-bee</v-icon> Welcome to CE-Boost Up Grader <v-icon class="text-h2 spin-r" color="yellow">mdi-bee</v-icon>
     </span>
     <span class="slide-in-top-1">
@@ -10,44 +11,58 @@
                 หากท่านเป็นมือใหม่หรือไม่เคยรู้จักกับภาษา C/C++ สามารถเรียนรู้โดยปุ่ม Learn ด้านล่างได้ เเต่ถ้าคุณพร้อมเเล้วก็ลุยที่ Start Coding กันเลย!!!
             </v-container>
         </v-card-text>
-        <v-card-text style="font-size:1.1rem">
-            Check out Something interesting By the Slide-Show Below.
-            Have Fun :)
-        </v-card-text>
+
     </span>
-
     <div class="divider rounded-pill "></div>
-
-    <v-card-actions class="d-flex align-center  justify-md-center" style="width:100%">
-        <v-col v-for="(i,index) in btnItems" :key="index" align="center">
+    <span style="font-size:1.5rem" class="font-weight-bold">Let's Get Started</span>
+    <v-card-actions class="d-flex align-center  justify-center md-5" style="width:100%">
+        <span v-for="(i,index) in btnItems" :key="index">
             <v-hover v-slot:default="{ hover }">
-                <v-btn style="font-size:1.25rem" :style="{ 'border-top': '8px solid ' + i.color}" :class="hover ? 'glow-' + i.color: '' " class="pa-10 slide-in-bottom" height="100" block :to="i.link">
+                <v-card :class="hover ? 'glow-' + i.color: '' " class="mx-3  slide-in-bottom" width="300" :to="i.link">
+                    <!-- :style="{ 'border-top': '8px solid ' + i.color}" -->
+                    <v-img :src="require('@/assets'+i.src)" height="200px"></v-img>
+                    <v-card-text style="font-size:1.25rem" class="pa-5 md-5">
+                        <v-scroll-x-transition>
+                            <div class="start-text" v-if="hover">
+                                {{i.hTitle}}
+                            </div>
+                        </v-scroll-x-transition>
+                        <v-scroll-x-transition>
+                            <div class="start-text" v-if="!hover">
+                                {{i.title}}
+                            </div>
+                        </v-scroll-x-transition>
+                    </v-card-text>
+                    <v-card-text style="font-size:1rem">
+                        <v-scroll-x-transition>
+                            <div class="mx-auto mt-1 divider rounded-pill " :class="i.color"></div>
+                        </v-scroll-x-transition>
+                        <v-scroll-x-transition>
+                            <div>
+                                {{i.content}}
+                            </div>
+                        </v-scroll-x-transition>
 
-                    <v-scroll-x-transition>
-                        <span style="position:absolute" v-if="hover">
-                            {{i.hTitle}}
-                        </span>
-                    </v-scroll-x-transition>
-                    <v-scroll-x-transition>
-                        <span style="position:absolute" v-if="!hover">
-                            {{i.title}}
-                        </span>
-                    </v-scroll-x-transition>
-                </v-btn>
+                    </v-card-text>
+                    <v-card-text></v-card-text>
+                </v-card>
             </v-hover>
-        </v-col>
+        </span>
+        <!-- https://www.freepik.com/ -->
     </v-card-actions>
-
-    <v-carousel>
-        <v-carousel-item v-for="(item,i) in items" :key="i" :src="item.src" reverse-transition="fade-transition" transition="fade-transition"></v-carousel-item>
-    </v-carousel>
 
     <div class="divider rounded-pill "></div>
 
     <span style="font-size:1.5rem" class="font-weight-bold">Sponsered By</span>
-    <div class="divider rounded-pill mt-10"></div>
-    <span style="font-size:1.5rem;position:absolute;bottom:0" class="font-weight-bold">The Best Grader in 2020</span>
+    <v-card-text style="font-size:1.1rem" class="grey--text">
+        <v-container grid-list-xs>
+            ( ก็อยากมีอยู่หรอก ; - ; )
+        </v-container>
+    </v-card-text>
 
+    <v-footer absolute style="font-size:1.5rem;" class="white d-flex justify-center align-center font-weight-bold my-2">
+        <v-icon class="text-h2 red--text spin mdi-flip-h">mdi-balloon</v-icon> The Best Grader in 2020<v-icon class="text-h2 blue--text spin ">mdi-balloon</v-icon>
+    </v-footer>
 </v-card>
 </template>
 
@@ -64,8 +79,14 @@
     background: rgb(251, 140, 0);
     width: 100px;
     height: 10px;
-    margin-top: 15px !important;
-    margin-bottom: 15px !important;
+    margin-top: 30px !important;
+    margin-bottom: 30px !important;
+}
+
+.start-text {
+    position: absolute;
+    left: 0%;
+    width: 100%
 }
 </style>
 
@@ -89,17 +110,23 @@ export default {
             btnItems: [{
                     title: "Start Coding",
                     hTitle: "Are you ready?",
+                    content: "Start Practice Coding Choose the Question and Let's get it done",
+                    src: '/code.jpg',
                     link: "/work/task",
                     color: "red"
                 }, {
                     title: "View Your Work",
                     hTitle: "Keep up the good Work",
+                    src: '/view.jpg',
+                    content: "View Your work Result and Keep Practicing",
                     link: "/work/submission",
                     color: "green"
                 },
                 {
                     title: "Learn",
                     hTitle: "Start From none ",
+                    content: "Never Experience C/C++? Let's Start Learning Now! ",
+                    src: '/learn.jpg',
                     link: "learn",
                     color: "blue"
                 }
