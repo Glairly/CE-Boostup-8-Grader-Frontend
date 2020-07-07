@@ -465,7 +465,7 @@ export default {
 </style>
 <style>
 .console-textarea{
-    font-family: monospace, monospace !important;
+    font-family: monospace, monospace , 'Kanit' ,sans-serif !important;
 }
 
 .CodeMirror {
