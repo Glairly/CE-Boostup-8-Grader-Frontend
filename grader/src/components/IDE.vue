@@ -101,7 +101,7 @@
                         </v-card-title>
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn v-if="!submitWait" v-on="on" color="pink" text v-bind="attrs" @click="snackbar = false">
+                            <v-btn v-if="!submitWait"  color="pink" text  @click="snackbar = false">
                                 Close
                             </v-btn>
                         </v-card-actions>
@@ -113,7 +113,7 @@
     </v-row>
     <!-- <v-divider></v-divider> -->
     <!-- Console -->
-    <v-sheet dark id="logs" class="text-left mt-2 elevation-3 rounded-xl" v-show="compile.show">
+    <v-sheet dark id="logs" class="console-textarea text-left mt-2 elevation-3 rounded-xl" v-show="compile.show">
         <!-- Result -->
         <v-card class="pa-5 rounded-xl">
             <v-toolbar class="elevation-0">
@@ -462,7 +462,12 @@ export default {
 
 <style lang="scss" scoped>
 @import '../css/animation.css';
-</style><style>
+</style>
+<style>
+.console-textarea{
+    font-family: monospace, monospace !important;
+}
+
 .CodeMirror {
     min-height: 500px;
     min-width: 500px;

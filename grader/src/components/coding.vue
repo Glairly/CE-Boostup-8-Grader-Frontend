@@ -218,6 +218,7 @@ export default {
                 }
             }).catch(() => {
                 this.rightNav.seeCode = true
+                console.clear();
             })
             // user
             this.axios.post(this.$store.state.api + "/api/v1/submission_code", body, config).then(res => {
