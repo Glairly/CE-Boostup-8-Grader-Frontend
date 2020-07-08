@@ -187,6 +187,21 @@ export default { // eslint-disable-next-line no-unused-vars
                 commit('setDoneQuestion', submission)
             })
         },
+        async isIdExist({ state, commit, rootState }) {
+            commit
+            let res = false
+            await axios.post(rootState.api + '/api/v1/login/', {
+                    "username": state.data.username,
+                    "password": "testExist"
+                }).then(() => {
+                    res = true
+                })
+                .catch((err) => { // if 200 , existed
+                    // error 400 
+                    res = err.response.data.msg === "password incorrect." ? true : false
+                })
+            return res
+        },
         computeStats({ state, commit }) {
             let q = JSON.parse(JSON.stringify(state.data.questions))
             let s = JSON.parse(JSON.stringify(state.data.doneQuestion))

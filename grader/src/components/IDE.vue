@@ -1,6 +1,6 @@
 <template>
 <!-- Two-way Data-Binding -->
-<v-card style="border-radius: 0px;  " class="pa-5 slide-in-bottom ">
+<v-card style="border-radius: 0px;  " class="slide-in-bottom ">
     <v-system-bar color="transparent">
         <v-icon color="green lighten-1">mdi-checkbox-blank-circle</v-icon>
 
@@ -51,9 +51,7 @@
             </v-row>
         </v-col>
     </v-row>
-    <v-divider></v-divider>
     <!-- space -->
-    <v-col></v-col>
     <!-- code editor -->
     <codemirror v-model="ide.code" :style="ideStyle" :options="cmOptions" />
     <!-- action button -->
@@ -113,7 +111,7 @@
     </v-row>
     <!-- <v-divider></v-divider> -->
     <!-- Console -->
-    <v-sheet dark id="logs" class="console-textarea text-left mt-2 elevation-3 rounded-xl" v-show="compile.show">
+    <v-sheet dark id="logs" class="glow-lg-indigo console-textarea text-left mt-2 elevation-3 rounded-xl" v-show="compile.show">
         <!-- Result -->
         <v-card class="pa-5 rounded-xl">
             <v-toolbar class="elevation-0">

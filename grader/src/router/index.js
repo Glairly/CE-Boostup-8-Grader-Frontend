@@ -91,7 +91,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    var noAuthPath = ['/api', '/gists']
+    var noAuthPath = ['/api']
 
     if (noAuthPath.includes(to.path)) {
         next();
@@ -114,7 +114,18 @@ router.beforeEach((to, from, next) => {
                 })
         })
     })
-
+    let idExist = true
+        // check exist
+    store.dispatch('user/isIdExist').then(res => {
+            idExist = res
+            if (to.name != 'Auth' && !idExist) {
+                store.commit('user/clear')
+                alert('User has been Removed')
+                next('Auth');
+                return 0;
+            }
+        })
+        // redirect to home
     if (to.name == 'Index') next('Home')
 
 
@@ -122,11 +133,11 @@ router.beforeEach((to, from, next) => {
     if (to.name != 'Auth') {
         if (Cookies.get('expire') && Date.now() - Cookies.get('expire') >= 80000000) { //80000000
             store.commit('user/clear')
-            alert('User Expired!! Please Re-Login')
-            next('/auth');
+            alert('User expired. Please Re-Login')
+            next('Auth');
             return 0;
         } else if (!cookie.username) {
-            next('/auth');
+            next('Auth');
             return 0;
         }
     } else {

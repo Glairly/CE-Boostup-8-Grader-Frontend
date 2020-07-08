@@ -1,6 +1,6 @@
 <template>
-<v-card  class="d-flex justify-space-around align-center" height="100%">
-    <v-card class="glow-lg-purple-a4 rounded-xl slide-in-left " height="610" width="20%">
+<v-card class="d-flex align-center justify-space-around"   height="100%">
+    <v-card class="glow-lg-purple-a4 rounded-xl slide-in-left mx-1"   height="610" width="300">
         <v-hover v-slot:default="{ hover }">
             <v-img height="250" class="puff-in-center" :src="user.detail.avatar">
                 <v-fade-transition>
@@ -46,26 +46,29 @@
         <!-- Password change -->
         <v-card-text class="">
             <v-hover v-slot:default="{ hover }">
-                <v-btn style="z-index:5" @click="editP.mode = !editP.mode" block dark class="pa-5" :class="hover ? 'glow-lg-purple-a4':''" color="purple accent-4">
+                <v-btn style="z-index:5" @click="editPToggle()" block  dark class="pa-5" :class="hover ? 'glow-lg-purple-a4':''" color="purple accent-4">
                     Change Password <v-icon right>{{ editP.mode ? 'mdi-arrow-up':'mdi-arrow-down'}}</v-icon>
                 </v-btn>
             </v-hover>
-            <v-text-field class="slide-in-top mt-3" v-if="editP.mode" label="New password" outlined :value="editP.data" v-model="editP.data" :hide-details="editP.mode" persistent-hint hint="Type your new Password here">
-                <template v-slot:append>
-                    <template>
-                        <v-tooltip bottom>
-                            <template v-slot:activator="{ on }">
-                                <v-icon @click.end="editP.mode = false" v-on="on">mdi-close</v-icon>
-                            </template>
-                            <span>Type new Password.</span>
-                        </v-tooltip>
+            <v-form ref="form" v-model="editP.valid">
+                <v-text-field :rules="editP.rules" counter class="slide-in-top mt-3" v-if="editP.mode" label="New password" outlined :value="editP.data" v-model="editP.data" persistent-hint hint="more than 6 characters are allowed ">
+                    <template v-slot:append>
+                        <template>
+                            <v-tooltip bottom>
+                                <template v-slot:activator="{ on }">
+                                    <v-icon @click.end="editP.mode = false" v-on="on">mdi-close</v-icon>
+                                </template>
+                                <span>Type new Password.</span>
+                            </v-tooltip>
+                        </template>
                     </template>
-                </template>
-            </v-text-field>
+                </v-text-field>
+            </v-form>
+
         </v-card-text>
 
         <v-hover v-slot:default="{hover}">
-            <v-footer absolute id="save" :class="hover ? 'glow-purple-a4' : '' " color="purple accent-4" v-ripple="{ class: `white--text` }" class="d-flex align-center justify-center pa-3 rounded-b-xl" style="color:white;font-weight:500;font-size:1.25rem" @click="save()">
+            <v-footer absolute id="save" :class="hover ? 'glow-purple-a4' : '' " :color="changeValid ? 'purple accent-4' : 'grey'" v-ripple=" { class: `white--text` }" class="d-flex align-center justify-center pa-3 rounded-b-xl" style="color:white;font-weight:500;font-size:1.25rem" @click="save()">
                 <v-icon class="white--text mr-3">mdi-floppy</v-icon> Save Change
             </v-footer>
         </v-hover>
@@ -77,10 +80,10 @@
             </div>
         </v-dialog>
     </v-card>
-    <v-card width="75%" class="glow-lg-warning rounded-xl  slide-in-right ">
-        <v-img height="150" class="puff-in-center" src="https://source.unsplash.com/random">
+    <v-card  class="glow-lg-warning rounded-xl  slide-in-right mx-1" >
+        <v-img height="150"  :width="$vuetify.breakpoint.mobile ? '600':'100%'" class="puff-in-center" src="https://source.unsplash.com/random">
             <template v-slot:placeholder>
-                <v-row class="fill-height  " align="center" justify="center">
+                <v-row class="fill-height" align="center" justify="center">
                     <v-progress-circular indeterminate color="dark lighten-5"></v-progress-circular>
                 </v-row>
             </template>
@@ -97,8 +100,8 @@
                 <v-tab-item>
                     <v-sheet class="d-flex flex-column rounded-b-xl ">
                         <!-- Score -->
-                        <v-row class="pa-5">
-                            <v-col cols="6" class="">
+                        <v-row class="pa-5" :class="$vuetify.breakpoint.mobile ? 'flex-column':'flex-row'" >
+                            <v-col  class="">
                                 <v-tooltip bottom>
                                     <template v-slot:activator="{on}">
                                         <v-card v-on="on" style="height:100%;border-radius:5%" class="slide-in-top  mb-3 pa-5 elevation-3 d-flex flex-column align-center justify-space-between">
@@ -119,7 +122,7 @@
 
                             </v-col>
                             <!-- Passed Task -->
-                            <v-col cols="6">
+                            <v-col  >
                                 <v-card style="height:100%;border-radius:5%" class="slide-in-top  mb-3 pa-5 elevation-3 d-flex flex-column align-center justify-space-between">
                                     <v-card-text text-xs-center>
                                         <v-flex style="font-size:2.125rem !important" class=" font-weight-black">
@@ -180,10 +183,6 @@ export default {
                 tab: 'DashBoard',
             },
 
-            // {
-            //     tab: 'Setting',
-            //     content: 'Tab 3 Content'
-            // },
         ],
         edit: {
             mode: true,
@@ -194,7 +193,12 @@ export default {
         editP: {
             mode: false,
             data: "",
-        }
+            valid: false,
+            rules: [
+                v => v.length >= 6 || 'Must be more than 6 characters'
+            ]
+        },
+
     }),
     computed: {
         pieScore() {
@@ -210,36 +214,60 @@ export default {
         },
         ...mapGetters({
             pie: 'user/getStats'
-        })
+        }),
+        changeValid(){
+            var logic = true
+            if(this.editP.valid){
+                if(this.editP.data.length < 6 && this.editP.data.length > 0){
+                    logic = false
+                }
+            }
+            return  logic && this.editP.valid
+        }
     },
     methods: {
+        editPToggle(){
+            this.editP.data = ""
+            this.editP.mode = !this.editP.mode
+        },
         save() {
-            this.axios.post(this.$store.state.api + '/api/v1/nickname', {
-                nickname: this.edit.data,
-                token: this.$store.getters['user/getToken'],
-            }).then(() => {
-                alert("Change Name Success")
-                this.$store.commit('user/changeName', this.edit.data)
-                location.reload();
-            }).catch(err => {
-                this.edit.editError = true
-                this.edit.editError_Msg = err.response.data.msg
-            })
-            if (this.editP.data) {
-                this.changePass()
+            if (this.changeValid) {
+                this.axios.post(this.$store.state.api + '/api/v1/nickname', {
+                    nickname: this.edit.data,
+                    token: this.$store.getters['user/getToken'],
+                }).then(() => {
+                    alert("Change name successful")
+                    this.$store.commit('user/changeName', this.edit.data)
+                }).catch(err => {
+                    alert("Change name fail!?")
+                    this.edit.editError = true
+                    this.edit.editError_Msg = err.response.data.msg
+                })
+                if (this.editP.data) {
+                    this.changePass()
+                } else {
+                    location.reload();
+                }
             }
         },
         changePass() {
-            this.axios.post(this.$store.state.api + '/api/v1/change_password', {
-                password: this.editP.data,
-                token: this.$store.getters['user/getToken'],
-            }).then(() => {
-                alert("Change Password and Name SuccessFul Refrsh!!")
-                location.reload();
-            }).catch(err => {
-                this.edit.editError = true
-                this.edit.editError_Msg = err.response.data.msg
-            })
+            if (this.changeValid) {
+                this.axios.post(this.$store.state.api + '/api/v1/change_password', {
+                    password: this.editP.data,
+                    token: this.$store.getters['user/getToken'],
+                }).then(() => {
+                    alert("Change password successFul")
+                    location.reload();
+                }).catch(err => {
+                    alert("Change password fail!?")
+                    this.edit.editError = true
+                    this.edit.editError_Msg = err.response.data.msg
+                     location.reload();
+                })
+                
+            } else {
+                alert("Couldn't Change Password : password least than 6 characters")
+            }
         },
         changeMeow() {
             this.axios.get('https://api.thecatapi.com/v1/images/search').then(res => {

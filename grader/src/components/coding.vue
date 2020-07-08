@@ -82,7 +82,7 @@
                                             </v-col>
 
                                             <v-col align="center">
-                                                <v-btn :disabled="rightNav.seeCode" outlined class="mt-1 glow-indigo" color="indigo" @click="codePopup(rightNav.other.data.code)"><strong>See Code</strong></v-btn>
+                                                <v-btn :disabled="rightNav.other.seeCode" outlined class="mt-1 glow-indigo" color="indigo" @click="codePopup(rightNav.other.data.code)"><strong>See Code</strong></v-btn>
                                                 <!-- show last submit code -->
                                             </v-col>
                                         </v-row>
@@ -136,11 +136,11 @@
         </v-row>
     </v-navigation-drawer>
     <!-- IDE -->
-    <v-dialog class="ma-0 pa-0" v-model="rightNav.codePopup" persistent>
-        <v-btn color="error" tile @click="rightNav.codePopup = !rightNav.codePopup"><strong>Close</strong></v-btn>
+    <v-dialog class="ma-0 pa-0" v-model="rightNav.codePopup" width="1200px" persistent>
+        <v-btn color="error" tile @click="() => {rightNav.codePopup = !rightNav.codePopup;rightNav.code = '';}"><strong>Close</strong></v-btn>
         <IDE :code="rightNav.code" :footer="false" title="Lastest Code"></IDE>
     </v-dialog>
-    <IDE  :task="task(qId)" :qId="task(qId).qId" footer class="pa-5"></IDE>
+    <IDE :task="task(qId)" :qId="task(qId).qId" footer class="pa-5"></IDE>
     <!-- {{ userLastest(task(qId).id) }} {{ rightNav.other.data }} -->
 </v-sheet>
 </template>
@@ -171,10 +171,11 @@ export default {
                 data: {}
             },
             user: {
-                lastCode: "#include<stdio.h>\r\n int main() {printf(\"a\"); return 0; }",
+                lastCode: "#include<stdio.h>\r\n int main() {printf(\"must be your lastest Code\"); return 0; }",
                 data: {}
             },
         },
+
         qId: ""
     }),
     computed: {
@@ -217,7 +218,7 @@ export default {
                     this.rightNav.other.data = arr[arr.length - 1]
                 }
             }).catch(() => {
-                this.rightNav.seeCode = true
+                this.rightNav.other.seeCode = true
                 console.clear();
             })
             // user

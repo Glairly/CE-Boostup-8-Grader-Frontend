@@ -83,7 +83,7 @@
                 <!-- Register -->
                 <v-dialog v-model="waitRegis" persistent width="500">
                     <v-card color="indigo" dark>
-                        <v-card-text class="pa-5  ">
+                        <v-card-text class="pa-5">
                             <v-row class="  pa-0" align="center" justify="center" style="height:100%">
                                 <v-col>
                                     <span class="mb-2 text-h6">Waiting For Registration...</span>
@@ -97,7 +97,6 @@
                 </v-dialog>
             </v-row>
 
-            <!-- <vue-particles style="height:100%;position:absolute;width:100%" color="#dedede" :particleOpacity="0.7" :particlesNumber="80" shapeType="polygon" :particleSize="4" linesColor="#dedede" :linesWidth="1" :lineLinked="true" :lineOpacity="0.4" :linesDistance="150" :moveSpeed="3" :hoverEffect="true" hoverMode="grab" :clickEffect="true" clickMode="push"> </vue-particles> -->
         </v-container>
         <template v-for="c in circleAround">
             <div :key="c" :class="c" style="width:60px;height:60px;border-radius:50%;">
@@ -140,10 +139,9 @@ export default {
             passFill: "",
             show1: true,
             menuIg: false,
-            nameRange: [6, 20],
             nameRules: [
                 v => !!v || 'This Field is required',
-                v => v.length >= this.nameRange[0] || 'Must be more than 6 characters'
+                v => v.length >= 6 || 'Must be more than 6 characters'
             ],
             // loginable 
             valid: true,
@@ -173,9 +171,6 @@ export default {
         }
     },
     methods: {
-        validate() {
-            this.$refs.form.validate()
-        },
         register() {
             this.waitRegis = true
             this.loginValid = false;
