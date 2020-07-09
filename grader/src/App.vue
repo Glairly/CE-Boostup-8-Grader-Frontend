@@ -102,10 +102,6 @@ export default {
         let rand = this.getRandomInt(this.lists.length)
         this.icons[1].link = this.lists[rand]
         this.$store.commit('setApiPath', process.env.NODE_ENV == 'development')
-
-        // setInterval(() => {
-        //     this.$store.dispatch('user/updateQuestion')
-        // }, 3000)
     },
 
 };
