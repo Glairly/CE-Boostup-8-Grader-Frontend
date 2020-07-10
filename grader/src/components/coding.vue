@@ -88,7 +88,7 @@
                     </v-col>
                   </v-card-title>
                 </v-card>
-                <v-sheet class="pa-5 mt-2">
+                <v-sheet class="py-5 pl-1 pr-2 mt-2">
                   <!-- question detail -->
                   <v-row align="center">
                     <v-col cols="3">
@@ -97,7 +97,7 @@
                         :ripple="false"
                         class="mt-1 glow-warning"
                         color="warning"
-                        ><strong>ความยากของโจทย์</strong></v-btn
+                        ><strong>ความยาก</strong></v-btn
                       >
                     </v-col>
                     <v-col cols="6">
@@ -119,7 +119,7 @@
                         :ripple="false"
                         class="mt-1 glow-warning"
                         color="warning"
-                        ><strong>คะเเนนของเเต่ละเคส</strong></v-btn
+                        ><strong>คะเเนนต่อเคส</strong></v-btn
                       >
                     </v-col>
                     <v-col cols="6">
@@ -136,7 +136,7 @@
                             :ripple="false"
                             class="mt-1 glow-warning"
                             color="warning"
-                            ><strong>โค้ดเพื่อนที่ Submit</strong></v-btn
+                            ><strong>{{ !$vuetify.breakpoint.mobile ? 'โค้ดเพื่อนที่ Submit' : 'โค้ดทั้งหมด'}}</strong></v-btn
                           >
                         </v-col>
 
@@ -165,7 +165,7 @@
                             :ripple="false"
                             class="mt-1 glow-warning"
                             color="warning"
-                            ><strong>โค้ดที่ Submit ล่าสุด</strong></v-btn
+                            ><strong>{{ !$vuetify.breakpoint.mobile ? 'โค้ดที่ Submit ล่าสุด' : 'โค้ดล่าสุด'}}</strong></v-btn
                           >
                         </v-col>
                         <v-col cols="6" class="px-0" align="center">

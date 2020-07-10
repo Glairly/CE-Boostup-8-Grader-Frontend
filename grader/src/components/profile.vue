@@ -81,7 +81,7 @@
         </v-dialog>
     </v-card>
     <v-card  class="glow-lg-warning rounded-xl  slide-in-right mx-1" >
-        <v-img height="150"  :width="$vuetify.breakpoint.mobile ? '600':'100%'" class="puff-in-center" src="https://source.unsplash.com/random">
+        <v-img height="150"  :width="$vuetify.breakpoint.mobile ? '600':'1000'" class="puff-in-center" src="https://source.unsplash.com/random">
             <template v-slot:placeholder>
                 <v-row class="fill-height" align="center" justify="center">
                     <v-progress-circular indeterminate color="dark lighten-5"></v-progress-circular>

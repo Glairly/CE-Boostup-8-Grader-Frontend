@@ -118,9 +118,8 @@ router.beforeEach((to, from, next) => {
         // check exist
     store.dispatch('user/isIdExist').then(res => {
             idExist = res
-            if (to.name != 'Auth' && !idExist) {
+            if (to.name != 'Auth' && !idExist && store.getters['user/getUserName']) {
                 store.commit('user/clear')
-                alert('User has been Removed')
                 next('Auth');
                 return 0;
             }
@@ -133,7 +132,6 @@ router.beforeEach((to, from, next) => {
     if (to.name != 'Auth') {
         if (Cookies.get('expire') && Date.now() - Cookies.get('expire') >= 80000000) { //80000000
             store.commit('user/clear')
-            alert('User expired. Please Re-Login')
             next('Auth');
             return 0;
         } else if (!cookie.username) {
