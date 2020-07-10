@@ -242,7 +242,6 @@
  
        v-if="!rightNav.mode"
         vertical
-        v-model="value"
  
         dark
         slider-color="purple accent-4"
