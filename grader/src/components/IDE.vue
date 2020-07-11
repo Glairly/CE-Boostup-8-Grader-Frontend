@@ -187,7 +187,7 @@
       <v-card class="pa-5 rounded-xl">
         <v-toolbar class="elevation-0">
           <v-col cols="2">
-            <v-btn block :ripple="false" class="mt-1" id="result" color="info"
+            <v-btn block :ripple="false" style="font-size:1.25rem" class="mt-1" id="result" color="info"
               ><strong>Result</strong></v-btn
             >
           </v-col>
@@ -234,51 +234,44 @@
         </v-toolbar>
 
         <span v-if="compile.withSample">
-          <v-skeleton-loader
-            :loading="compile.skeleton"
-            height="100%"
-            type="table"
+          <v-tabs
+            class="pa-5  "
+            show-arrows
+            v-model="compile.tabSelect"
+            slider-color="transparent"
           >
-            <v-tabs
-              class="pa-5  "
-              show-arrows
-              v-model="compile.tabSelect"
-              slider-color="transparent"
-            >
-              <template v-if="compile.withSample">
-                <v-tab
-                  :ripple="false"
-                  v-for="(i, index) in compile.compile_Status"
-                  :key="index"
-                >
-                  <v-chip dark class="pa-4" :ripple="false">
-                    <span v-if="!standAloneCase(i)">
-                      Case {{ index + 1 }} :
-                      <v-icon v-if="i == 'P'" color="success" right
-                        >mdi-check-bold</v-icon
-                      >
-                      <v-icon v-else color="error" right>mdi-close</v-icon>
-                    </span>
-                    <span v-else> ❌ Compiles Error Code : {{ i }} ❌ </span>
-                  </v-chip>
-                </v-tab>
-              </template>
-              <!-- <v-tabs-items v-model="compile.tabSelect">
+            <template v-if="compile.withSample">
+              <v-tab
+                :ripple="false"
+                v-for="(i, index) in compile.compile_Status"
+                :key="index"
+              >
+                <v-chip dark class="pa-4" :ripple="false">
+                  <span v-if="!standAloneCase(i)">
+                    Case {{ index + 1 }} :
+                    <v-icon v-if="i == 'P'" color="success" right
+                      >mdi-check-bold</v-icon
+                    >
+                    <v-icon v-else color="error" right>mdi-close</v-icon>
+                  </span>
+                  <span v-else> ❌ Compiles Error Code : {{ i }} ❌ </span>
+                </v-chip>
+              </v-tab>
+            </template>
+            <!-- <v-tabs-items v-model="compile.tabSelect">
                             <v-tab-item v-for="(i,index) in compile.compile_Status.length" :key="index">
                                 <v-textarea class="mt-2 elevation-2" label="Error Logs" readonly style="color:green;" color="success" outlined hide-details v-model="compile.errorText[index]">
                                 </v-textarea>
                             </v-tab-item>
                         </v-tabs-items> -->
-            </v-tabs>
-          </v-skeleton-loader>
+          </v-tabs>
         </span>
         <!-- without sample -->
         <span v-else>
           <v-textarea
             placeholder="Your input here like : 1 2 3 "
-            class="mt-2 elevation-2"
+            class="mt-5 elevation-2"
             clearable
-            label="Input Field"
             style="color:green;"
             rows="4"
             color="success"
@@ -286,6 +279,9 @@
             hide-details
             v-model="compile.input"
           >
+          <template v-slot:label>
+             <span style="font-size:1.5rem;">Input Field</span>
+          </template>
           </v-textarea>
           <v-divider class="ma-5" color="transparent"></v-divider>
           <v-textarea
@@ -293,7 +289,6 @@
             id="compileLog"
             v-if="compile.log"
             class="mt-2 elevation-2"
-            label="Compile Result"
             readonly
             style="color:green;"
             color="success"
@@ -301,6 +296,9 @@
             hide-details
             v-model="compile.log"
           >
+          <template v-slot:label>
+             <span style="font-size:1.5rem;">Compile Result</span>
+          </template>
           </v-textarea>
         </span>
       </v-card>
@@ -429,9 +427,9 @@ export default {
       }, 500);
       if (_new) this.ide.code = _new;
     },
-    title(_new){
-        this.ide.title = _new
-    }
+    title(_new) {
+      this.ide.title = _new;
+    },
   },
   methods: {
     saveSession() {
@@ -594,13 +592,13 @@ export default {
       this.ide.fonts -= this.ide.fonts > 10 ? 1 : 0;
     },
     standAloneCase(item) {
-      var standAlone = ["C", "B", "b", "L", "F","O"];
+      var standAlone = ["C", "B", "b", "L", "F", "O"];
       return standAlone.includes(item);
     },
-    errorCase(item){
-        var error = ["C", "B", "b", "L", "F","M","T","R","X","O"];
-        return error.includes(item);
-    }
+    errorCase(item) {
+      var error = ["C", "B", "b", "L", "F", "M", "T", "R", "X", "O"];
+      return error.includes(item);
+    },
   },
   mounted() {
     if (this.code) {
@@ -620,7 +618,7 @@ export default {
     }
     if (!this.title) {
       this.ide.title = "Write Your Code Below..";
-    }else this.ide.title = this.title
+    } else this.ide.title = this.title;
   },
   created() {
     this.ide.wait = true;
