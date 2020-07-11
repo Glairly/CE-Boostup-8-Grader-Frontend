@@ -136,7 +136,11 @@
                             :ripple="false"
                             class="mt-1 glow-warning"
                             color="warning"
-                            ><strong>{{ !$vuetify.breakpoint.mobile ? 'โค้ดเพื่อนที่ Submit' : 'โค้ดทั้งหมด'}}</strong></v-btn
+                            ><strong>{{
+                              !$vuetify.breakpoint.mobile
+                                ? "โค้ดเพื่อนที่ Submit"
+                                : "โค้ดทั้งหมด"
+                            }}</strong></v-btn
                           >
                         </v-col>
 
@@ -153,7 +157,7 @@
                         </v-col>
                       </v-row>
                     </template>
-                    <span>ดูโค้ดของเพื่อนๆที่ทำเสร็จเหมือนกัน</span>
+                    <span>สุ่มดูโค้ดของเพื่อนๆที่ทำเสร็จเหมือนกัน(อย่างมาก 10 คน)</span>
                   </v-tooltip>
                   <!-- user lastest -->
                   <v-tooltip bottom>
@@ -165,7 +169,11 @@
                             :ripple="false"
                             class="mt-1 glow-warning"
                             color="warning"
-                            ><strong>{{ !$vuetify.breakpoint.mobile ? 'โค้ดที่ Submit ล่าสุด' : 'โค้ดล่าสุด'}}</strong></v-btn
+                            ><strong>{{
+                              !$vuetify.breakpoint.mobile
+                                ? "โค้ดที่ Submit ล่าสุด"
+                                : "โค้ดล่าสุด"
+                            }}</strong></v-btn
                           >
                         </v-col>
                         <v-col cols="6" class="px-0" align="center">
@@ -239,30 +247,30 @@
         ><strong>Close</strong></v-btn
       >
       <v-tabs
- 
-       v-if="!rightNav.mode"
+        v-if="!rightNav.mode"
         vertical
- 
         dark
         slider-color="purple accent-4"
       >
-        <template v-for="(i, index) in rightNav.other.data">
-          <v-tab  class="pa-8" :key="index"> โค้ด #{{ index+1 }} </v-tab>
-        </template>
-        <template v-for="(i, index) in rightNav.other.data">
+        <template v-for="(i, index) in randOther">
+          <v-tab class="pa-8" :key="index"> โค้ด #{{ index + 1 }} </v-tab>
           <v-tab-item :key="index">
-            <IDE :code="i.code" :footer="false" title="แอบส่องโค้ดคนอื่น 🤫"></IDE>
+            <IDE
+              :code="i.code"
+              :footer="false"
+              title="แอบส่องโค้ดคนอื่น 🤫"
+            ></IDE>
           </v-tab-item>
         </template>
       </v-tabs>
       <IDE
-       v-if="rightNav.mode"
+        v-if="rightNav.mode"
         :code="rightNav.user.data.code"
         :footer="false"
         title="โค้ดล่าสุดของน้อลๆ 🧐"
       ></IDE>
     </v-dialog>
-    
+
     <IDE :task="task(qId)" :qId="task(qId).qId" footer class="pa-5"></IDE>
     <!-- {{ userLastest(task(qId).id) }} {{ rightNav.other.data }} -->
   </v-sheet>
@@ -309,6 +317,20 @@ export default {
       userLastest: "user/getLastSubmission",
       task: "user/getQuestion",
     }),
+    randOther() {
+      let a = this.rightNav.other.data;
+      let len = a.length >= 10 ? 10 : a.length;
+      for (let i = 0; i < a.length; ++i) {
+        let rand = Math.floor(Math.random() * (a.length - 1));
+        [a[i], a[rand]] = [a[rand], a[i]];
+      }
+      let arr = [];
+      if (len < 10)
+        for (let i = 0; i < len; i++) {
+          arr.push(a[i]);
+        }
+      return len >= 10 ? a : arr;
+    },
   },
   created() {
     this.update();

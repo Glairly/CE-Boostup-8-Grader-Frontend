@@ -259,7 +259,7 @@
                       >
                       <v-icon v-else color="error" right>mdi-close</v-icon>
                     </span>
-                    <span v-else> ❌ Compile Error Code : {{ i }} ❌ </span>
+                    <span v-else> ❌ Compiles Error Code : {{ i }} ❌ </span>
                   </v-chip>
                 </v-tab>
               </template>
@@ -540,7 +540,7 @@ export default {
             }
             this.compile.time = res.data.timeUsage;
           } else {
-            if (this.standAloneCase(res.data.result))
+            if (this.errorCase(res.data.result))
               this.compile.log =
                 "❌ Compile error Code : " + res.data.result + " ❌";
             else this.compile.log = res.data.result;
@@ -594,9 +594,13 @@ export default {
       this.ide.fonts -= this.ide.fonts > 10 ? 1 : 0;
     },
     standAloneCase(item) {
-      var standAlone = ["C", "B", "b", "L", "F"];
+      var standAlone = ["C", "B", "b", "L", "F","O"];
       return standAlone.includes(item);
     },
+    errorCase(item){
+        var error = ["C", "B", "b", "L", "F","M","T","R","X","O"];
+        return error.includes(item);
+    }
   },
   mounted() {
     if (this.code) {
@@ -614,7 +618,6 @@ export default {
         return true;
       };
     }
-    console.log(this.title)
     if (!this.title) {
       this.ide.title = "Write Your Code Below..";
     }else this.ide.title = this.title
