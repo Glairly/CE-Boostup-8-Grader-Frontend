@@ -8,7 +8,7 @@
         :page="options.page"
         :search="options.search"
         :sort-by="sortBy.toLowerCase()"
-        :sort-desc="options.sortDesc"
+        :sort-desc="sortDesc"
         hide-default-footer
       >
         <!-- search bar etc. -->
@@ -195,7 +195,7 @@
                       v-on="on"
                       class="d-none d-md-flex d-xl-none d-md-none d-lg-flex"
                     >
-                      <v-btn-toggle v-model="options.sortDesc" mandatory>
+                      <v-btn-toggle v-model="sortDesc" mandatory>
                         <v-btn depressed :value="false">
                           <v-icon>mdi-arrow-up</v-icon>
                         </v-btn>
@@ -659,6 +659,23 @@ export default {
       });
       return t;
     },
+    sortDesc: {
+      get () {
+        if (this.type == "submission") {
+          return this.options.sortDescSubmit;
+        } else if (this.type == "question") {
+          return this.options.sortDescTask;
+        }
+        return false;
+      },
+      set (value) {
+        if (this.type == "submission") {
+          this.options.sortDescSubmit = value;
+        } else if (this.type == "question") {
+          this.options.sortDescTask = value;
+        }
+      }
+    }
   },
   methods: {
     // pagination
@@ -724,7 +741,6 @@ export default {
         value: "result",
         align: "center",
       });
-      this.options.sortDesc = true;
     } else if (this.type == "question") {
       this.table.header.push({
         text: "Passed",

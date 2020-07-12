@@ -42,7 +42,8 @@ export default {
                     onlyIdle: false
                 },
                 rank_range: [0, 10],
-                sortDesc: false,
+                sortDescTask: false,
+                sortDescSubmit: true,
                 itemsPerPage: 20,
                 page: 1,
             }
@@ -195,7 +196,8 @@ export default {
                     onlyIdle: false
                 },
                 rank_range: [0, 10],
-                sortDesc: false,
+                sortDescTask: false,
+                sortDescSubmit: true,
                 itemsPerPage: 20,
                 page: 1,
             }
