@@ -448,7 +448,7 @@ export default {
       this.ide.title = _new;
     },
     numOfSubmissions(_new) {
-      if (_new == 0) return;
+      if (_new == 0 && this.task) return;
       let last = this.$store.state.user.data.submission[_new - 1];
       if (last.questionId != this.task.id) return;
       this.result = last.result;
