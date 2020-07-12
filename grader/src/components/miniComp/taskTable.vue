@@ -46,7 +46,7 @@
                 label="Search Name"
               ></v-text-field>
             </v-col>
-            <v-divider vertical class="mx-1"></v-divider>
+            <v-divider vertical class="mx-1" v-if="type != 'submission'"></v-divider>
             <!-- types -->
             <template v-if="type != 'submission'">
               <v-col cols="3">
