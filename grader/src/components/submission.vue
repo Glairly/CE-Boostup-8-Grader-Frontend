@@ -22,13 +22,6 @@ export default {
     },
     data() {
         return {
-            sortBy: 'rank',
-            page: 1,
-            sortDesc: false,
-            search: '',
-            itemsPerPage: 4,
-            itemsPerPageArray: [4, 8, 12],
-            rank_range: [0, 10],
             wait: true,
             modal: {
                 primary: "No data found !?",
