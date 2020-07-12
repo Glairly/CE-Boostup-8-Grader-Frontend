@@ -29,6 +29,24 @@ export default {
                 unfinished: [],
             },
         },
+        options: {
+            darkMode: false,
+            search: {
+                mode: false,
+                search: "",
+                types: [],
+                filter: {
+                    typeSingle: false,
+                    onlyPassed: false,
+                    onlyNotPassed: false,
+                    onlyIdle: false
+                },
+                rank_range: [0, 10],
+                sortDesc: false,
+                itemsPerPage: 20,
+                page: 1,
+            }
+        },
     },
 
     // eslint-disable-next-line no-unused-vars
@@ -87,6 +105,9 @@ export default {
         getStats: (state) => {
             return state.data.stats;
         },
+        getSearchOptions: (state) => {
+            return state.options.search;
+        }
     },
 
     // eslint-disable-next-line no-unused-vars
@@ -162,6 +183,23 @@ export default {
             };
             sessionStorage.clear();
         },
+        resetSearch(state) {
+            state.options.search = {
+                mode: false,
+                search: "",
+                types: [],
+                filter: {
+                    typeSingle: false,
+                    onlyPassed: false,
+                    onlyNotPassed: false,
+                    onlyIdle: false
+                },
+                rank_range: [0, 10],
+                sortDesc: false,
+                itemsPerPage: 20,
+                page: 1,
+            }
+        }
     },
     // eslint-disable-next-line no-unused-vars
     actions: {

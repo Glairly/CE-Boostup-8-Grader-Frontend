@@ -4,11 +4,11 @@
       <v-data-iterator
         :items="filtered"
         :custom-filter="customFilter"
-        :items-per-page.sync="itemsPerPage"
-        :page="page"
-        :search="search"
+        :items-per-page.sync="options.itemsPerPage"
+        :page="options.page"
+        :search="options.search"
         :sort-by="sortBy.toLowerCase()"
-        :sort-desc="sortDesc"
+        :sort-desc="options.sortDesc"
         hide-default-footer
       >
         <!-- search bar etc. -->
@@ -28,7 +28,7 @@
                   color="white"
                   v-on="on"
                   hide-details
-                  v-model="mode"
+                  v-model="options.mode"
                 ></v-switch>
               </template>
               <span>Switch Table Style</span>
@@ -38,7 +38,7 @@
             <!-- Search Bar -->
             <v-col cols="2">
               <v-text-field
-                v-model="search"
+                v-model="options.search"
                 clearable
                 solo
                 hide-details
@@ -54,7 +54,7 @@
                   multiple
                   chips
                   :menu-props="{ bottom: true, offsetY: true }"
-                  v-model="types"
+                  v-model="options.types"
                   :items="table.types"
                   clearable
                   solo
@@ -67,7 +67,7 @@
                       <span>{{ item }}</span>
                     </v-chip>
                     <span v-if="index === 1" class="grey--text caption"
-                      >(+{{ types.length - 1 }} others)</span
+                      >(+{{ options.types.length - 1 }} others)</span
                     >
                   </template>
                 </v-select>
@@ -93,7 +93,7 @@
                       <v-checkbox
                         class="my-0"
                         v-on="on"
-                        v-model="filter.typeSingle"
+                        v-model="options.filter.typeSingle"
                         color="info"
                         hide-details
                       >
@@ -112,7 +112,7 @@
                       <v-checkbox
                         class="my-0"
                         v-on="on"
-                        v-model="filter.onlyPassed"
+                        v-model="options.filter.onlyPassed"
                         color="success"
                         hide-details
                       >
@@ -131,7 +131,7 @@
                       <v-checkbox
                         class="my-0"
                         v-on="on"
-                        v-model="filter.onlyNotPassed"
+                        v-model="options.filter.onlyNotPassed"
                         color="error"
                         hide-details
                       >
@@ -150,7 +150,7 @@
                       <v-checkbox
                         class="my-0"
                         v-on="on"
-                        v-model="filter.onlyIdle"
+                        v-model="options.filter.onlyIdle"
                         color="warning"
                         hide-details
                       >
@@ -175,7 +175,7 @@
                       <v-range-slider
                         hide-details
                         label="rank"
-                        v-model="rank_range"
+                        v-model="options.rank_range"
                         track-color="black"
                         color="white"
                         thumb-color="black"
@@ -195,7 +195,7 @@
                       v-on="on"
                       class="d-none d-md-flex d-xl-none d-md-none d-lg-flex"
                     >
-                      <v-btn-toggle v-model="sortDesc" mandatory>
+                      <v-btn-toggle v-model="options.sortDesc" mandatory>
                         <v-btn depressed :value="false">
                           <v-icon>mdi-arrow-up</v-icon>
                         </v-btn>
@@ -210,11 +210,27 @@
                 <v-spacer></v-spacer>
               </v-row>
             </template>
+
+            <v-divider vertical class="mx-3"></v-divider>
+            <!-- Reset search -->
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on }">
+                    <v-btn
+                      v-on="on"
+                      dark
+                      color="dark darken-3"
+                      @click="resetSearch"
+                    >
+                    Reset
+                    </v-btn>
+                  </template>
+                  <span>Reset search filter</span>
+                </v-tooltip>
           </v-toolbar>
         </template>
         <!--  -->
         <!-- table data -->
-        <template v-if="!mode" v-slot:default="props">
+        <template v-if="!options.mode" v-slot:default="props">
           <v-row class="pa-5">
             <v-col
               v-for="(item, index) in props.items"
@@ -363,9 +379,9 @@
             <v-data-table
               item-key="i_d"
               hide-default-footer
-              :items-per-page.sync="itemsPerPage"
-              :page="page"
-              :search="search"
+              :items-per-page.sync="options.itemsPerPage"
+              :page="options.page"
+              :search="options.search"
               :headers="table.header"
               :items="props.items"
             >
@@ -429,7 +445,7 @@
               <v-menu offset-y>
                 <template v-slot:activator="{ on }">
                   <v-btn outlined class="ml-2" v-on="on">
-                    {{ itemsPerPage }}
+                    {{ options.itemsPerPage }}
                     <v-icon right>mdi-chevron-down</v-icon>
                   </v-btn>
                 </template>
@@ -473,7 +489,7 @@
 
               <v-spacer></v-spacer>
               <span class="mr-4 font-weight-black">
-                Page {{ page }} of {{ numberOfPages }}
+                Page {{ options.page }} of {{ numberOfPages }}
               </span>
               <v-btn
                 fab
@@ -538,19 +554,7 @@ export default {
   data() {
     return {
       sortBy: "i_d",
-      page: 1,
-      sortDesc: false,
-      search: "",
-      types: [],
-      filter: {
-        typeSingle: false,
-        onlyPassed: false,
-        onlyNotPassed: false,
-        onlyIdle:false
-      },
-      itemsPerPage: 20,
       itemsPerPageArray: [12, 20, 30, 50],
-      rank_range: [0, 10],
       table: {
         header: [
           {
@@ -587,7 +591,6 @@ export default {
           "pointer",
         ],
       },
-      mode: false,
       ratingIcon: {
         full: "mdi-skull",
         half: "mdi-star-half-full",
@@ -598,10 +601,11 @@ export default {
   computed: {
     ...mapGetters({
       doneQuestion: "user/getDoneQuestion",
+      options: "user/getSearchOptions",
     }),
     // pagination
     numberOfPages() {
-      if (this.tasks) return Math.ceil(this.tasks.length / this.itemsPerPage);
+      if (this.tasks) return Math.ceil(this.tasks.length / this.options.itemsPerPage);
       else return 0;
     },
 
@@ -609,31 +613,31 @@ export default {
       if (this.tasks)
         return this.tasks.filter((el) => {
           var diff = el.rank;
-          var inRank = diff >= this.rank_range[0] && diff <= this.rank_range[1];
+          var inRank = diff >= this.options.rank_range[0] && diff <= this.options.rank_range[1];
           var intype = true;
           var onlyPassed = true;
           var onlyNotPassed = true;
           var onlyIdle = true;
-          if (this.types.length && el.types) {
+          if (this.options.types.length && el.types) {
             var sp = "$.$";
             var typeArr = el.types.split(sp);
-            if (!this.filter.typeSingle) {
+            if (!this.options.filter.typeSingle) {
               intype = typeArr.some((t) =>
-                this.types.includes(t.replace(/\s+/g, "").toLocaleLowerCase())
+                this.options.types.includes(t.replace(/\s+/g, "").toLocaleLowerCase())
               );
             } else {
               intype = typeArr.every((t) =>
-                this.types.includes(t.replace(/\s+/g, "").toLocaleLowerCase())
+                this.options.types.includes(t.replace(/\s+/g, "").toLocaleLowerCase())
               );
             }
           }
-          if (this.filter.onlyPassed) {
+          if (this.options.filter.onlyPassed) {
             onlyPassed = this.doneQuestion.finished.includes(el.id);
           }
-          if (this.filter.onlyNotPassed){
+          if (this.options.filter.onlyNotPassed){
               onlyNotPassed = this.doneQuestion.unfinished.includes(el.id);
           }
-          if(this.filter.onlyIdle){
+          if(this.options.filter.onlyIdle){
               let p = this.doneQuestion.finished.includes(el.id);
               let np = this.doneQuestion.unfinished.includes(el.id);
               if(p || np){
@@ -668,13 +672,13 @@ export default {
       return col[status];
     },
     nextPage() {
-      if (this.page + 1 <= this.numberOfPages) this.page += 1;
+      if (this.options.page + 1 <= this.numberOfPages) this.options.page += 1;
     },
     formerPage() {
-      if (this.page - 1 >= 1) this.page -= 1;
+      if (this.options.page - 1 >= 1) this.options.page -= 1;
     },
     updateItemsPerPage(number) {
-      this.itemsPerPage = number;
+      this.options.itemsPerPage = number;
     },
     toCoding(item, index) {
       var data;
@@ -709,6 +713,9 @@ export default {
       var cols = ["lime lighten-1", "amber", "red"];
       return cols[Math.floor(rank / 5)];
     },
+    resetSearch() {
+      this.$store.commit('user/resetSearch')
+    }
   },
   created() {
     if (this.type == "submission") {
@@ -717,7 +724,7 @@ export default {
         value: "result",
         align: "center",
       });
-      this.sortDesc = true;
+      this.options.sortDesc = true;
     } else if (this.type == "question") {
       this.table.header.push({
         text: "Passed",
