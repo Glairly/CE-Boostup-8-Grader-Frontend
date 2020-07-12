@@ -157,7 +157,10 @@
                         </v-col>
                       </v-row>
                     </template>
-                    <span>สุ่มดูโค้ดของเพื่อนๆที่ทำเสร็จเหมือนกัน(อย่างมาก 10 คน)</span>
+                    <span
+                      >สุ่มดูโค้ดของเพื่อนๆที่ทำเสร็จเหมือนกัน(อย่างมาก 10
+                      คน)</span
+                    >
                   </v-tooltip>
                   <!-- user lastest -->
                   <v-tooltip bottom>
@@ -325,11 +328,16 @@ export default {
         [a[i], a[rand]] = [a[rand], a[i]];
       }
       let arr = [];
-      if (len < 10)
+      if (len < 10) {
         for (let i = 0; i < len; i++) {
           arr.push(a[i]);
         }
-      return len >= 10 ? a : arr;
+      } else if (len > 0) {
+        for (let i = 0; i < 10; i++) {
+          arr.push(a[i]);
+        }
+      }
+      return JSON.parse(JSON.stringify(arr));
     },
   },
   created() {

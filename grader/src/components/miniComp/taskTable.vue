@@ -81,8 +81,8 @@
               offset-y
             >
               <template v-slot:activator="{ on, attrs }">
-                <v-btn   dark v-bind="attrs" v-on="on">
-                 Filter Options
+                <v-btn dark v-bind="attrs" v-on="on">
+                  Filter Options
                 </v-btn>
               </template>
               <v-list>
@@ -97,9 +97,9 @@
                         color="info"
                         hide-details
                       >
-                         <template v-slot:label>
-                        <span class="info--text">เจาะจง</span>
-                       </template>
+                        <template v-slot:label>
+                          <span class="info--text">เจาะจง</span>
+                        </template>
                       </v-checkbox>
                     </template>
                     <span>เปลี่ยนเป็นโหมด เจาะจง(ตาม types) </span>
@@ -116,9 +116,9 @@
                         color="success"
                         hide-details
                       >
-                       <template v-slot:label>
-                        <span class="success--text"> เฉพาะข้อที่ผ่าน</span>
-                       </template>
+                        <template v-slot:label>
+                          <span class="success--text"> เฉพาะข้อที่ผ่าน</span>
+                        </template>
                       </v-checkbox>
                     </template>
                     <span>โชว์เฉพาะข้อที่ผ่าน</span>
@@ -135,9 +135,9 @@
                         color="error"
                         hide-details
                       >
-                      <template v-slot:label>
-                        <span class="error--text">เฉพาะข้อที่ไม่ผ่าน</span>
-                       </template>
+                        <template v-slot:label>
+                          <span class="error--text">เฉพาะข้อที่ไม่ผ่าน</span>
+                        </template>
                       </v-checkbox>
                     </template>
                     <span>โชว์เฉพาะข้อที่ไม่ผ่าน</span>
@@ -154,9 +154,11 @@
                         color="warning"
                         hide-details
                       >
-                      <template v-slot:label>
-                        <span class="warning--text">เฉพาะข้อที่ยังไม่ได้ทำ</span>
-                       </template>
+                        <template v-slot:label>
+                          <span class="warning--text"
+                            >เฉพาะข้อที่ยังไม่ได้ทำ</span
+                          >
+                        </template>
                       </v-checkbox>
                     </template>
                     <span>โชว์เฉพาะข้อที่ยังไม่ทำ</span>
@@ -192,6 +194,7 @@
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on }">
                     <v-col
+                      v-if="!$vuetify.breakpoint.mobile"
                       v-on="on"
                       class="d-none d-md-flex d-xl-none d-md-none d-lg-flex"
                     >
@@ -546,7 +549,7 @@ export default {
         typeSingle: false,
         onlyPassed: false,
         onlyNotPassed: false,
-        onlyIdle:false
+        onlyIdle: false,
       },
       itemsPerPage: 20,
       itemsPerPageArray: [12, 20, 30, 50],
@@ -629,20 +632,32 @@ export default {
           }
           if (this.filter.onlyPassed) {
             onlyPassed = this.doneQuestion.finished.includes(el.id);
+            if(onlyPassed && el.result){
+               for (let i = 0; i < el.result.length; i++) 
+                        if (el.result.charAt(i) != "P") 
+                            onlyPassed = false
+            }
           }
-          if (this.filter.onlyNotPassed){
-              onlyNotPassed = this.doneQuestion.unfinished.includes(el.id);
+          if (this.filter.onlyNotPassed) {
+            onlyNotPassed = this.doneQuestion.unfinished.includes(el.id);
           }
-          if(this.filter.onlyIdle){
-              let p = this.doneQuestion.finished.includes(el.id);
-              let np = this.doneQuestion.unfinished.includes(el.id);
-              if(p || np){
-                  onlyIdle = false
-              }
+          if (this.filter.onlyIdle) {
+            let p = this.doneQuestion.finished.includes(el.id);
+            let np = this.doneQuestion.unfinished.includes(el.id);
+            if (p || np) {
+              onlyIdle = false;
+            }
           }
-          
+
           let status = this.type == "submission" ? true : el.status;
-          return inRank && intype && onlyPassed && status && onlyNotPassed && onlyIdle;
+          return (
+            inRank &&
+            intype &&
+            onlyPassed &&
+            status &&
+            onlyNotPassed &&
+            onlyIdle
+          );
         });
       else return [];
     },
