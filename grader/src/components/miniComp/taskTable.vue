@@ -5,7 +5,7 @@
         :items="filtered"
         :custom-filter="customFilter"
         :items-per-page.sync="options.itemsPerPage"
-        :page="options.page"
+        :page="page"
         :search="options.search"
         :sort-by="sortBy.toLowerCase()"
         :sort-desc="sortDesc"
@@ -380,7 +380,7 @@
               item-key="i_d"
               hide-default-footer
               :items-per-page.sync="options.itemsPerPage"
-              :page="options.page"
+              :page="page"
               :search="options.search"
               :headers="table.header"
               :items="props.items"
@@ -489,7 +489,7 @@
 
               <v-spacer></v-spacer>
               <span class="mr-4 font-weight-black">
-                Page {{ options.page }} of {{ numberOfPages }}
+                Page {{ page }} of {{ numberOfPages }}
               </span>
               <v-btn
                 fab
@@ -675,7 +675,24 @@ export default {
           this.options.sortDescTask = value;
         }
       }
-    }
+    },
+    page: {
+      get () {
+        if (this.type == "submission") {
+          return this.options.pageSubmit;
+        } else if (this.type == "question") {
+          return this.options.pageTask;
+        }
+        return false;
+      },
+      set (value) {
+        if (this.type == "submission") {
+          this.options.pageSubmit = value;
+        } else if (this.type == "question") {
+          this.options.pageTask = value;
+        }
+      }
+    },
   },
   methods: {
     // pagination
@@ -689,10 +706,10 @@ export default {
       return col[status];
     },
     nextPage() {
-      if (this.options.page + 1 <= this.numberOfPages) this.options.page += 1;
+      if (this.page + 1 <= this.numberOfPages) this.page += 1;
     },
     formerPage() {
-      if (this.options.page - 1 >= 1) this.options.page -= 1;
+      if (this.page - 1 >= 1) this.page -= 1;
     },
     updateItemsPerPage(number) {
       this.options.itemsPerPage = number;
@@ -741,6 +758,7 @@ export default {
         value: "result",
         align: "center",
       });
+      this.page = 1;
     } else if (this.type == "question") {
       this.table.header.push({
         text: "Passed",

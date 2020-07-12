@@ -45,7 +45,8 @@ export default {
                 sortDescTask: false,
                 sortDescSubmit: true,
                 itemsPerPage: 20,
-                page: 1,
+                pageTask: 1,
+                pageSubmit: 1,
             }
         },
     },
@@ -199,7 +200,8 @@ export default {
                 sortDescTask: false,
                 sortDescSubmit: true,
                 itemsPerPage: 20,
-                page: 1,
+                pageTask: 1,
+                pageSubmit: 1,
             }
         }
     },
