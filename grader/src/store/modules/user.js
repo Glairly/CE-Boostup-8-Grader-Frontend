@@ -267,8 +267,10 @@ export default {
                     star += q[ind].rank;
                     if (!process.env.NODE_ENV == "development") {
                         let indS = _sub.indexOf(el);
-                        score.max += sub[indS].maxScore;
-                        score.now += sub[indS].maxScore;
+                        if (sub[indS].maxScore) {
+                            score.max += sub[indS].maxScore;
+                            score.now += sub[indS].maxScore;
+                        }
                     }
                 }
             });
@@ -285,14 +287,14 @@ export default {
                     arr.forEach((i) => {
                         if (sub[i].score > max) max = sub[i].score;
                     });
-
+                score.max += max;
                 score.now += max;
             });
 
             star /= 2;
-            if (process.env.NODE_ENV == "development") {
-                score.max = 1000;
-            }
+            // if (process.env.NODE_ENV == "development") {
+            //     score.max = 1000;
+            // }
             let stat = {
                 score: score,
                 question: {
