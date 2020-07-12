@@ -702,7 +702,7 @@ export default {
           return el[key]
             .toString()
             .toLocaleLowerCase()
-            .includes(search.toLocaleLowerCase());
+            .includes((search || "").toLocaleLowerCase());
         });
       });
     },
