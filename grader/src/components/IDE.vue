@@ -152,12 +152,25 @@
                     indeterminate
                   ></v-progress-circular>
                 </span>
-                <span v-else>
-                  <v-icon class="mx-auto pa-0" :color="snackbarIconColor">{{
-                    snackbarIcon
-                  }}</v-icon>
-                  {{ text }}
-                </span>
+                <div v-else>
+                  <span>
+                    <v-icon class="mx-auto pa-0" :color="snackbarIconColor">{{
+                      snackbarIcon
+                    }}</v-icon>
+                    {{ text }}
+                  </span>
+                  <br>
+                  <span>Result : </span>
+                  <span v-if="result == ''">
+                    <v-progress-circular
+                      :value="20"
+                      indeterminate
+                    ></v-progress-circular>
+                  </span>
+                  <span v-else>
+                    {{ result }}
+                  </span>
+                </div>
               </v-card-title>
               <v-card-actions>
                 <v-spacer></v-spacer>
@@ -375,6 +388,7 @@ export default {
       snackbar: false,
       submitWait: false,
       text: "Submit Success",
+      result: "",
       snackbarIcon: "",
       snackbarIconColor: "",
       ///////////////
@@ -416,6 +430,9 @@ export default {
     qId() {
       return this.task.id;
     },
+    numOfSubmissions () {
+      return this.$store.state.user.data.stats.submission;
+    },
   },
   watch: {
     code(_new) {
@@ -430,6 +447,12 @@ export default {
     title(_new) {
       this.ide.title = _new;
     },
+    numOfSubmissions(_new) {
+      if (_new == 0) return;
+      let last = this.$store.state.user.data.submission[_new - 1];
+      if (last.questionId != this.task.id) return;
+      this.result = last.result;
+    }
   },
   methods: {
     saveSession() {
@@ -559,6 +582,7 @@ export default {
       }, 500);
     },
     Submit() {
+      this.result = "";
       this.snackbar = true;
       this.submitWait = true;
       let data = {
