@@ -41,7 +41,6 @@
 </template>
 
 <script>
-import mixin from '@/components/mixins'
 export default {
     props: {
         show: Boolean,
@@ -50,7 +49,6 @@ export default {
         secondary: String,
         mode: String
     },
-    mixins: [mixin],
     data() {
         return {
             modal: false

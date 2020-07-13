@@ -329,10 +329,8 @@ import "codemirror/theme/duotone-light.css";
 import "codemirror/theme/blackboard.css";
 import "codemirror/theme/eclipse.css";
 
-import mixin from "../components/mixins";
 
 export default {
-  mixins: [mixin],
   props: {
     footer: Boolean,
     code: String,
