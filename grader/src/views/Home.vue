@@ -190,7 +190,7 @@ export default {
                 this.$store.dispatch('user/fetch').then(() => {
                     f2()
                 });
-            }, 3000)
+            }, 6000)
         }
 
         let f2 = async () => {
