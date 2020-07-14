@@ -255,9 +255,17 @@
                       absolute
                       color="grey lighten-5"
                     >
-                      <v-btn @click.end="toCoding(item, index)"
-                        >Go to Coding</v-btn
-                      >
+                      <template v-slot:default>
+                        <v-row class="d-flex flex-column alingn-center justify-center">
+                          <v-btn  class="mb-3" @click.end="toCoding(item, index, false)"
+                            >Coding Now!!</v-btn
+                          >
+
+                          <v-btn @click.end="toCoding(item, index, true)"
+                            >Codes in new-Tab</v-btn
+                          >
+                        </v-row>
+                      </template>
                     </v-overlay>
                   </v-fade-transition>
 
@@ -636,10 +644,9 @@ export default {
           }
           if (this.options.filter.onlyPassed) {
             onlyPassed = this.doneQuestion.finished.includes(el.id);
-            if(onlyPassed && el.result){
-               for (let i = 0; i < el.result.length; i++) 
-                        if (el.result.charAt(i) != "P") 
-                            onlyPassed = false
+            if (onlyPassed && el.result) {
+              for (let i = 0; i < el.result.length; i++)
+                if (el.result.charAt(i) != "P") onlyPassed = false;
             }
           }
           if (this.options.filter.onlyNotPassed) {
@@ -729,7 +736,7 @@ export default {
     updateItemsPerPage(number) {
       this.options.itemsPerPage = number;
     },
-    toCoding(item, index) {
+    toCoding(item, index, newTab) {
       var data;
       if (typeof index == "number") {
         // click return (item , index)
@@ -738,9 +745,14 @@ export default {
         // dblclick return  (event , row )
         data = index.item;
       }
-      this.$router.push({
-        name: "Coding",
-      });
+      if (newTab) {
+        let r = this.$router.resolve({ name: "Coding" });
+        window.open(r.href, "_blank");
+      } else
+        this.$router.push({
+          name: "Coding",
+        });
+
       this.$cookies.remove("task");
       this.$cookies.set("task", data.id, "1d");
     },
