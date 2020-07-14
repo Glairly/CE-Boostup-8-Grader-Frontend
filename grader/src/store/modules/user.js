@@ -146,26 +146,19 @@ export default {
             let doneQuestion = state.data.doneQuestion;
             sub.forEach((el) => {
                 if (el.result) {
-                    var finished = true;
-                    for (let i = 0; i < el.result.length; i++) {
-                        if (el.result.charAt(i) != "P") {
-                            finished = false;
-                            if (!doneQuestion.finished.includes(el.questionId) &&
-                                !doneQuestion.unfinished.includes(el.questionId)
-                            )
-                                doneQuestion.unfinished.push(el.questionId);
-                            break;
-                        }
+                    if (doneQuestion.finished.includes(el.questionId)) {
+                        return;
                     }
-                    if (finished) {
+                    if (/^P*$/.test(el.result)) { // check all char is P
                         // remove duplicate
                         let isExisted = doneQuestion.unfinished.indexOf(el.questionId);
                         if (isExisted > -1) {
                             doneQuestion.unfinished.splice(isExisted, 1);
                         }
-                        if (!doneQuestion.finished.includes(el.questionId)) {
-                            doneQuestion.finished.push(el.questionId);
-                        }
+                        doneQuestion.finished.push(el.questionId);
+                    } else {
+                        if (!doneQuestion.unfinished.includes(el.questionId))
+                            doneQuestion.unfinished.push(el.questionId);
                     }
                 }
             });
