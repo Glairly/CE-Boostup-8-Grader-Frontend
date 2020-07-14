@@ -45,7 +45,12 @@ export default {
     mounted() {
         setTimeout(() => {
             this.wait = false
-        }, 2000)
+        }, 2000);
+        
+        this.$store.dispatch("user/setFetchInterval", {item: "Questions", val: 10000});
+    },
+    beforeDestroy() {
+        this.$store.dispatch("user/setFetchInterval", {item: "Questions", val: 0});
     },
 }
 </script>

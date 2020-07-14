@@ -178,7 +178,7 @@
                   v-if="!submitWait"
                   color="pink"
                   text
-                  @click="snackbar = false"
+                  @click="closeSnackbar"
                 >
                   Close
                 </v-btn>
@@ -429,7 +429,7 @@ export default {
       return this.task.id;
     },
     numOfSubmissions () {
-      return this.$store.state.user.data.stats.submission;
+      return this.$store.state.user.data.submission.length;
     },
   },
   watch: {
@@ -450,6 +450,8 @@ export default {
       let last = this.$store.state.user.data.submission[_new - 1];
       if (last.questionId != this.task.id) return;
       this.result = last.result;
+
+      this.$store.dispatch("user/setFetchInterval", {item: "Submissions", val: 0});
     }
   },
   methods: {
@@ -599,6 +601,7 @@ export default {
           this.snackbarIcon = "mdi-check-bold";
           this.snackbarIconColor = "success";
           this.submitWait = false;
+          this.$store.dispatch("user/setFetchInterval", {item: "Submissions", val: 2000});
         })
         .catch(() => {
           this.submitWait = false;
@@ -621,6 +624,10 @@ export default {
       var error = ["C", "B", "b", "L", "F", "M", "T", "R", "X", "O"];
       return error.includes(item);
     },
+    closeSnackbar() {
+      this.snackbar = false;
+      this.$store.dispatch("user/setFetchInterval", {item: "Submissions", val: 0});
+    }
   },
   mounted() {
     if (this.code) {
@@ -648,6 +655,9 @@ export default {
       this.ide.wait = false;
       this.cmOptions.theme = this.ide.editorThemes[0];
     }, 500);
+  },
+  beforeDestroy() {
+    this.$store.dispatch("user/setFetchInterval", {item: "Submissions", val: 0});
   },
 };
 </script>

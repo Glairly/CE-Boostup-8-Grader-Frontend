@@ -49,6 +49,16 @@ export default {
                 pageSubmit: 1,
             }
         },
+        fetch: {
+            Submissions: {
+                interval: 0,
+                id: 0,
+            },
+            Questions: {
+                interval: 0,
+                id: 0,
+            },
+        },
     },
 
     // eslint-disable-next-line no-unused-vars
@@ -203,12 +213,11 @@ export default {
                 pageTask: 1,
                 pageSubmit: 1,
             }
-        }
+        },
     },
     // eslint-disable-next-line no-unused-vars
     actions: {
-        async fetch({ state, commit, rootState }) {
-            var tok = state.data.token;
+        async fetchQuestions({ commit, rootState }) {
             await axios.get(rootState.api + "/api/v1/questions").then((res) => {
                 var allQuestion = JSON.parse(JSON.stringify(res.data.data));
                 var _allQuestion = [];
@@ -220,16 +229,24 @@ export default {
                 }
                 commit("setQuestions", _allQuestion);
             });
+        },
+        async fetchSubmissions({ state, commit, rootState }) {
             await axios
                 .post(rootState.api + "/api/v1/list_submission", {
-                    token: tok,
+                    token: state.data.token,
                 })
                 .then((response) => {
                     var submission = response.data.data;
                     if (!submission) submission = [];
-                    commit("setSubmission", submission);
-                    commit("setDoneQuestion", submission);
+                    if (state.data.submission.length != submission.length) {
+                        commit("setSubmission", submission);
+                        commit("setDoneQuestion", submission);
+                    }
                 });
+        },
+        async fetch({ dispatch }) {
+            dispatch('fetchQuestions');
+            dispatch('fetchSubmissions');
         },
         async isIdExist({ state, commit, rootState }) {
             commit;
@@ -308,6 +325,23 @@ export default {
         },
         // autoSave({ state, commit }) {
 
-        // }
+        // },
+        setFetchInterval({ state, dispatch }, payload) {
+            if (!state.fetch[payload.item]) return;
+            if (payload.val == 0) {
+                clearInterval(state.fetch[payload.item].id);
+                state.fetch[payload.item].interval = 0;
+                state.fetch[payload.item].id = 0;
+            } else if (state.fetch[payload.item].interval != payload.val) {
+                clearInterval(state.fetch[payload.item].id);
+                state.fetch[payload.item].interval = payload.val;
+
+                dispatch('fetch' + payload.item).then(() => {
+                    state.fetch[payload.item].id = setInterval(() => {
+                        dispatch('fetch' + payload.item);
+                    }, payload.val);
+                })
+            }
+        },
     },
 };

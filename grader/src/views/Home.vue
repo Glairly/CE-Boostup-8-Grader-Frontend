@@ -231,25 +231,13 @@ export default {
   created() {
     var store = this.$store;
     this.user = store.state.user.data;
+    this.$store.dispatch("user/setFetchInterval", {item: "Submissions", val: 0});
+    this.$store.dispatch("user/setFetchInterval", {item: "Questions", val: 0});
   },
   mounted() {
-    let ready = () => {
+    this.$store.dispatch("user/fetch").then(() => {
       this.scaleover = "scale-over-out";
       this.ready = true;
-      setInterval(() => {
-        this.$store.dispatch("user/fetch").then(() => {
-          f2();
-        });
-      }, 6000);
-    };
-
-    let f2 = async () => {
-      await this.$store.dispatch("user/computeStats");
-    };
-    this.$store.dispatch("user/fetch").then(() => {
-      f2().then(() => {
-        ready();
-      });
     });
   },
    
