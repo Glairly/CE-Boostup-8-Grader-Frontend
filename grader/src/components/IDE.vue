@@ -601,7 +601,7 @@ export default {
           this.snackbarIcon = "mdi-check-bold";
           this.snackbarIconColor = "success";
           this.submitWait = false;
-          this.$store.dispatch("user/setFetchInterval", {item: "Submissions", val: 2000});
+          this.$store.dispatch("user/setFetchInterval", {item: "Submissions", val: 2000, force: false});
         })
         .catch(() => {
           this.submitWait = false;

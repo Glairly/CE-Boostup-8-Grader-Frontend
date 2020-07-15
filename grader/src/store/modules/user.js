@@ -329,7 +329,13 @@ export default {
                 clearInterval(state.fetch[payload.item].id);
                 state.fetch[payload.item].interval = payload.val;
 
-                dispatch('fetch' + payload.item).then(() => {
+                let pro = Promise.resolve(0);
+                
+                if (typeof payload.force === 'undefined' || payload.force !== false) {
+                    pro = dispatch('fetch' + payload.item);
+                }
+
+                pro.then(() => {
                     state.fetch[payload.item].id = setInterval(() => {
                         dispatch('fetch' + payload.item);
                     }, payload.val);
