@@ -152,12 +152,25 @@
                     indeterminate
                   ></v-progress-circular>
                 </span>
-                <span v-else>
-                  <v-icon class="mx-auto pa-0" :color="snackbarIconColor">{{
-                    snackbarIcon
-                  }}</v-icon>
-                  {{ text }}
-                </span>
+                <div v-else>
+                  <span>
+                    <v-icon class="mx-auto pa-0" :color="snackbarIconColor">{{
+                      snackbarIcon
+                    }}</v-icon>
+                    {{ text }}
+                  </span>
+                  <br>
+                  <span>Result : </span>
+                  <span v-if="result == ''">
+                    <v-progress-circular
+                      :value="20"
+                      indeterminate
+                    ></v-progress-circular>
+                  </span>
+                  <span v-else>
+                    {{ result }}
+                  </span>
+                </div>
               </v-card-title>
               <v-card-actions>
                 <v-spacer></v-spacer>
@@ -165,7 +178,7 @@
                   v-if="!submitWait"
                   color="pink"
                   text
-                  @click="snackbar = false"
+                  @click="closeSnackbar"
                 >
                   Close
                 </v-btn>
@@ -373,6 +386,7 @@ export default {
       snackbar: false,
       submitWait: false,
       text: "Submit Success",
+      result: "",
       snackbarIcon: "",
       snackbarIconColor: "",
       ///////////////
@@ -414,6 +428,9 @@ export default {
     qId() {
       return this.task.id;
     },
+    numOfSubmissions () {
+      return this.$store.state.user.data.submission.length;
+    },
   },
   watch: {
     code(_new) {
@@ -428,6 +445,14 @@ export default {
     title(_new) {
       this.ide.title = _new;
     },
+    numOfSubmissions(_new) {
+      if (_new == 0 && this.task) return;
+      let last = this.$store.state.user.data.submission[_new - 1];
+      if (last.questionId != this.task.id) return;
+      this.result = last.result;
+
+      this.$store.dispatch("user/setFetchInterval", {item: "Submissions", val: 0});
+    }
   },
   methods: {
     saveSession() {
@@ -557,6 +582,7 @@ export default {
       }, 500);
     },
     Submit() {
+      this.result = "";
       this.snackbar = true;
       this.submitWait = true;
       let data = {
@@ -575,6 +601,7 @@ export default {
           this.snackbarIcon = "mdi-check-bold";
           this.snackbarIconColor = "success";
           this.submitWait = false;
+          this.$store.dispatch("user/setFetchInterval", {item: "Submissions", val: 2000, force: false});
         })
         .catch(() => {
           this.submitWait = false;
@@ -597,6 +624,10 @@ export default {
       var error = ["C", "B", "b", "L", "F", "M", "T", "R", "X", "O"];
       return error.includes(item);
     },
+    closeSnackbar() {
+      this.snackbar = false;
+      this.$store.dispatch("user/setFetchInterval", {item: "Submissions", val: 0});
+    }
   },
   mounted() {
     if (this.code) {
@@ -624,6 +655,9 @@ export default {
       this.ide.wait = false;
       this.cmOptions.theme = this.ide.editorThemes[0];
     }, 500);
+  },
+  beforeDestroy() {
+    this.$store.dispatch("user/setFetchInterval", {item: "Submissions", val: 0});
   },
 };
 </script>

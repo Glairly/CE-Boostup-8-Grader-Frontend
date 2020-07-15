@@ -11,7 +11,18 @@ export default {
   components: {
     profile
   },
-  created() {
+  data: () => ({
+    setIntervalId: 0,
+  }),
+  mounted() {
+    this.$store.dispatch("user/computeStats");
+    this.setIntervalId = setInterval(() => {
+      this.$store.dispatch("user/fetch")
+        .then(() => this.$store.dispatch("user/computeStats"));
+    }, 10000);
+  },
+  beforeDestroy() {
+    clearInterval(this.setIntervalId);
   },
 }
 

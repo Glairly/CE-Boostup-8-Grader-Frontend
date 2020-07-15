@@ -29,6 +29,36 @@ export default {
                 unfinished: [],
             },
         },
+        options: {
+            darkMode: false,
+            search: {
+                mode: false,
+                search: "",
+                types: [],
+                filter: {
+                    typeSingle: false,
+                    onlyPassed: false,
+                    onlyNotPassed: false,
+                    onlyIdle: false
+                },
+                rank_range: [0, 10],
+                sortDescTask: false,
+                sortDescSubmit: true,
+                itemsPerPage: 20,
+                pageTask: 1,
+                pageSubmit: 1,
+            }
+        },
+        fetch: {
+            Submissions: {
+                interval: 0,
+                id: 0,
+            },
+            Questions: {
+                interval: 0,
+                id: 0,
+            },
+        },
     },
 
     // eslint-disable-next-line no-unused-vars
@@ -87,6 +117,9 @@ export default {
         getStats: (state) => {
             return state.data.stats;
         },
+        getSearchOptions: (state) => {
+            return state.options.search;
+        }
     },
 
     // eslint-disable-next-line no-unused-vars
@@ -113,26 +146,19 @@ export default {
             let doneQuestion = state.data.doneQuestion;
             sub.forEach((el) => {
                 if (el.result) {
-                    var finished = true;
-                    for (let i = 0; i < el.result.length; i++) {
-                        if (el.result.charAt(i) != "P") {
-                            finished = false;
-                            if (!doneQuestion.finished.includes(el.questionId) &&
-                                !doneQuestion.unfinished.includes(el.questionId)
-                            )
-                                doneQuestion.unfinished.push(el.questionId);
-                            break;
-                        }
+                    if (doneQuestion.finished.includes(el.questionId)) {
+                        return;
                     }
-                    if (finished) {
+                    if (/^P*$/.test(el.result)) { // check all char is P
                         // remove duplicate
                         let isExisted = doneQuestion.unfinished.indexOf(el.questionId);
                         if (isExisted > -1) {
                             doneQuestion.unfinished.splice(isExisted, 1);
                         }
-                        if (!doneQuestion.finished.includes(el.questionId)) {
-                            doneQuestion.finished.push(el.questionId);
-                        }
+                        doneQuestion.finished.push(el.questionId);
+                    } else {
+                        if (!doneQuestion.unfinished.includes(el.questionId))
+                            doneQuestion.unfinished.push(el.questionId);
                     }
                 }
             });
@@ -162,11 +188,29 @@ export default {
             };
             sessionStorage.clear();
         },
+        resetSearch(state) {
+            state.options.search = {
+                mode: false,
+                search: "",
+                types: [],
+                filter: {
+                    typeSingle: false,
+                    onlyPassed: false,
+                    onlyNotPassed: false,
+                    onlyIdle: false
+                },
+                rank_range: [0, 10],
+                sortDescTask: false,
+                sortDescSubmit: true,
+                itemsPerPage: 20,
+                pageTask: 1,
+                pageSubmit: 1,
+            }
+        },
     },
     // eslint-disable-next-line no-unused-vars
     actions: {
-        async fetch({ state, commit, rootState }) {
-            var tok = state.data.token;
+        async fetchQuestions({ commit, rootState }) {
             await axios.get(rootState.api + "/api/v1/questions").then((res) => {
                 var allQuestion = JSON.parse(JSON.stringify(res.data.data));
                 var _allQuestion = [];
@@ -178,16 +222,24 @@ export default {
                 }
                 commit("setQuestions", _allQuestion);
             });
+        },
+        async fetchSubmissions({ state, commit, rootState }) {
             await axios
                 .post(rootState.api + "/api/v1/list_submission", {
-                    token: tok,
+                    token: state.data.token,
                 })
                 .then((response) => {
                     var submission = response.data.data;
                     if (!submission) submission = [];
-                    commit("setSubmission", submission);
-                    commit("setDoneQuestion", submission);
+                    if (state.data.submission.length != submission.length) {
+                        commit("setSubmission", submission);
+                        commit("setDoneQuestion", submission);
+                    }
                 });
+        },
+        async fetch({ dispatch }) {
+            dispatch('fetchQuestions');
+            dispatch('fetchSubmissions');
         },
         async isIdExist({ state, commit, rootState }) {
             commit;
@@ -266,6 +318,29 @@ export default {
         },
         // autoSave({ state, commit }) {
 
-        // }
+        // },
+        setFetchInterval({ state, dispatch }, payload) {
+            if (!state.fetch[payload.item]) return;
+            if (payload.val == 0) {
+                clearInterval(state.fetch[payload.item].id);
+                state.fetch[payload.item].interval = 0;
+                state.fetch[payload.item].id = 0;
+            } else if (state.fetch[payload.item].interval != payload.val) {
+                clearInterval(state.fetch[payload.item].id);
+                state.fetch[payload.item].interval = payload.val;
+
+                let pro = Promise.resolve(0);
+                
+                if (typeof payload.force === 'undefined' || payload.force !== false) {
+                    pro = dispatch('fetch' + payload.item);
+                }
+
+                pro.then(() => {
+                    state.fetch[payload.item].id = setInterval(() => {
+                        dispatch('fetch' + payload.item);
+                    }, payload.val);
+                })
+            }
+        },
     },
 };
