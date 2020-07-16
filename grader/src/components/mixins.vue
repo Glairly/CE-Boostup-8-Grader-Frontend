@@ -3,7 +3,7 @@
 export default {
   computed: {},
   data: (vm) => ({
-    initialDark: vm.$vuetify ? vm.$vuetify.theme.dark : true,
+    initialDark: vm.$vuetify && vm.$vuetify.theme ? vm.$vuetify.theme.dark : true,
     moveBee: {
         target: "",
         status: "",
