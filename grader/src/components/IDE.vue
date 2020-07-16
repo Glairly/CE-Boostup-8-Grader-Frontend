@@ -570,6 +570,12 @@ export default {
                 '😅 Look like the output is empty. Did u forgot "printf()" ?🤨?';
             this.compile.time = res.data.timeUsage;
           }
+        })
+        .catch(() => {
+          this.compile.wait = false;
+          this.compile.log =
+            '⚠️ Look like server error. Please try again. ⚠️';
+          this.compile.time = 0;
         });
 
       let logs = document.getElementById("compileLog");
