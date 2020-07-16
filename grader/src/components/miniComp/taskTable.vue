@@ -106,6 +106,7 @@
                     <span>เปลี่ยนเป็นโหมด เจาะจง(ตาม types) </span>
                   </v-tooltip>
                 </v-list-item>
+                <v-divider></v-divider>
                 <!-- passed -->
                 <v-list-item>
                   <v-tooltip left>
@@ -639,32 +640,34 @@ export default {
               );
             }
           }
-          if (this.options.filter.onlyPassed) {
-            onlyPassed = this.doneQuestion.finished.includes(el.id);
-            if (onlyPassed && el.result) {
-              for (let i = 0; i < el.result.length; i++)
-                if (el.result.charAt(i) != "P") onlyPassed = false;
-            }
-          }
-          if (this.options.filter.onlyNotPassed) {
-            onlyNotPassed = this.doneQuestion.unfinished.includes(el.id);
-          }
-          if (this.options.filter.onlyIdle) {
-            let p = this.doneQuestion.finished.includes(el.id);
-            let np = this.doneQuestion.unfinished.includes(el.id);
-            if (p || np) {
-              onlyIdle = false;
-            }
+          if (this.options.filter.onlyPassed ||
+              this.options.filter.onlyNotPassed ||
+              this.options.filter.onlyIdle) {
+                onlyPassed = false;
+                onlyNotPassed = false;
+                onlyIdle = false;
+
+                let p = this.doneQuestion.finished.includes(el.id);
+                let np = this.doneQuestion.unfinished.includes(el.id);
+                if (this.options.filter.onlyPassed) {
+                  onlyPassed = p;
+                }
+                if (this.options.filter.onlyNotPassed) {
+                  onlyNotPassed = np;
+                }
+                if (this.options.filter.onlyIdle) {
+                  if (!p && !np) {
+                    onlyIdle = true;
+                  }
+                }
           }
 
           let status = this.type == "submission" ? true : el.status;
           return (
             inRank &&
             intype &&
-            onlyPassed &&
             status &&
-            onlyNotPassed &&
-            onlyIdle
+            ( onlyPassed || onlyNotPassed || onlyIdle )
           );
         });
       else return [];
