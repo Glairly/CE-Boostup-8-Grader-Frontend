@@ -360,9 +360,13 @@ export default {
           "Access-Control-Allow-Origin": "*",
         },
       };
-      // other
-      this.axios
-        .post(this.$store.state.api + "/api/v1/get_finish_code", body, config)
+      let isFinish = false;
+
+      if (this.$store.state.user.data.doneQuestion.finished.includes(this.qId)) {
+        isFinish = true;
+        // other
+        this.axios
+          .post(this.$store.state.api + "/api/v1/get_finish_code", body, config)
         .then((res) => {
           var arr = res.data.data;
           if (arr.length) {
@@ -373,9 +377,12 @@ export default {
         .catch(() => {
           this.rightNav.other.seeCode = true;
           console.clear();
-        });
-      // user
-      this.axios
+          });
+      }
+      
+      if (isFinish || this.$store.state.user.data.doneQuestion.unfinished.includes(this.qId)) {
+        // user
+        this.axios
         .post(this.$store.state.api + "/api/v1/submission_code", body, config)
         .then((res) => {
           var arr = res.data.data;
@@ -385,7 +392,8 @@ export default {
         })
         .catch(() => {
           this.rightNav.seeCode = true;
-        });
+          });
+      }
 
       setTimeout(() => {
         this.toggleRightNav();
