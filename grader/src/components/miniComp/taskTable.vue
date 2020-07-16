@@ -106,7 +106,7 @@
                     <span>เปลี่ยนเป็นโหมด เจาะจง(ตาม types) </span>
                   </v-tooltip>
                 </v-list-item>
-                <v-divider></v-divider>
+                <v-divider v-if="type == 'question'"></v-divider>
                 <!-- passed -->
                 <v-list-item>
                   <v-tooltip left>
