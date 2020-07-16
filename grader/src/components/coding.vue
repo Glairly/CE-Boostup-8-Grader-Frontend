@@ -339,6 +339,9 @@ export default {
       }
       return JSON.parse(JSON.stringify(arr));
     },
+    numOfSubmissions () {
+      return this.$store.state.user.data.submission.length;
+    },
   },
   created() {
     this.update();
@@ -349,7 +352,7 @@ export default {
       this.rightNav.mode = mode;
       this.rightNav.codePopup = true;
     },
-    update() {
+    update(toggle) {
       this.qId = this.$cookies.get("task");
       var body = {
         token: this.$store.getters["user/getToken"],
@@ -395,9 +398,11 @@ export default {
           });
       }
 
-      setTimeout(() => {
-        this.toggleRightNav();
-      }, 500);
+      if (toggle !== false) {
+        setTimeout(() => {
+          this.toggleRightNav();
+        }, 500);
+      }
     },
     setEvents() {
       const minSize = 500;
@@ -463,6 +468,15 @@ export default {
       }
       this.rightNav.tab_select = 0;
     },
+  },
+  watch: {
+    numOfSubmissions(_new) {
+      if (_new == 0 && this.task) return;
+      let last = this.$store.state.user.data.submission[_new - 1];
+      if (last.questionId != this.qId) return;
+      
+      this.update(false);
+    }
   },
 };
 </script>
