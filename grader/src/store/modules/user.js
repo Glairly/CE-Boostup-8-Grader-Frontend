@@ -50,6 +50,7 @@ export default {
             }
         },
         fetch: {
+            paused: false,
             Submissions: {
                 interval: 0,
                 id: 0,
@@ -320,26 +321,43 @@ export default {
 
         // },
         setFetchInterval({ state, dispatch }, payload) {
-            if (!state.fetch[payload.item]) return;
-            if (payload.val == 0) {
-                clearInterval(state.fetch[payload.item].id);
-                state.fetch[payload.item].interval = 0;
-                state.fetch[payload.item].id = 0;
-            } else if (state.fetch[payload.item].interval != payload.val) {
-                clearInterval(state.fetch[payload.item].id);
-                state.fetch[payload.item].interval = payload.val;
-
-                let pro = Promise.resolve(0);
-                
-                if (typeof payload.force === 'undefined' || payload.force !== false) {
-                    pro = dispatch('fetch' + payload.item);
-                }
-
-                pro.then(() => {
-                    state.fetch[payload.item].id = setInterval(() => {
-                        dispatch('fetch' + payload.item);
-                    }, payload.val);
+            if (payload.paused !== undefined) {
+                let list = ["Submissions", "Questions"];
+                list.forEach(item => {
+                    if (payload.paused === true) {
+                        clearInterval(state.fetch[item].id);
+                        state.fetch[item].id = 0;
+                    } else if (state.fetch[item].interval != 0) {
+                        clearInterval(state.fetch[item].id);
+                        dispatch('fetch' + item).then(() => {
+                            state.fetch[item].id = setInterval(() => {
+                                dispatch('fetch' + item);
+                            }, state.fetch[item].interval);
+                        })
+                    }
                 })
+            } else {
+                if (!state.fetch[payload.item]) return;
+                if (payload.val == 0) {
+                    clearInterval(state.fetch[payload.item].id);
+                    state.fetch[payload.item].interval = 0;
+                    state.fetch[payload.item].id = 0;
+                } else if (state.fetch[payload.item].interval != payload.val) {
+                    clearInterval(state.fetch[payload.item].id);
+                    state.fetch[payload.item].interval = payload.val;
+
+                    let pro = Promise.resolve(0);
+                    
+                    if (typeof payload.force === 'undefined' || payload.force !== false) {
+                        pro = dispatch('fetch' + payload.item);
+                    }
+
+                    pro.then(() => {
+                        state.fetch[payload.item].id = setInterval(() => {
+                            dispatch('fetch' + payload.item);
+                        }, payload.val);
+                    })
+                }
             }
         },
     },
