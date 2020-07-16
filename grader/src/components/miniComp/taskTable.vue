@@ -9,6 +9,7 @@
         :search="options.search"
         :sort-by="sortBy.toLowerCase()"
         :sort-desc="sortDesc"
+        v-on:page-count="changeNumOfPages"
         hide-default-footer
       >
         <!-- search bar etc. -->
@@ -607,6 +608,7 @@ export default {
         half: "mdi-star-half-full",
         default: "mdi-star",
       },
+      numberOfPages: 0,
     };
   },
   computed: {
@@ -614,11 +616,6 @@ export default {
       doneQuestion: "user/getDoneQuestion",
       options: "user/getSearchOptions",
     }),
-    // pagination
-    numberOfPages() {
-      if (this.tasks) return Math.ceil(this.tasks.length / this.options.itemsPerPage);
-      else return 0;
-    },
 
     filtered() {
       if (this.tasks)
@@ -776,7 +773,11 @@ export default {
     },
     resetSearch() {
       this.$store.commit('user/resetSearch')
-    }
+    },
+    changeNumOfPages(num) {
+      if (this.page > num) this.page = num;
+      this.numberOfPages = num;
+    },
   },
   created() {
     if (this.type == "submission") {
@@ -799,6 +800,10 @@ export default {
         width: "30%",
       });
     }
+  },
+  mounted() {
+    // pagination
+    if (this.tasks) this.numberOfPages = Math.ceil(this.tasks.length / this.options.itemsPerPage);
   },
 };
 </script>
