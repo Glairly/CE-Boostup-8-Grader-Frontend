@@ -790,6 +790,7 @@ export default {
         align: "center",
       });
       this.page = 1;
+      this.options.filter.onlyIdle = false;
     } else if (this.type == "question") {
       this.table.header.push({
         text: "Passed",
