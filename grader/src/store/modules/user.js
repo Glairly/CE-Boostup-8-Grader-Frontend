@@ -253,7 +253,7 @@ export default {
             await axios
                 .get(rootState.api + "/api/v1/leaderboard")
                 .then((response) => {
-                    console.log(response)
+
                     commit("setLeaderBoard", response.data.users);
                 })
         },
