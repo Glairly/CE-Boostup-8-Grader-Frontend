@@ -75,7 +75,7 @@
               circle
               color="warning"
               v-model="table.page"
-              :length="numberOfPages(items, 10)"
+              :length="numberOfPages(filtered, 10)"
               :total-visible="7"
             ></v-pagination>
           </template>
