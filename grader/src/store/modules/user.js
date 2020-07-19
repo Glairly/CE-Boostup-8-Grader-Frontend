@@ -62,7 +62,7 @@ export default {
             LeaderBoard: {
                 interval: 0,
                 id: 0,
-            }
+            },
         },
     },
 
@@ -126,7 +126,9 @@ export default {
             return state.options.search;
         },
         getLeaderBoard: (state) => {
-            return state.data.leaderBoard;
+            if (state.data.leaderBoard && state.data.leaderBoard.length)
+                return state.data.leaderBoard;
+            else return [];
         },
     },
 
@@ -187,16 +189,32 @@ export default {
         clear(state) {
             // clear interval
             for (let i = 0; i < 100; i++) {
-                window.clearInterval(i);
-                window.clearTimeout(i);
+                clearInterval(i);
+                clearTimeout(i);
             }
             state.data = {
                 token: "",
                 username: "",
-                detail: { email: "", avatar: "", name: "" },
+                detail: { avatar: "", name: "" },
                 submission: [],
                 questions: [],
-                codeSession: [],
+                stats: {
+                    score: {
+                        max: 0,
+                        now: 0,
+                    },
+                    question: {
+                        max: 0,
+                        now: 0,
+                        star: 0,
+                    },
+                    submission: 0,
+                },
+                doneQuestion: {
+                    finished: [],
+                    unfinished: [],
+                },
+                leaderBoard: [],
             };
             sessionStorage.clear();
         },
@@ -253,13 +271,14 @@ export default {
             await axios
                 .get(rootState.api + "/api/v1/leaderboard")
                 .then((response) => {
-
-                    commit("setLeaderBoard", response.data.users);
-                })
+                    if (response.data.users)
+                        commit("setLeaderBoard", response.data.users);
+                });
         },
         async fetch({ dispatch }) {
             dispatch("fetchQuestions");
             dispatch("fetchSubmissions");
+            dispatch("fetchLeaderBoard");
         },
         async isIdExist({ state, commit, rootState }) {
             commit;

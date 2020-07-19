@@ -23,7 +23,6 @@ export default {
       return Math.floor(Math.random() * Math.floor(max));
     },
     moveBeeInit(beeList) {
-        console.log("init bee")
       beeList.forEach((bee) => {
         let b = document.getElementById(bee);
         if (b)

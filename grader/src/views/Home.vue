@@ -239,6 +239,10 @@ export default {
       item: "Questions",
       val: 0,
     });
+     this.$store.dispatch("user/setFetchInterval", {
+          item: "LeaderBoard",
+          val: 0,
+        });
   },
   mounted() {
     this.$store.dispatch("user/fetch").then(() => {

@@ -1,15 +1,13 @@
 <template>
   <v-hover v-slot:default="{ hover }" close-delay="50">
     <v-card
-     dark
+      dark
       class="rounded-lg"
       :class="hover ? 'glow-lg-warning' : ''"
       :width="table.show ? 1000 : 'auto'"
     >
-      <v-sheet   class="rounded-lg" :color="table.show ? '' : ''">
-        <v-card-text
-          class="text-center"
-        >
+      <v-sheet class="rounded-lg" :color="table.show ? '' : ''">
+        <v-card-text class="text-center">
           <v-row
             class="align-center"
             :class="table.show ? 'justify-space-between' : 'justify-center'"
@@ -38,9 +36,9 @@
           </v-row>
         </v-card-text>
 
-        <v-card-text  v-show="table.show">
+        <v-card-text v-show="table.show">
           <v-text-field
-          light
+            light
             prepend-inner-icon="search"
             solo
             clearable
@@ -66,8 +64,8 @@
           item-key="id"
           :page="table.page"
           :search="table.search"
-          :loading="!filtered"
-          loading-text="Loading... Please wait"
+          :loading="!filtered.length"
+          loading-text="กำลังโหลดข้อมูลอยู่... ( ถ้านานเกินไป ลองเข้าหน้านี้ใหม่อีกครั้ง )"
         >
           <template v-slot:footer>
             <v-pagination
@@ -78,6 +76,15 @@
               :length="numberOfPages(filtered, 10)"
               :total-visible="7"
             ></v-pagination>
+          </template>
+          <template v-slot:progress>
+            <v-progress-linear
+              color="white"
+              :height="10"
+              indeterminate
+              rounded
+              striped
+            ></v-progress-linear>
           </template>
           <template v-slot:item.id="{ item }">
             <v-icon v-if="item.id == 1" class="amber--text sub-crown "
@@ -97,6 +104,7 @@
           </template>
         </v-data-table>
       </v-expand-transition>
+      {{ test }}
     </v-card>
   </v-hover>
 </template>
@@ -109,10 +117,13 @@
   position: absolute !important;
   transform: translate(5px, -10px) rotate(45deg);
 }
+tr.v-data-table__progress > th {
+  background: transparent;
+}
 </style>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   data() {
@@ -142,43 +153,38 @@ export default {
         ],
         itemsPerPage: 10,
       },
-      //   items: [
-      //     {
-      //       nickname: 1,
-      //       score: 5,
-      //     },
-      //   ],
     };
   },
   methods: {
     toggleTable() {
       this.table.show = !this.table.show;
-      if (this.table.show) {
-        this.$store.dispatch("user/setFetchInterval", {
-          item: "LeaderBoard",
-          val: 180000,
-        });
-      } else {
-        this.$store.dispatch("user/setFetchInterval", {
-          item: "LeaderBoard",
-          val: 0,
-        });
-      }
+      // if (this.table.show) {
+      //   this.$store.dispatch("user/setFetchInterval", {
+      //     item: "LeaderBoard",
+      //     val: 1000,
+      //   });
+      // }
     },
   },
   computed: {
-    ...mapGetters({
-      items: "user/getLeaderBoard",
+    ...mapState({
+      lbData: (state) => state.user.data["leaderBoard"],
     }),
     filtered() {
-      if (this.items) {
+      if (this.lbData) {
         let ind = 1;
-        return this.items.filter((el) => {
-          el.id = ind++;
+        return this.lbData.filter((el) => {
+          this.$set(el, "id", ind++);
           return el.score;
         });
       } else return [];
     },
+  },
+  beforeDestroy() {
+    this.$store.dispatch("user/setFetchInterval", {
+      item: "LeaderBoard",
+      val: 0,
+    });
   },
 };
 </script>
