@@ -64,6 +64,7 @@
           select-all
           :items-per-page="10"
           item-key="id"
+          :page="table.page"
           :search="table.search"
           :loading="!filtered"
           loading-text="Loading... Please wait"
