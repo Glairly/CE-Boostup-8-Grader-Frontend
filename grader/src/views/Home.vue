@@ -231,8 +231,14 @@ export default {
   created() {
     var store = this.$store;
     this.user = store.state.user.data;
-    this.$store.dispatch("user/setFetchInterval", {item: "Submissions", val: 0});
-    this.$store.dispatch("user/setFetchInterval", {item: "Questions", val: 0});
+    this.$store.dispatch("user/setFetchInterval", {
+      item: "Submissions",
+      val: 0,
+    });
+    this.$store.dispatch("user/setFetchInterval", {
+      item: "Questions",
+      val: 0,
+    });
   },
   mounted() {
     this.$store.dispatch("user/fetch").then(() => {
@@ -240,7 +246,6 @@ export default {
       this.ready = true;
     });
   },
-   
 };
 </script>
 

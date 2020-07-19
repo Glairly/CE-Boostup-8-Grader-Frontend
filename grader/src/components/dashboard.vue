@@ -51,6 +51,8 @@
         <!-- https://www.freepik.com/ -->
     </v-card-actions>
 
+     <div class="divider rounded-pill "></div>
+        <leaderBoard/>
     <div class="divider rounded-pill "></div>
 
     <span style="font-size:1.5rem" class="font-weight-bold">Sponsered By</span>
@@ -91,7 +93,13 @@
 </style>
 
 <script>
+import leaderBoard from "@/components/leaderBoard";
+
+
 export default {
+    components:{
+        leaderBoard
+    },
     data() {
         return {
             items: [{
