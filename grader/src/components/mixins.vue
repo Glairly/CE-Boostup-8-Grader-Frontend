@@ -23,7 +23,6 @@ export default {
       return Math.floor(Math.random() * Math.floor(max));
     },
     moveBeeInit(beeList) {
-        console.log("init bee")
       beeList.forEach((bee) => {
         let b = document.getElementById(bee);
         if (b)
@@ -71,6 +70,10 @@ export default {
         true
       );
     },
+    numberOfPages(items,divide) {
+         if (items) return Math.ceil(items.length / divide);
+      else return 0;
+    }
     // contactStaff(text) {
     //     var mode = [" ","KywdxDsJg7ByoTjcKhY4hDW2DDilhWi7VieIT4T3Bgv", "C03gyvCYaHMtxivJ3iBrFwFiOw8WXcTneJpsv4Y76D4"]
     //     let config = {

@@ -45,3 +45,42 @@
          box-shadow: 0px 3px 5px -1px rgba($col, 0.2), 0px 5px 8px 0px rgba($col, 0.14), 0px 1px 14px 0px rgba($col, 0.12) !important;
      }
  }
+ 
+ tbody>tr {
+     margin: 100px !important;
+ }
+ 
+ tbody tr:nth-of-type(even) {
+     background-color: rgba(var(--themeRgb-8), 0.1);
+ }
+ 
+ .v-data-table tbody tr.v-data-table__expanded__content {
+     box-shadow: none !important;
+ }
+ 
+ tbody>tr:hover {
+     box-shadow: rgba(var(--themeRgb-8), 0.5) 0px 0px 9px 5px;
+     background: inherit !important;
+     /* transform: scaleY(1.2); */
+     z-index: 15;
+ }
+ 
+ .v-data-table .v-data-table-header th.sortable .v-data-table-header__icon {
+     display: none !important;
+ }
+ 
+ .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>td:not(.v-data-table__mobile-row),
+ .theme--light.v-data-table>.v-data-table__wrapper>table>tbody>tr:not(:last-child)>th:not(.v-data-table__mobile-row) {
+     border-bottom: none !important;
+ }
+ 
+ .v-data-table>.v-data-table__wrapper>table>tbody>tr>td,
+ .v-data-table>.v-data-table__wrapper>table>thead>tr>td,
+ .v-data-table>.v-data-table__wrapper>table>tfoot>tr>td {
+     font-size: 1rem !important;
+ }
+ 
+ .leaderBoard>.v-data-table__wrapper>table>thead {
+     background-color: #fb8c00 !important;
+     margin-bottom: 15px;
+ }

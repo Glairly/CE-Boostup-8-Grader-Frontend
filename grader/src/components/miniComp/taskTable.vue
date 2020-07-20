@@ -44,7 +44,7 @@
                 solo
                 hide-details
                 prepend-inner-icon="search"
-                label="Search Name"
+                label="Search Name..."
               ></v-text-field>
             </v-col>
             <v-divider vertical class="mx-1" v-if="type != 'submission'"></v-divider>
@@ -812,27 +812,4 @@ export default {
 };
 </script>
 
-<style>
-tbody > tr {
-  margin: 100px !important;
-}
-
-.v-data-table-header {
-  /* background: var(--theme-8); */
-}
-
-tbody tr:nth-of-type(even) {
-  background-color: rgba(var(--themeRgb-8), 0.1);
-}
-
-.v-data-table tbody tr.v-data-table__expanded__content {
-  box-shadow: none !important;
-}
-
-tbody > tr:hover {
-  box-shadow: rgba(var(--themeRgb-8), 0.5) 0px 0px 9px 5px;
-  background: inherit !important;
-  /* transform: scaleY(1.2); */
-  z-index: 15;
-}
-</style>
+ 

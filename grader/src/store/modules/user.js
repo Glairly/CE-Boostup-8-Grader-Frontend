@@ -28,6 +28,7 @@ export default {
                 finished: [],
                 unfinished: [],
             },
+            leaderBoard: [],
         },
         options: {
             darkMode: false,
@@ -39,7 +40,7 @@ export default {
                     typeSingle: false,
                     onlyPassed: false,
                     onlyNotPassed: false,
-                    onlyIdle: false
+                    onlyIdle: false,
                 },
                 rank_range: [0, 10],
                 sortDescTask: false,
@@ -47,7 +48,7 @@ export default {
                 itemsPerPage: 20,
                 pageTask: 1,
                 pageSubmit: 1,
-            }
+            },
         },
         fetch: {
             paused: false,
@@ -56,6 +57,10 @@ export default {
                 id: 0,
             },
             Questions: {
+                interval: 0,
+                id: 0,
+            },
+            LeaderBoard: {
                 interval: 0,
                 id: 0,
             },
@@ -120,7 +125,12 @@ export default {
         },
         getSearchOptions: (state) => {
             return state.options.search;
-        }
+        },
+        getLeaderBoard: (state) => {
+            if (state.data.leaderBoard && state.data.leaderBoard.length)
+                return state.data.leaderBoard;
+            else return [];
+        },
     },
 
     // eslint-disable-next-line no-unused-vars
@@ -138,6 +148,9 @@ export default {
         setSubmission(state, data) {
             state.data.submission = data;
         },
+        setLeaderBoard(state, data) {
+            state.data.leaderBoard = data;
+        },
         setDoneQuestion(state, data) {
             state.data.doneQuestion = {
                 finished: [],
@@ -150,7 +163,8 @@ export default {
                     if (doneQuestion.finished.includes(el.questionId)) {
                         return;
                     }
-                    if (/^P*$/.test(el.result)) { // check all char is P
+                    if (/^P*$/.test(el.result)) {
+                        // check all char is P
                         // remove duplicate
                         let isExisted = doneQuestion.unfinished.indexOf(el.questionId);
                         if (isExisted > -1) {
@@ -176,16 +190,32 @@ export default {
         clear(state) {
             // clear interval
             for (let i = 0; i < 100; i++) {
-                window.clearInterval(i);
-                window.clearTimeout(i);
+                clearInterval(i);
+                clearTimeout(i);
             }
             state.data = {
                 token: "",
                 username: "",
-                detail: { email: "", avatar: "", name: "" },
+                detail: { avatar: "", name: "" },
                 submission: [],
                 questions: [],
-                codeSession: [],
+                stats: {
+                    score: {
+                        max: 0,
+                        now: 0,
+                    },
+                    question: {
+                        max: 0,
+                        now: 0,
+                        star: 0,
+                    },
+                    submission: 0,
+                },
+                doneQuestion: {
+                    finished: [],
+                    unfinished: [],
+                },
+                leaderBoard: [],
             };
             sessionStorage.clear();
         },
@@ -198,7 +228,7 @@ export default {
                     typeSingle: false,
                     onlyPassed: false,
                     onlyNotPassed: false,
-                    onlyIdle: false
+                    onlyIdle: false,
                 },
                 rank_range: [0, 10],
                 sortDescTask: false,
@@ -206,7 +236,7 @@ export default {
                 itemsPerPage: 20,
                 pageTask: 1,
                 pageSubmit: 1,
-            }
+            };
         },
     },
     // eslint-disable-next-line no-unused-vars
@@ -238,9 +268,18 @@ export default {
                     }
                 });
         },
+        async fetchLeaderBoard({ commit, rootState }) {
+            await axios
+                .get(rootState.api + "/api/v1/leaderboard")
+                .then((response) => {
+                    if (response.data.users)
+                        commit("setLeaderBoard", response.data.users);
+                });
+        },
         async fetch({ dispatch }) {
-            dispatch('fetchQuestions');
-            dispatch('fetchSubmissions');
+            dispatch("fetchQuestions");
+            dispatch("fetchSubmissions");
+            dispatch("fetchLeaderBoard");
         },
         async isIdExist({ state, commit, rootState }) {
             commit;
@@ -287,10 +326,10 @@ export default {
             });
 
             s.unfinished.forEach((el) => {
-                let arr = []
+                let arr = [];
                 for (let i = 0; i < _sub.length; ++i) {
                     if (_sub[i] == el) {
-                        arr.push(i)
+                        arr.push(i);
                     }
                 }
                 let max = 0;
@@ -346,18 +385,17 @@ export default {
                     clearInterval(state.fetch[payload.item].id);
                     state.fetch[payload.item].interval = payload.val;
 
-                    let pro = Promise.resolve(0);
-                    
-                    if (typeof payload.force === 'undefined' || payload.force !== false) {
-                        pro = dispatch('fetch' + payload.item);
-                    }
+                let pro = Promise.resolve(0);
 
-                    pro.then(() => {
-                        state.fetch[payload.item].id = setInterval(() => {
-                            dispatch('fetch' + payload.item);
-                        }, payload.val);
-                    })
+                if (typeof payload.force === "undefined" || payload.force !== false) {
+                    pro = dispatch("fetch" + payload.item);
                 }
+
+                pro.then(() => {
+                    state.fetch[payload.item].id = setInterval(() => {
+                        dispatch("fetch" + payload.item);
+                    }, payload.val);
+                });
             }
         },
     },

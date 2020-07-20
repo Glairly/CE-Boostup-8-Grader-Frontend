@@ -231,9 +231,18 @@ export default {
   created() {
     var store = this.$store;
     this.user = store.state.user.data;
-    this.$store.dispatch("user/setFetchInterval", {item: "Submissions", val: 0});
-    this.$store.dispatch("user/setFetchInterval", {item: "Questions", val: 0});
-
+    this.$store.dispatch("user/setFetchInterval", {
+      item: "Submissions",
+      val: 0,
+    });
+    this.$store.dispatch("user/setFetchInterval", {
+      item: "Questions",
+      val: 0,
+    });
+     this.$store.dispatch("user/setFetchInterval", {
+          item: "LeaderBoard",
+          val: 0,
+        });
     // Set the name of the hidden property and the change event for visibility
     var hidden, visibilityChange; 
     if (typeof document.hidden !== "undefined") { // Opera 12.10 and Firefox 18 and later support 
@@ -256,6 +265,7 @@ export default {
         this.$store.dispatch("user/setFetchInterval", {paused: document[hidden]});
       }, false);
     }
+
   },
   mounted() {
     this.$store.dispatch("user/fetch").then(() => {
@@ -263,7 +273,6 @@ export default {
       this.ready = true;
     });
   },
-   
 };
 </script>
 
