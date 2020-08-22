@@ -339,6 +339,9 @@ export default {
       }
       return JSON.parse(JSON.stringify(arr));
     },
+    numOfSubmissions () {
+      return this.$store.state.user.data.submission.length;
+    },
   },
   created() {
     this.update();
@@ -349,7 +352,7 @@ export default {
       this.rightNav.mode = mode;
       this.rightNav.codePopup = true;
     },
-    update() {
+    update(toggle) {
       this.qId = this.$cookies.get("task");
       var body = {
         token: this.$store.getters["user/getToken"],
@@ -360,9 +363,13 @@ export default {
           "Access-Control-Allow-Origin": "*",
         },
       };
-      // other
-      this.axios
-        .post(this.$store.state.api + "/api/v1/get_finish_code", body, config)
+      let isFinish = false;
+
+      if (this.$store.state.user.data.doneQuestion.finished.includes(this.qId)) {
+        isFinish = true;
+        // other
+        this.axios
+          .post(this.$store.state.api + "/api/v1/get_finish_code", body, config)
         .then((res) => {
           var arr = res.data.data;
           if (arr.length) {
@@ -373,9 +380,12 @@ export default {
         .catch(() => {
           this.rightNav.other.seeCode = true;
           console.clear();
-        });
-      // user
-      this.axios
+          });
+      }
+      
+      if (isFinish || this.$store.state.user.data.doneQuestion.unfinished.includes(this.qId)) {
+        // user
+        this.axios
         .post(this.$store.state.api + "/api/v1/submission_code", body, config)
         .then((res) => {
           var arr = res.data.data;
@@ -385,11 +395,14 @@ export default {
         })
         .catch(() => {
           this.rightNav.seeCode = true;
-        });
+          });
+      }
 
-      setTimeout(() => {
-        this.toggleRightNav();
-      }, 500);
+      if (toggle !== false) {
+        setTimeout(() => {
+          this.toggleRightNav();
+        }, 500);
+      }
     },
     setEvents() {
       const minSize = 500;
@@ -455,6 +468,15 @@ export default {
       }
       this.rightNav.tab_select = 0;
     },
+  },
+  watch: {
+    numOfSubmissions(_new) {
+      if (_new == 0 && this.task) return;
+      let last = this.$store.state.user.data.submission[_new - 1];
+      if (last.questionId != this.qId) return;
+      
+      this.update(false);
+    }
   },
 };
 </script>

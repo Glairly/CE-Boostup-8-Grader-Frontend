@@ -446,7 +446,7 @@ export default {
       this.ide.title = _new;
     },
     numOfSubmissions(_new) {
-      if (_new == 0 && this.task) return;
+      if (_new == 0 || !this.task) return;
       let last = this.$store.state.user.data.submission[_new - 1];
       if (last.questionId != this.task.id) return;
       this.result = last.result;
@@ -570,6 +570,12 @@ export default {
                 '😅 Look like the output is empty. Did u forgot "printf()" ?🤨?';
             this.compile.time = res.data.timeUsage;
           }
+        })
+        .catch(() => {
+          this.compile.wait = false;
+          this.compile.log =
+            '⚠️ Look like server error. Please try again. ⚠️';
+          this.compile.time = 0;
         });
 
       let logs = document.getElementById("compileLog");
